@@ -35,6 +35,7 @@ class DumpCommand extends ContainerAwareCommand
             )
             ->addOption('no-sandbox', '', InputOption::VALUE_NONE)
             ->addOption('api-version', null, InputOption::VALUE_REQUIRED, 'The API version')
+            ->addOption('locale', null, InputOption::VALUE_REQUIRED, 'Locale for translation')
             ->setName('api:doc:dump')
             ;
     }
@@ -52,6 +53,10 @@ class DumpCommand extends ContainerAwareCommand
             }
 
             $formatter = $this->getContainer()->get(sprintf('nelmio_api_doc.formatter.%s_formatter', $format));
+        }
+
+        if ($input->hasOption('locale')) {
+            $this->getContainer()->get('translator')->setLocale($input->getOption('locale'));
         }
 
         if ($input->getOption('no-sandbox') && 'html' === $format) {
