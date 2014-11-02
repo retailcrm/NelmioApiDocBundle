@@ -86,7 +86,6 @@ class ValidationParser implements ParserInterface, PostParserInterface
             $input['name'] => array(
                 'required'    => false,
                 'readonly'    => false,
-                'description' => '',
                 'default'     => null,
                 'dataType'    => $dataType,
                 'actualType'  => DataTypes::MODEL,
