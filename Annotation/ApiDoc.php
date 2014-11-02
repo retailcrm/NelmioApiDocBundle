@@ -47,6 +47,11 @@ class ApiDoc
     /**
      * @var string
      */
+    private $inputs = null;
+
+    /**
+     * @var string
+     */
     private $output = null;
 
     /**
@@ -165,6 +170,8 @@ class ApiDoc
 
         if (isset($data['input'])) {
             $this->input = $data['input'];
+        } elseif (isset($data['inputs'])) {
+            $this->inputs = $data['inputs'];
         } elseif (isset($data['filters'])) {
             foreach ($data['filters'] as $filter) {
                 if (!isset($filter['name'])) {
@@ -323,6 +330,14 @@ class ApiDoc
     public function getInput()
     {
         return $this->input;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getInputs()
+    {
+        return $this->inputs;
     }
 
     /**
