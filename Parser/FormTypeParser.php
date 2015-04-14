@@ -22,6 +22,7 @@ use Symfony\Component\Form\ResolvedFormTypeInterface;
 use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\Exception\FormException;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class FormTypeParser implements ParserInterface
 {
@@ -34,6 +35,11 @@ class FormTypeParser implements ParserInterface
      * @var \Symfony\Component\Form\FormRegistry
      */
     protected $formRegistry;
+
+    /**
+     * @var \Symfony\Component\Translation\TranslatorInterface
+     */
+    protected $translator;
 
     /**
      * @var array
@@ -52,9 +58,10 @@ class FormTypeParser implements ParserInterface
         'file'      => DataTypes::FILE,
     );
 
-    public function __construct(FormFactoryInterface $formFactory)
+    public function __construct(FormFactoryInterface $formFactory, TranslatorInterface $translator)
     {
         $this->formFactory  = $formFactory;
+        $this->translator   = $translator;
     }
 
     /**
@@ -124,6 +131,7 @@ class FormTypeParser implements ParserInterface
     private function parseForm($form)
     {
         $parameters = array();
+        $domain = $form->getConfig()->getOption('translation_domain');
         foreach ($form as $name => $child) {
             $config     = $child->getConfig();
             $bestType   = '';
@@ -187,7 +195,7 @@ class FormTypeParser implements ParserInterface
                                     'default'     => null,
                                     'subType'     => $subType,
                                     'required'    => $config->getRequired(),
-                                    'description' => ($config->getOption('description')) ? $config->getOption('description'):$config->getOption('label'),
+                                    'description' => $this->getFormDescription($config, $domain),
                                     'readonly'    => $config->getDisabled(),
                                     'children'    => $children,
                                 );
@@ -205,7 +213,7 @@ class FormTypeParser implements ParserInterface
                                 'actualType'  => 'string',
                                 'default'     => $config->getData(),
                                 'required'    => $config->getRequired(),
-                                'description' => ($config->getOption('description')) ? $config->getOption('description'):$config->getOption('label'),
+                                'description' => $this->getFormDescription($config, $domain),
                                 'readonly'    => $config->getDisabled(),
                             );
                         }
@@ -221,7 +229,7 @@ class FormTypeParser implements ParserInterface
                 'subType'     => $subType,
                 'default'     => $config->getData(),
                 'required'    => $config->getRequired(),
-                'description' => ($config->getOption('description')) ? $config->getOption('description'):$config->getOption('label'),
+                'description' => $this->getFormDescription($config, $domain),
                 'readonly'    => $config->getDisabled(),
             );
 
@@ -329,5 +337,12 @@ class FormTypeParser implements ParserInterface
         }
 
         return $choices;
+    }
+
+    private function getFormDescription($config, $domain = null)
+    {
+        $descr = $config->getOption('description') ?:$config->getOption('label');
+
+        return $this->translator->trans($descr, [], $domain);
     }
 }
