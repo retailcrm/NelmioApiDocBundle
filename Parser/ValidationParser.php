@@ -132,7 +132,7 @@ class ValidationParser implements ParserInterface, PostParserInterface
             }
 
             if (isset($vparams['format'])) {
-                $vparams['format'] = join(', ', $vparams['format']);
+                $vparams['format'] = join(', ', array_unique($vparams['format']));
             }
 
             foreach (array('dataType', 'readonly', 'required', 'subType') as $reqprop) {
@@ -278,6 +278,8 @@ class ValidationParser implements ParserInterface, PostParserInterface
                 break;
             case 'Choice':
                 $choices = $this->getChoices($constraint, $className);
+                sort($choices);
+
                 $format = '[' . join('|', $choices) . ']';
                 if ($constraint->multiple) {
                     $vparams['actualType'] = DataTypes::COLLECTION;
