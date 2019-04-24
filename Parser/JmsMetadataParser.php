@@ -87,7 +87,30 @@ class JmsMetadataParser implements ParserInterface, PostParserInterface
         $className = $input['class'];
         $groups    = $input['groups'];
 
-        return $this->doParse($className, array(), $groups);
+        $result = $this->doParse($className, array(), $groups);
+
+        if (!isset($input['name']) || empty($input['name'])) {
+            return $result;
+        }
+
+        if (class_exists($className)) {
+            $parts = explode('\\', $className);
+            $dataType = sprintf('object (%s)', end($parts));
+        } else {
+            $dataType = sprintf('object (%s)', $className);
+        }
+
+        return array(
+            $input['name'] => array(
+                'required'    => null,
+                'readonly'    => null,
+                'default'     => null,
+                'dataType'    => $dataType,
+                'actualType'  => DataTypes::MODEL,
+                'subType'     => $dataType,
+                'children'    => $result,
+            ),
+        );
     }
 
     /**
