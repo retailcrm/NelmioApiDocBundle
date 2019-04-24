@@ -22,6 +22,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormFactoryBuilder;
 use Symfony\Component\Form\ResolvedFormTypeFactory;
+use Symfony\Component\Translation\Translator;
 
 class FormTypeParserTest extends \PHPUnit_Framework_TestCase
 {
@@ -37,7 +38,7 @@ class FormTypeParserTest extends \PHPUnit_Framework_TestCase
         $formFactoryBuilder->addTypeExtension(new DescriptionFormTypeExtension());
         $formFactoryBuilder->addType(new DependencyType(array('foo')));
         $formFactory = $formFactoryBuilder->getFormFactory();
-        $formTypeParser = new FormTypeParser($formFactory, $entityToChoice = true);
+        $formTypeParser = new FormTypeParser($formFactory, new Translator('en'), $entityToChoice = true);
 
         set_error_handler(array('Nelmio\ApiDocBundle\Tests\WebTestCase', 'handleDeprecation'));
         trigger_error('test', E_USER_DEPRECATED);
@@ -64,7 +65,7 @@ class FormTypeParserTest extends \PHPUnit_Framework_TestCase
         $formFactoryBuilder->addExtension(new CoreExtension());
         $formFactoryBuilder->addTypeExtension(new DescriptionFormTypeExtension());
         $formFactory = $formFactoryBuilder->getFormFactory();
-        $formTypeParser = new FormTypeParser($formFactory, $entityToChoice = true);
+        $formTypeParser = new FormTypeParser($formFactory, new Translator('en'), $entityToChoice = true);
 
         set_error_handler(array('Nelmio\ApiDocBundle\Tests\WebTestCase', 'handleDeprecation'));
         trigger_error('test', E_USER_DEPRECATED);
@@ -87,7 +88,7 @@ class FormTypeParserTest extends \PHPUnit_Framework_TestCase
         $formFactoryBuilder->addTypeExtension(new DescriptionFormTypeExtension());
         $formFactoryBuilder->addType(new DependencyType(array('bar')));
         $formFactory = $formFactoryBuilder->getFormFactory();
-        $formTypeParser = new FormTypeParser($formFactory, $entityToChoice = false);
+        $formTypeParser = new FormTypeParser($formFactory, new Translator('en'), $entityToChoice = false);
 
         set_error_handler(array('Nelmio\ApiDocBundle\Tests\WebTestCase', 'handleDeprecation'));
         trigger_error('test', E_USER_DEPRECATED);
