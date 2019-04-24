@@ -73,7 +73,12 @@ class ValidationParser implements ParserInterface, PostParserInterface
     {
         $className = $input['class'];
 
-        $parsed = $this->doParse($className, array());
+        $groups = array();
+        if (isset($input["groups"]) && $input["groups"]) {
+            $groups = $input["groups"];
+        }
+
+        $parsed = $this->doParse($className, array(), $groups);
 
         if (!isset($input['name']) || empty($input['name'])) {
             return $parsed;
@@ -105,9 +110,10 @@ class ValidationParser implements ParserInterface, PostParserInterface
      *
      * @param  $className
      * @param  array $visited
+     * @param  array $groups
      * @return array
      */
-    protected function doParse($className, array $visited)
+    protected function doParse($className, array $visited, array $groups = array())
     {
         $params = array();
         $classdata = $this->factory->getMetadataFor($className);
@@ -126,7 +132,7 @@ class ValidationParser implements ParserInterface, PostParserInterface
                 $constraints = $propdata->getConstraints();
 
                 foreach ($constraints as $constraint) {
-                    $vparams = $this->parseConstraint($constraint, $vparams, $className, $visited);
+                    $vparams = $this->parseConstraint($constraint, $vparams, $className, $visited, $groups);
                 }
             }
 
@@ -143,7 +149,7 @@ class ValidationParser implements ParserInterface, PostParserInterface
             // check for nested classes with All constraint
             if (isset($vparams['class']) && !in_array($vparams['class'], $visited) && null !== $this->factory->getMetadataFor($vparams['class'])) {
                 $visited[] = $vparams['class'];
-                $vparams['children'] = $this->doParse($vparams['class'], $visited);
+                $vparams['children'] = $this->doParse($vparams['class'], $visited, $groups);
             }
 
             $vparams['actualType'] = isset($vparams['actualType']) ? $vparams['actualType'] : DataTypes::STRING;
@@ -159,9 +165,14 @@ class ValidationParser implements ParserInterface, PostParserInterface
      */
     public function postParse(array $input, array $parameters)
     {
+        $groups = [];
+        if (isset($input["groups"]) && $input["groups"]) {
+            $groups = $input["groups"];
+        }
+
         foreach ($parameters as $param => $data) {
             if (isset($data['class']) && isset($data['children'])) {
-                $input = array('class' => $data['class']);
+                $input = array('class' => $data['class'], "groups" => $groups);
                 $parameters[$param]['children'] = array_merge(
                     $parameters[$param]['children'], $this->postParse($input, $parameters[$param]['children'])
                 );
@@ -188,14 +199,34 @@ class ValidationParser implements ParserInterface, PostParserInterface
      *
      * @param  Constraint $constraint The constraint metadata object.
      * @param  array      $vparams    The existing validation parameters.
+     * @param  array      $groups     Validation groups.
      * @return mixed      The parsed list of validation parameters.
      */
-    protected function parseConstraint(Constraint $constraint, $vparams, $className, &$visited = array())
+    protected function parseConstraint(
+        Constraint $constraint,
+        $vparams,
+        $className,
+        &$visited = array(),
+        array $groups = array()
+    )
     {
         $class = substr(get_class($constraint), strlen('Symfony\\Component\\Validator\\Constraints\\'));
 
         $vparams['actualType'] = DataTypes::STRING;
         $vparams['subType'] = null;
+        $vparams['groups'] = $constraint->groups;
+
+        if ($groups) {
+            $containGroup = false;
+            foreach ($groups as $group) {
+                if (in_array($group, $vparams['groups'])) {
+                    $containGroup = true;
+                }
+            }
+            if (!$containGroup) {
+                return $vparams;
+            }
+        }
 
         switch ($class) {
             case 'NotBlank':
