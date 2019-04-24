@@ -442,7 +442,7 @@ class SwaggerFormatter implements FormatterInterface
                     case DataTypes::ENUM:
                         $type = 'string';
                         if (isset($prop['format'])) {
-                            $enum = array_keys(json_decode($prop['format'], true));
+                            $enum = explode('|', rtrim(ltrim($prop['format'], '['), ']'));
                         }
                         break;
 

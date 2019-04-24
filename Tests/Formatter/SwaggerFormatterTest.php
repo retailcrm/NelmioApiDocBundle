@@ -289,9 +289,9 @@ class SwaggerFormatterTest extends WebTestCase
                                                             'type'      => 'string',
                                                             'enum'      =>
                                                                 array(
-                                                                    0 => 'x',
-                                                                    1 => 'y',
-                                                                    2 => 'z',
+                                                                    0 => 'X',
+                                                                    1 => 'Y',
+                                                                    2 => 'Z',
                                                                 ),
                                                         ),
                                                     4 =>

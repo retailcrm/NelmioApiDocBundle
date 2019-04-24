@@ -155,7 +155,7 @@ class ValidationParserTest extends WebTestCase
             array(
                 'property' => 'multiplerangechoice',
                 'expected' => array(
-                    'format' => '{min: 2 max: 3 choice of [foo|bar|baz|qux]}',
+                    'format' => '{min: 2 max: 3 choice of [bar|baz|foo|qux]}',
                     'actualType' => DataTypes::COLLECTION,
                     'subType' => DataTypes::ENUM,
                     'default' => null,

@@ -466,7 +466,7 @@ With multiple lines.',
           'required' => true,
           'description' => NULL,
           'readonly' => false,
-          'format' => '{"x":"X","y":"Y","z":"Z"}',
+          'format' => '[X|Y|Z]',
         ),
         'd' =>
         array (

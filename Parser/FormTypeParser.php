@@ -367,7 +367,11 @@ class FormTypeParser implements ParserInterface
                     }
 
                     if (($choices = $config->getOption('choices')) && is_array($choices) && count($choices)) {
-                        $parameters[$name]['format'] = json_encode($choices);
+                        $choices = $config->getOption('choices_as_values') ?
+                            array_values($choices) :
+                            array_keys($choices);
+                        sort($choices);
+                        $parameters[$name]['format'] = '[' . join('|', $choices) . ']';
                     } elseif ($choiceList = $config->getOption('choice_list')) {
                         $choiceListType = $config->getType();
                         $choiceListName = method_exists($choiceListType, 'getBlockPrefix') ?

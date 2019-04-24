@@ -121,7 +121,7 @@ class FormTypeParserTest extends \PHPUnit_Framework_TestCase
                 'description' => '',
                 'readonly' => false,
             ),
-            LegacyFormHelper::isLegacy() ? array() : array('format' => '{"foo":"bar","bazgroup":{"baz":"Buzz"}}',)
+            LegacyFormHelper::isLegacy() ? array() : array('format' => '[bar|Array]',)
         );
 
         return array(
@@ -446,7 +446,7 @@ class FormTypeParserTest extends \PHPUnit_Framework_TestCase
                         'required' => true,
                         'description' => '',
                         'readonly' => false,
-                        'format' => json_encode(array('m' => 'Male', 'f' => 'Female')),
+                        'format' => '[Female|Male]',
                     ),
                     'c2' => array(
                         'dataType' => 'array of choices',
@@ -456,7 +456,7 @@ class FormTypeParserTest extends \PHPUnit_Framework_TestCase
                         'required' => true,
                         'description' => '',
                         'readonly' => false,
-                        'format' => json_encode(array('m' => 'Male', 'f' => 'Female')),
+                        'format' => '[Female|Male]',
                     ),
                     'c3' => array(
                         'dataType' => 'choice',
@@ -475,7 +475,7 @@ class FormTypeParserTest extends \PHPUnit_Framework_TestCase
                         'required' => true,
                         'description' => '',
                         'readonly' => false,
-                        'format' => '{"foo":"bar","bazgroup":{"baz":"Buzz"}}',
+                        'format' => '[bar|Array]',
                     ),
                     'e1' => $entityData
                 ),
@@ -523,7 +523,7 @@ class FormTypeParserTest extends \PHPUnit_Framework_TestCase
                                             'required' => true,
                                             'description' => '',
                                             'readonly' => false,
-                                            'format' => '{"x":"X","y":"Y","z":"Z"}',
+                                            'format' => '[X|Y|Z]',
                                         ),
                                     'd' =>
                                         array (
