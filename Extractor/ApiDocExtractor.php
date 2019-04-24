@@ -350,6 +350,7 @@ class ApiDocExtractor
                 }
             }
 
+            $parameters = $this->setParentClasses($parameters);
             $parameters = $this->clearClasses($parameters);
             $parameters = $this->generateHumanReadableTypes($parameters);
 
@@ -422,6 +423,7 @@ class ApiDocExtractor
                     }
                 }
 
+                $parameters = $this->setParentClasses($parameters);
                 $parameters = $this->clearClasses($parameters);
                 $parameters = $this->generateHumanReadableTypes($parameters);
 
@@ -554,6 +556,30 @@ class ApiDocExtractor
         foreach ($this->handlers as $handler) {
             $handler->handle($annotation, $annots, $route, $method);
         }
+    }
+
+    /**
+     * Set parent class to children
+     *
+     * @param  array $array The source array.
+     * @return array The updated array.
+     */
+    protected function setParentClasses($array)
+    {
+        if (is_array($array)) {
+            foreach ($array as $k => $v) {
+                if (isset($v['children'])) {
+                    if (isset($v['class'])) {
+                        foreach ($v['children'] as $key => $item) {
+                            $array[$k]['children'][$key]['parentClass'] = $v['class'];
+                            $array[$k]['children'][$key]['field'] = $key;
+                        }
+                    }
+                    $array[$k]['children'] = $this->setParentClasses($array[$k]['children']);
+                }
+            }
+        }
+        return $array;
     }
 
     /**

@@ -4,7 +4,7 @@ use Nelmio\ApiDocBundle\Util\LegacyFormHelper;
 
 return array (
     '/api/other-resources' =>
-        array (
+            array (
             0 =>
                 array (
                     'method' => 'GET',
@@ -104,6 +104,8 @@ return array (
                                                                     'readonly' => true,
                                                                     'sinceVersion' => NULL,
                                                                     'untilVersion' => NULL,
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                                    'field' => 'foo',
                                                                 ),
                                                             'bar' =>
                                                                 array (
@@ -116,6 +118,8 @@ return array (
                                                                     'readonly' => false,
                                                                     'sinceVersion' => NULL,
                                                                     'untilVersion' => NULL,
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                                    'field' => 'bar',
                                                                 ),
                                                             'baz' =>
                                                                 array (
@@ -130,6 +134,8 @@ With multiple lines.',
                                                                     'readonly' => false,
                                                                     'sinceVersion' => NULL,
                                                                     'untilVersion' => NULL,
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                                    'field' => 'baz',
                                                                 ),
                                                             'circular' =>
                                                                 array (
@@ -142,6 +148,8 @@ With multiple lines.',
                                                                     'readonly' => false,
                                                                     'sinceVersion' => NULL,
                                                                     'untilVersion' => NULL,
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                                    'field' => 'circular',
                                                                 ),
                                                             'parent' =>
                                                                 array (
@@ -154,6 +162,8 @@ With multiple lines.',
                                                                     'readonly' => false,
                                                                     'sinceVersion' => NULL,
                                                                     'untilVersion' => NULL,
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                                    'field' => 'parent',
                                                                     'children' =>
                                                                         array (
                                                                             'foo' =>
@@ -167,6 +177,8 @@ With multiple lines.',
                                                                                     'readonly' => false,
                                                                                     'sinceVersion' => NULL,
                                                                                     'untilVersion' => NULL,
+                                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                                                    'field' => 'foo',
                                                                                 ),
                                                                             'bar' =>
                                                                                 array (
@@ -179,6 +191,8 @@ With multiple lines.',
                                                                                     'readonly' => true,
                                                                                     'sinceVersion' => NULL,
                                                                                     'untilVersion' => NULL,
+                                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                                                    'field' => 'bar',
                                                                                 ),
                                                                             'number' =>
                                                                                 array (
@@ -191,6 +205,8 @@ With multiple lines.',
                                                                                     'readonly' => false,
                                                                                     'sinceVersion' => NULL,
                                                                                     'untilVersion' => NULL,
+                                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                                                    'field' => 'number',
                                                                                 ),
                                                                             'arr' =>
                                                                                 array (
@@ -203,6 +219,8 @@ With multiple lines.',
                                                                                     'readonly' => false,
                                                                                     'sinceVersion' => NULL,
                                                                                     'untilVersion' => NULL,
+                                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                                                    'field' => 'arr',
                                                                                 ),
                                                                             'nested' =>
                                                                                 array (
@@ -215,6 +233,8 @@ With multiple lines.',
                                                                                     'readonly' => false,
                                                                                     'sinceVersion' => NULL,
                                                                                     'untilVersion' => NULL,
+                                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                                                    'field' => 'nested',
                                                                                 ),
                                                                             'nested_array' =>
                                                                                 array (
@@ -227,6 +247,8 @@ With multiple lines.',
                                                                                     'readonly' => false,
                                                                                     'sinceVersion' => NULL,
                                                                                     'untilVersion' => NULL,
+                                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                                                    'field' => 'nested_array',
                                                                                 ),
                                                                         ),
                                                                 ),
@@ -241,6 +263,8 @@ With multiple lines.',
                                                                     'readonly' => false,
                                                                     'sinceVersion' => '0.2',
                                                                     'untilVersion' => NULL,
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                                    'field' => 'since',
                                                                 ),
                                                             'until' =>
                                                                 array (
@@ -253,6 +277,8 @@ With multiple lines.',
                                                                     'readonly' => false,
                                                                     'sinceVersion' => NULL,
                                                                     'untilVersion' => '0.3',
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                                    'field' => 'until',
                                                                 ),
                                                             'since_and_until' =>
                                                                 array (
@@ -265,6 +291,8 @@ With multiple lines.',
                                                                     'readonly' => false,
                                                                     'sinceVersion' => '0.4',
                                                                     'untilVersion' => '0.5',
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                                    'field' => 'since_and_until',
                                                                 ),
                                                         ),
                                                 ),
@@ -540,6 +568,8 @@ With multiple lines.',
                                                     'readonly' => true,
                                                     'sinceVersion' => NULL,
                                                     'untilVersion' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                    'field' => 'foo',
                                                 ),
                                             'bar' =>
                                                 array (
@@ -552,6 +582,8 @@ With multiple lines.',
                                                     'readonly' => false,
                                                     'sinceVersion' => NULL,
                                                     'untilVersion' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                    'field' => 'bar',
                                                 ),
                                             'baz' =>
                                                 array (
@@ -566,6 +598,8 @@ With multiple lines.',
                                                     'readonly' => false,
                                                     'sinceVersion' => NULL,
                                                     'untilVersion' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                    'field' => 'baz',
                                                 ),
                                             'circular' =>
                                                 array (
@@ -578,6 +612,8 @@ With multiple lines.',
                                                     'readonly' => false,
                                                     'sinceVersion' => NULL,
                                                     'untilVersion' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                    'field' => 'circular',
                                                 ),
                                             'parent' =>
                                                 array (
@@ -590,6 +626,8 @@ With multiple lines.',
                                                     'readonly' => false,
                                                     'sinceVersion' => NULL,
                                                     'untilVersion' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                    'field' => 'parent',
                                                     'children' =>
                                                         array (
                                                             'foo' =>
@@ -603,6 +641,8 @@ With multiple lines.',
                                                                     'readonly' => false,
                                                                     'sinceVersion' => NULL,
                                                                     'untilVersion' => NULL,
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                                    'field' => 'foo',
                                                                 ),
                                                             'bar' =>
                                                                 array (
@@ -615,6 +655,8 @@ With multiple lines.',
                                                                     'readonly' => true,
                                                                     'sinceVersion' => NULL,
                                                                     'untilVersion' => NULL,
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                                    'field' => 'bar',
                                                                 ),
                                                             'number' =>
                                                                 array (
@@ -627,6 +669,8 @@ With multiple lines.',
                                                                     'readonly' => false,
                                                                     'sinceVersion' => NULL,
                                                                     'untilVersion' => NULL,
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                                    'field' => 'number',
                                                                 ),
                                                             'arr' =>
                                                                 array (
@@ -639,6 +683,8 @@ With multiple lines.',
                                                                     'readonly' => false,
                                                                     'sinceVersion' => NULL,
                                                                     'untilVersion' => NULL,
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                                    'field' => 'arr',
                                                                 ),
                                                             'nested' =>
                                                                 array (
@@ -651,6 +697,8 @@ With multiple lines.',
                                                                     'readonly' => false,
                                                                     'sinceVersion' => NULL,
                                                                     'untilVersion' => NULL,
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                                    'field' => 'nested',
                                                                 ),
                                                             'nested_array' =>
                                                                 array (
@@ -663,6 +711,8 @@ With multiple lines.',
                                                                     'readonly' => false,
                                                                     'sinceVersion' => NULL,
                                                                     'untilVersion' => NULL,
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                                    'field' => 'nested_array',
                                                                 ),
                                                         ),
                                                 ),
@@ -677,6 +727,8 @@ With multiple lines.',
                                                     'readonly' => false,
                                                     'sinceVersion' => '0.2',
                                                     'untilVersion' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                    'field' => 'since',
                                                 ),
                                             'until' =>
                                                 array (
@@ -689,6 +741,8 @@ With multiple lines.',
                                                     'readonly' => false,
                                                     'sinceVersion' => NULL,
                                                     'untilVersion' => '0.3',
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                    'field' => 'until',
                                                 ),
                                             'since_and_until' =>
                                                 array (
@@ -701,6 +755,8 @@ With multiple lines.',
                                                     'readonly' => false,
                                                     'sinceVersion' => '0.4',
                                                     'untilVersion' => '0.5',
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                    'field' => 'since_and_until',
                                                 ),
                                         ),
                                 ),
@@ -728,6 +784,8 @@ With multiple lines.',
                                                     'readonly' => false,
                                                     'sinceVersion' => NULL,
                                                     'untilVersion' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                    'field' => 'foo',
                                                 ),
                                             'bar' =>
                                                 array (
@@ -740,6 +798,8 @@ With multiple lines.',
                                                     'readonly' => true,
                                                     'sinceVersion' => NULL,
                                                     'untilVersion' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                    'field' => 'bar',
                                                 ),
                                             'number' =>
                                                 array (
@@ -752,6 +812,8 @@ With multiple lines.',
                                                     'readonly' => false,
                                                     'sinceVersion' => NULL,
                                                     'untilVersion' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                    'field' => 'number',
                                                 ),
                                             'arr' =>
                                                 array (
@@ -764,6 +826,8 @@ With multiple lines.',
                                                     'readonly' => false,
                                                     'sinceVersion' => NULL,
                                                     'untilVersion' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                    'field' => 'arr',
                                                 ),
                                             'nested' =>
                                                 array (
@@ -776,6 +840,8 @@ With multiple lines.',
                                                     'readonly' => false,
                                                     'sinceVersion' => NULL,
                                                     'untilVersion' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                    'field' => 'nested',
                                                 ),
                                             'nested_array' =>
                                                 array (
@@ -788,6 +854,8 @@ With multiple lines.',
                                                     'readonly' => false,
                                                     'sinceVersion' => NULL,
                                                     'untilVersion' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                    'field' => 'nested_array',
                                                 ),
                                         ),
                                 ),
@@ -1325,6 +1393,8 @@ With multiple lines.',
                                                     'readonly' => true,
                                                     'sinceVersion' => NULL,
                                                     'untilVersion' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                    'field' => 'foo',
                                                 ),
                                             'bar' =>
                                                 array (
@@ -1337,6 +1407,8 @@ With multiple lines.',
                                                     'readonly' => false,
                                                     'sinceVersion' => NULL,
                                                     'untilVersion' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                    'field' => 'bar',
                                                 ),
                                             'baz' =>
                                                 array (
@@ -1351,6 +1423,8 @@ With multiple lines.',
                                                     'readonly' => false,
                                                     'sinceVersion' => NULL,
                                                     'untilVersion' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                    'field' => 'baz',
                                                 ),
                                             'circular' =>
                                                 array (
@@ -1363,6 +1437,8 @@ With multiple lines.',
                                                     'readonly' => false,
                                                     'sinceVersion' => NULL,
                                                     'untilVersion' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                    'field' => 'circular',
                                                 ),
                                             'parent' =>
                                                 array (
@@ -1375,6 +1451,8 @@ With multiple lines.',
                                                     'readonly' => false,
                                                     'sinceVersion' => NULL,
                                                     'untilVersion' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                    'field' => 'parent',
                                                     'children' =>
                                                         array (
                                                             'foo' =>
@@ -1388,6 +1466,8 @@ With multiple lines.',
                                                                     'readonly' => false,
                                                                     'sinceVersion' => NULL,
                                                                     'untilVersion' => NULL,
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                                    'field' => 'foo',
                                                                 ),
                                                             'bar' =>
                                                                 array (
@@ -1400,6 +1480,8 @@ With multiple lines.',
                                                                     'readonly' => true,
                                                                     'sinceVersion' => NULL,
                                                                     'untilVersion' => NULL,
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                                    'field' => 'bar',
                                                                 ),
                                                             'number' =>
                                                                 array (
@@ -1412,6 +1494,8 @@ With multiple lines.',
                                                                     'readonly' => false,
                                                                     'sinceVersion' => NULL,
                                                                     'untilVersion' => NULL,
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                                    'field' => 'number',
                                                                 ),
                                                             'arr' =>
                                                                 array (
@@ -1424,6 +1508,8 @@ With multiple lines.',
                                                                     'readonly' => false,
                                                                     'sinceVersion' => NULL,
                                                                     'untilVersion' => NULL,
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                                    'field' => 'arr',
                                                                 ),
                                                             'nested' =>
                                                                 array (
@@ -1436,6 +1522,8 @@ With multiple lines.',
                                                                     'readonly' => false,
                                                                     'sinceVersion' => NULL,
                                                                     'untilVersion' => NULL,
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                                    'field' => 'nested',
                                                                 ),
                                                             'nested_array' =>
                                                                 array (
@@ -1448,6 +1536,8 @@ With multiple lines.',
                                                                     'readonly' => false,
                                                                     'sinceVersion' => NULL,
                                                                     'untilVersion' => NULL,
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                                    'field' => 'nested_array',
                                                                 ),
                                                         ),
                                                 ),
@@ -1462,6 +1552,8 @@ With multiple lines.',
                                                     'readonly' => false,
                                                     'sinceVersion' => '0.2',
                                                     'untilVersion' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                    'field' => 'since',
                                                 ),
                                             'until' =>
                                                 array (
@@ -1474,6 +1566,8 @@ With multiple lines.',
                                                     'readonly' => false,
                                                     'sinceVersion' => NULL,
                                                     'untilVersion' => '0.3',
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                    'field' => 'until',
                                                 ),
                                             'since_and_until' =>
                                                 array (
@@ -1486,6 +1580,8 @@ With multiple lines.',
                                                     'readonly' => false,
                                                     'sinceVersion' => '0.4',
                                                     'untilVersion' => '0.5',
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                    'field' => 'since_and_until',
                                                 ),
                                         ),
                                 ),
@@ -1830,6 +1926,8 @@ And, it supports multilines until the first \'@\' char.',
                                                     'readonly' => true,
                                                     'sinceVersion' => NULL,
                                                     'untilVersion' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                    'field' => 'foo',
                                                 ),
                                             'bar' =>
                                                 array (
@@ -1842,6 +1940,8 @@ And, it supports multilines until the first \'@\' char.',
                                                     'readonly' => false,
                                                     'sinceVersion' => NULL,
                                                     'untilVersion' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                    'field' => 'bar',
                                                 ),
                                             'baz' =>
                                                 array (
@@ -1856,6 +1956,8 @@ With multiple lines.',
                                                     'readonly' => false,
                                                     'sinceVersion' => NULL,
                                                     'untilVersion' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                    'field' => 'baz',
                                                 ),
                                             'circular' =>
                                                 array (
@@ -1868,6 +1970,8 @@ With multiple lines.',
                                                     'readonly' => false,
                                                     'sinceVersion' => NULL,
                                                     'untilVersion' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                    'field' => 'circular',
                                                 ),
                                             'parent' =>
                                                 array (
@@ -1880,6 +1984,8 @@ With multiple lines.',
                                                     'readonly' => false,
                                                     'sinceVersion' => NULL,
                                                     'untilVersion' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                    'field' => 'parent',
                                                     'children' =>
                                                         array (
                                                             'foo' =>
@@ -1893,6 +1999,8 @@ With multiple lines.',
                                                                     'readonly' => false,
                                                                     'sinceVersion' => NULL,
                                                                     'untilVersion' => NULL,
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                                    'field' => 'foo',
                                                                 ),
                                                             'bar' =>
                                                                 array (
@@ -1905,6 +2013,8 @@ With multiple lines.',
                                                                     'readonly' => true,
                                                                     'sinceVersion' => NULL,
                                                                     'untilVersion' => NULL,
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                                    'field' => 'bar',
                                                                 ),
                                                             'number' =>
                                                                 array (
@@ -1917,6 +2027,8 @@ With multiple lines.',
                                                                     'readonly' => false,
                                                                     'sinceVersion' => NULL,
                                                                     'untilVersion' => NULL,
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                                    'field' => 'number',
                                                                 ),
                                                             'arr' =>
                                                                 array (
@@ -1929,6 +2041,8 @@ With multiple lines.',
                                                                     'readonly' => false,
                                                                     'sinceVersion' => NULL,
                                                                     'untilVersion' => NULL,
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                                    'field' => 'arr',
                                                                 ),
                                                             'nested' =>
                                                                 array (
@@ -1941,6 +2055,8 @@ With multiple lines.',
                                                                     'readonly' => false,
                                                                     'sinceVersion' => NULL,
                                                                     'untilVersion' => NULL,
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                                    'field' => 'nested',
                                                                 ),
                                                             'nested_array' =>
                                                                 array (
@@ -1953,6 +2069,8 @@ With multiple lines.',
                                                                     'readonly' => false,
                                                                     'sinceVersion' => NULL,
                                                                     'untilVersion' => NULL,
+                                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest',
+                                                                    'field' => 'nested_array',
                                                                 ),
                                                         ),
                                                 ),
@@ -1967,6 +2085,8 @@ With multiple lines.',
                                                     'readonly' => false,
                                                     'sinceVersion' => '0.2',
                                                     'untilVersion' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                    'field' => 'since',
                                                 ),
                                             'until' =>
                                                 array (
@@ -1979,6 +2099,8 @@ With multiple lines.',
                                                     'readonly' => false,
                                                     'sinceVersion' => NULL,
                                                     'untilVersion' => '0.3',
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                    'field' => 'until',
                                                 ),
                                             'since_and_until' =>
                                                 array (
@@ -1991,6 +2113,8 @@ With multiple lines.',
                                                     'readonly' => false,
                                                     'sinceVersion' => '0.4',
                                                     'untilVersion' => '0.5',
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested',
+                                                    'field' => 'since_and_until',
                                                 ),
                                         ),
                                 ),
@@ -2225,6 +2349,8 @@ With multiple lines.',
                                                     'required' => true,
                                                     'dataType' => 'string',
                                                     'readonly' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\Test',
+                                                    'field' => 'a',
                                                 ),
                                             'b' =>
                                                 array (
@@ -2234,6 +2360,8 @@ With multiple lines.',
                                                     'dataType' => 'DateTime',
                                                     'readonly' => NULL,
                                                     'required' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\Test',
+                                                    'field' => 'b',
                                                 ),
                                         ),
                                     'readonly' => NULL,
@@ -2273,6 +2401,8 @@ With multiple lines.',
                                                     'required' => true,
                                                     'dataType' => 'string',
                                                     'readonly' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\Test',
+                                                    'field' => 'a',
                                                 ),
                                             'b' =>
                                                 array (
@@ -2282,6 +2412,8 @@ With multiple lines.',
                                                     'dataType' => 'DateTime',
                                                     'readonly' => NULL,
                                                     'required' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\Test',
+                                                    'field' => 'b',
                                                 ),
                                         ),
                                 ),
@@ -2379,6 +2511,8 @@ With multiple lines.',
                                                     'required' => true,
                                                     'dataType' => 'string',
                                                     'readonly' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\Test',
+                                                    'field' => 'a',
                                                 ),
                                             'b' =>
                                                 array (
@@ -2388,6 +2522,8 @@ With multiple lines.',
                                                     'dataType' => 'DateTime',
                                                     'readonly' => NULL,
                                                     'required' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\Test',
+                                                    'field' => 'b',
                                                 ),
                                         ),
                                     'readonly' => NULL,
@@ -2427,6 +2563,8 @@ With multiple lines.',
                                                     'required' => true,
                                                     'dataType' => 'string',
                                                     'readonly' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\Test',
+                                                    'field' => 'a',
                                                 ),
                                             'b' =>
                                                 array (
@@ -2436,6 +2574,8 @@ With multiple lines.',
                                                     'dataType' => 'DateTime',
                                                     'readonly' => NULL,
                                                     'required' => NULL,
+                                                    'parentClass' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\Test',
+                                                    'field' => 'b',
                                                 ),
                                         ),
                                 ),
