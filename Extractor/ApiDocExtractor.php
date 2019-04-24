@@ -320,25 +320,33 @@ class ApiDocExtractor
         // route
         $annotation->setRoute($route);
 
+        $inputs = array();
+        if (null !== $annotation->getInputs()) {
+            $inputs = $annotation->getInputs();
+        } elseif (null !== $annotation->getInput()) {
+            $inputs[] = $annotation->getInput();
+        }
+
         // input (populates 'parameters' for the formatters)
-        if (null !== $input = $annotation->getInput()) {
-            $parameters      = array();
-            $normalizedInput = $this->normalizeClassParameter($input);
-
-            $supportedParsers = array();
-            foreach ($this->getParsers($normalizedInput) as $parser) {
-                if ($parser->supports($normalizedInput)) {
-                    $supportedParsers[] = $parser;
-                    $parameters         = $this->mergeParameters($parameters, $parser->parse($normalizedInput));
+        if (sizeof($inputs)) {
+            $parameters = array();
+            foreach ($inputs as $input) {
+                $normalizedInput = $this->normalizeClassParameter($input);
+                $supportedParsers = array();
+                foreach ($this->getParsers($normalizedInput) as $parser) {
+                    if ($parser->supports($normalizedInput)) {
+                        $supportedParsers[] = $parser;
+                        $parameters         = $this->mergeParameters($parameters, $parser->parse($normalizedInput));
+                    }
                 }
-            }
 
-            foreach ($supportedParsers as $parser) {
-                if ($parser instanceof PostParserInterface) {
-                    $parameters = $this->mergeParameters(
-                        $parameters,
-                        $parser->postParse($normalizedInput, $parameters)
-                    );
+                foreach ($supportedParsers as $parser) {
+                    if ($parser instanceof PostParserInterface) {
+                        $parameters = $this->mergeParameters(
+                            $parameters,
+                            $parser->postParse($normalizedInput, $parameters)
+                        );
+                    }
                 }
             }
 

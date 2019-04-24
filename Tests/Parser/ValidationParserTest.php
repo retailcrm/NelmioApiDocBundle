@@ -57,14 +57,14 @@ class ValidationParserTest extends WebTestCase
             array(
                 'property' => 'length10',
                 'expected' => array(
-                    'format' => '{length: min: 10}',
+                    'format' => '{length: {min: 10}}',
                     'default' => 'validate this',
                 )
             ),
             array(
                 'property' => 'length1to10',
                 'expected' => array(
-                    'format' => '{length: min: 1, max: 10}',
+                    'format' => '{length: {min: 1, max: 10}}',
                     'default' => null,
                 )
             ),
@@ -187,7 +187,7 @@ class ValidationParserTest extends WebTestCase
             array(
                 'property' => 'multipleformats',
                 'expected' => array(
-                    'format' => '{url}, {length: min: 10}',
+                    'format' => '{url}, {length: {min: 10}}',
                     'default' => null,
                 )
             )

@@ -62,6 +62,11 @@ class ApiDoc
     /**
      * @var string
      */
+    private $inputs = null;
+
+    /**
+     * @var string
+     */
     private $output = null;
 
     /**
@@ -180,6 +185,10 @@ class ApiDoc
 
         if (isset($data['input'])) {
             $this->input = $data['input'];
+        }
+
+        if (isset($data['inputs'])) {
+            $this->inputs = $data['inputs'];
         }
 
         if (isset($data['filters'])) {
@@ -363,6 +372,14 @@ class ApiDoc
     public function getInput()
     {
         return $this->input;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getInputs()
+    {
+        return $this->inputs;
     }
 
     /**

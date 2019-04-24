@@ -75,23 +75,29 @@ class ValidationParser implements ParserInterface, PostParserInterface
 
         $parsed = $this->doParse($className, array());
 
-        if (isset($input['name']) && !empty($input['name'])) {
-            $output = array();
-            $output[$input['name']] = array(
-                'dataType' => 'object',
-                'actualType' => 'object',
-                'class' => $className,
-                'subType' => null,
-                'required' => null,
-                'description' => null,
-                'readonly' => null,
-                'children' => $parsed
-            );
-
-            return $output;
+        if (!isset($input['name']) || empty($input['name'])) {
+            return $parsed;
         }
 
-        return $parsed;
+        if (class_exists($className)) {
+            $parts = explode('\\', $className);
+            $dataType = sprintf('object (%s)', end($parts));
+        } else {
+            $dataType = sprintf('object (%s)', $className);
+        }
+
+        return array(
+            $input['name'] => array(
+                'dataType' => $dataType,
+                'actualType' => DataTypes::MODEL,
+                'class' => $className,
+                'subType' => $dataType,
+                'required' => null,
+                'readonly' => null,
+                'children' => $parsed,
+                'default' => null,
+            ),
+        );
     }
 
     /**
@@ -224,6 +230,16 @@ class ValidationParser implements ParserInterface, PostParserInterface
                 $vparams['format'][] = '{Time HH:MM:SS}';
                 $vparams['actualType'] = DataTypes::TIME;
                 break;
+            case 'Range':
+                $messages = array();
+                if (isset($constraint->min)) {
+                    $messages[] = ">={$constraint->min}";
+                }
+                if (isset($constraint->max)) {
+                    $messages[] = "<={$constraint->max}";
+                }
+                $vparams['format'][] = '{range: {' . join(', ', $messages) . '}}';
+                break;
             case 'Length':
                 $messages = array();
                 if (isset($constraint->min)) {
@@ -232,7 +248,7 @@ class ValidationParser implements ParserInterface, PostParserInterface
                 if (isset($constraint->max)) {
                     $messages[] = "max: {$constraint->max}";
                 }
-                $vparams['format'][] = '{length: ' . join(', ', $messages) . '}';
+                $vparams['format'][] = '{length: {' . join(', ', $messages) . '}}';
                 break;
             case 'Choice':
                 $choices = $this->getChoices($constraint, $className);
