@@ -63,6 +63,10 @@ class DumpCommand extends ContainerAwareCommand
             $this->getContainer()->get('translator')->setLocale($input->getOption('locale'));
         }
 
+        if ($input->hasOption('api-version')) {
+            $formatter->setVersion($input->getOption('api-version'));
+        }
+
         if ($input->getOption('no-sandbox') && 'html' === $format) {
             $formatter->setEnableSandbox(false);
         }
