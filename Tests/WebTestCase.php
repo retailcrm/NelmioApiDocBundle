@@ -12,6 +12,7 @@
 namespace Nelmio\ApiDocBundle\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
 abstract class WebTestCase extends BaseWebTestCase
@@ -36,6 +37,10 @@ abstract class WebTestCase extends BaseWebTestCase
         return \PHPUnit_Util_ErrorHandler::handleError($errorNumber, $message, $file, $line);
     }
 
+    /**
+     * @param array $options
+     * @return ContainerInterface
+     */
     protected function getContainer(array $options = array())
     {
         if (!static::$kernel) {

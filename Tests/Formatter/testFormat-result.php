@@ -2470,5 +2470,23 @@ With multiple lines.',
                         ),
                     'deprecated' => false,
                 ),
+            27 =>
+                array(
+                    'authentication' => false,
+                    'method' => 'GET',
+                    'uri' => '/zz-tests-route-version.{_format}',
+                    'https' => false,
+                    'authenticationRoles' => array(),
+                    'deprecated' => false,
+                    'requirements' =>
+                        array(
+                            '_format' =>
+                                array(
+                                    'requirement' => '',
+                                    'dataType' => '',
+                                    'description' => '',
+                                ),
+                        ),
+                ),
         ),
 );

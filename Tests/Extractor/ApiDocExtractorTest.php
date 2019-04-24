@@ -19,7 +19,7 @@ class ApiDocExtractorTest extends WebTestCase
 {
     const NB_ROUTES_ADDED_BY_DUNGLAS_API_BUNDLE = 5;
 
-    private static $ROUTES_QUANTITY_DEFAULT = 34; // Routes in the default view
+    private static $ROUTES_QUANTITY_DEFAULT = 35; // Routes in the default view
     private static $ROUTES_QUANTITY_PREMIUM = 6;  // Routes in the premium view
     private static $ROUTES_QUANTITY_TEST    = 2;  // Routes in the test view
 
@@ -94,6 +94,18 @@ class ApiDocExtractorTest extends WebTestCase
         $a5requirements = $a5->getRequirements();
         $this->assertEquals('api.test.dev', $a5->getHost());
         $this->assertEquals('test.dev|test.com', $a5requirements['domain']['requirement']);
+    }
+
+    public function testRouteVersionChecking()
+    {
+        $container = $this->getContainer();
+        $extractor = $container->get('nelmio_api_doc.extractor.api_doc_extractor');
+        $data = $extractor->allForVersion('1.5');
+        $this->assertTrue(is_array($data));
+        $this->assertCount(self::$ROUTES_QUANTITY_DEFAULT, $data);
+        $data = $extractor->allForVersion('1.4');
+        $this->assertTrue(is_array($data));
+        $this->assertCount(self::$ROUTES_QUANTITY_DEFAULT - 1, $data);
     }
 
     public function testGet()

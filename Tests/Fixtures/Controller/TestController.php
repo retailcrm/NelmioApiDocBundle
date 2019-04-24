@@ -85,6 +85,13 @@ class TestController
     }
 
     /**
+     * @ApiDoc()
+     */
+    public function routeVersionAction()
+    {
+    }
+
+    /**
      * @ApiDoc(description="Action without HTTP verb")
      */
     public function anyAction()

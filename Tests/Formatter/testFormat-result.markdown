@@ -1017,3 +1017,12 @@ related[b]:
 
 
 ### `POST` /zsecured ###
+
+
+
+### `GET` /zz-tests-route-version.{_format} ###
+
+
+#### Requirements ####
+
+**_format**

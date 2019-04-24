@@ -253,3 +253,9 @@ test_route_31:
     path: /z-query-requirement-param-not-set
     methods: [GET]
     defaults: { _controller: NelmioApiDocTestBundle:Test:zActionWithRequirementParamNotSet }
+
+test_route_version_checking:
+    path:  /zz-tests-route-version.{_format}
+    methods: [GET]
+    defaults: { _controller: NelmioApiDocTestBundle:Test:routeVersion, _format: json, _version: "1.5" }
+

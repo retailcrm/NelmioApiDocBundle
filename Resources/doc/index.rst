@@ -119,3 +119,26 @@ By calling an URL with the parameter ``?_doc=1``, you will get the corresponding
 documentation if available.
 
 .. _`installation chapter`: https://getcomposer.org/doc/00-intro.md
+
+Route versions
+~~~~~~~~~~~~~~
+
+You can define version for the API routes:
+
+.. code-block:: yaml
+    api_v3_products_list:
+        pattern:  /api/v3/products.{_format}
+        defaults: { _controller: NelmioApiDocTestBundle:Test:routeVersion, _format: json, _version: "3.0" }
+        requirements:
+            _method: GET
+    api_v1_orders:
+        resource: "@AcmeOrderBundle/Resources/config/routing/orders_v1.yml"
+        defaults: { _version: "1.0" }
+        prefix:   /api/v1/orders
+
+And generate documentation for specific version by the command:
+
+.. code-block:: bash
+     php app/console api:doc:dump --format=html --api-version=3.0 > api.html
+
+Or by adding `?_version={version}` to API documentation page URL.
