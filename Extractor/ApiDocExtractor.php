@@ -610,7 +610,7 @@ class ApiDocExtractor
     {
         foreach ($array as $name => $info) {
 
-            if (empty($info['dataType']) && isset($info['subType'])) {
+            if (empty($info['dataType']) && array_key_exists('subType', $info)) {
                 $array[$name]['dataType'] = $this->generateHumanReadableType($info['actualType'], $info['subType']);
             }
 
