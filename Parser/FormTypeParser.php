@@ -17,9 +17,10 @@ use Symfony\Component\Form\Exception\FormException;
 use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Symfony\Component\Form\ChoiceList\ChoiceListInterface;
 use Symfony\Component\Form\Extension\Core\View\ChoiceView;
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormConfigInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Form\ResolvedFormTypeInterface;
 use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -45,6 +46,11 @@ class FormTypeParser implements ParserInterface
      * @var boolean
      */
     protected $entityToChoice;
+
+    /**
+     * @var array|FormInfoParser[]
+     */
+    protected $formInfoParsers = [];
 
     /**
      * @var array
@@ -197,6 +203,28 @@ class FormTypeParser implements ParserInterface
         );
     }
 
+    public function addFormInfoParser(FormInfoParser $formInfoParser)
+    {
+        $class = get_class($formInfoParser);
+        if (isset($this->formInfoParsers[$class])) {
+            throw new \InvalidArgumentException($class . ' already added');
+        }
+
+        $this->formInfoParsers[$class] = $formInfoParser;
+    }
+
+    private function parseFormType(FormTypeInterface $type, FormConfigInterface $config): ?array
+    {
+        foreach ($this->formInfoParsers as $parser) {
+            $customInfo = $parser->parseFormType($type, $config);
+            if ($customInfo) {
+                return $customInfo;
+            }
+        }
+
+        return null;
+    }
+
     private function getDataType($type)
     {
         foreach ($this->extendedMapTypes as $data => $types) {
@@ -223,6 +251,20 @@ class FormTypeParser implements ParserInterface
                  $type instanceof FormInterface || $type instanceof ResolvedFormTypeInterface;
                  $type = $type->getParent()
             ) {
+                $customInfo = $this->parseFormType($type->getInnerType(), $config);
+                if ($customInfo) {
+                    $parameters[$name] = array_merge([
+                        'dataType'    => 'string',
+                        'actualType'  => 'string',
+                        'default'     => $config->getData(),
+                        'required'    => $config->getRequired(),
+                        'description' => $this->getFormDescription($config, $domain),
+                        'readonly'    => $config->getDisabled(),
+                    ], $customInfo);
+
+                    continue 2;
+                 }
+
                 $typeName = method_exists($type, 'getBlockPrefix') ?
                     $type->getBlockPrefix() : $type->getName();
 
