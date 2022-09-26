@@ -49,11 +49,6 @@ class ApiDocExtractor
     private $commentExtractor;
 
     /**
-     * @var ControllerNameParser
-     */
-    protected $controllerNameParser;
-
-    /**
      * @var ParserInterface[]
      */
     protected $parsers = array();
@@ -68,13 +63,12 @@ class ApiDocExtractor
      */
     protected $annotationsProviders;
 
-    public function __construct(ContainerInterface $container, RouterInterface $router, Reader $reader, DocCommentExtractor $commentExtractor, ControllerNameParser $controllerNameParser, array $handlers, array $annotationsProviders)
+    public function __construct(ContainerInterface $container, RouterInterface $router, Reader $reader, DocCommentExtractor $commentExtractor, array $handlers, array $annotationsProviders)
     {
         $this->container            = $container;
         $this->router               = $router;
         $this->reader               = $reader;
         $this->commentExtractor     = $commentExtractor;
-        $this->controllerNameParser = $controllerNameParser;
         $this->handlers             = $handlers;
         $this->annotationsProviders = $annotationsProviders;
     }
@@ -227,9 +221,9 @@ class ApiDocExtractor
      */
     public function getReflectionMethod($controller)
     {
-        if (false === strpos($controller, '::') && 2 === substr_count($controller, ':')) {
-            $controller = $this->controllerNameParser->parse($controller);
-        }
+//        if (false === strpos($controller, '::') && 2 === substr_count($controller, ':')) {
+//            $controller = $this->controllerNameParser->parse($controller);
+//        }
 
         if (preg_match('#(.+)::([\w]+)#', $controller, $matches)) {
             $class = $matches[1];
