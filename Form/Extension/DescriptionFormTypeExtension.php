@@ -60,8 +60,8 @@ class DescriptionFormTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
-    public function getExtendedType()
+    public function getExtendedTypes()
     {
-        return LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\FormType');
+        return [LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\FormType')];
     }
 }
