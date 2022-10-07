@@ -221,9 +221,9 @@ class ApiDocExtractor
      */
     public function getReflectionMethod($controller)
     {
-//        if (false === strpos($controller, '::') && 2 === substr_count($controller, ':')) {
-//            $controller = $this->controllerNameParser->parse($controller);
-//        }
+        if (null === $controller) {
+            return null;
+        }
 
         if (preg_match('#(.+)::([\w]+)#', $controller, $matches)) {
             $class = $matches[1];
