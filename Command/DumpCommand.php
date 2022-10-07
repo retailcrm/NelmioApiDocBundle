@@ -12,14 +12,16 @@
 namespace Nelmio\ApiDocBundle\Command;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class DumpCommand extends ContainerAwareCommand
+class DumpCommand extends Command implements ContainerAwareInterface
 {
+    use \Symfony\Component\DependencyInjection\ContainerAwareTrait;
     /**
      * @var array
      */
@@ -47,20 +49,20 @@ class DumpCommand extends ContainerAwareCommand
         $format = $input->getOption('format');
         $view = $input->getOption('view');
 
-        $routeCollection = $this->getContainer()->get('router')->getRouteCollection();
+        $routeCollection = $this->container->get('router')->getRouteCollection();
 
         if ($format == 'json') {
-            $formatter = $this->getContainer()->get('nelmio_api_doc.formatter.simple_formatter');
+            $formatter = $this->container->get('nelmio_api_doc.formatter.simple_formatter');
         } else {
             if (!in_array($format, $this->availableFormats)) {
                 throw new \RuntimeException(sprintf('Format "%s" not supported.', $format));
             }
 
-            $formatter = $this->getContainer()->get(sprintf('nelmio_api_doc.formatter.%s_formatter', $format));
+            $formatter = $this->container->get(sprintf('nelmio_api_doc.formatter.%s_formatter', $format));
         }
 
         if ($input->hasOption('locale')) {
-            $this->getContainer()->get('translator')->setLocale($input->getOption('locale'));
+            $this->container->get('translator')->setLocale($input->getOption('locale'));
         }
 
         if ($input->hasOption('api-version')) {
@@ -71,12 +73,12 @@ class DumpCommand extends ContainerAwareCommand
             $formatter->setEnableSandbox(false);
         }
 
-        if ('html' === $format && method_exists($this->getContainer(), 'enterScope')) {
-            $this->getContainer()->enterScope('request');
-            $this->getContainer()->set('request', new Request(), 'request');
+        if ('html' === $format && method_exists($this->container, 'enterScope')) {
+            $this->container->enterScope('request');
+            $this->container->set('request', new Request(), 'request');
         }
 
-        $extractor = $this->getContainer()->get('nelmio_api_doc.extractor.api_doc_extractor');
+        $extractor = $this->container->get('nelmio_api_doc.extractor.api_doc_extractor');
         $extractedDoc = $input->hasOption('api-version') ?
             $extractor->allForVersion($input->getOption('api-version'), $view) :
             $extractor->all($view);
@@ -88,5 +90,7 @@ class DumpCommand extends ContainerAwareCommand
         } else {
             $output->writeln($formattedDoc, OutputInterface::OUTPUT_RAW);
         }
+
+        return 0;
     }
 }
