@@ -48,6 +48,7 @@ class DumpCommand extends Command
         $availableFormats = $this->renderOpenApi->getAvailableFormats();
         $this
             ->setDescription('Dumps documentation in OpenAPI format to: '.implode(', ', $availableFormats))
+            ->setName('nelmio:apidoc:dump')
             ->addOption('area', '', InputOption::VALUE_OPTIONAL, '', 'default')
             ->addOption(
                 'format',
