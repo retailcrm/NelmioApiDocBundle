@@ -48,10 +48,21 @@ class HtmlOpenApiRenderer implements OpenApiRenderer
             'swagger_ui_config' => [],
         ];
 
+        $spec = json_decode($spec->toJson(), true);
+
+        foreach ($spec['paths'] as $path => $methods) {
+            foreach ($methods as $method => $data) {
+                if (array_key_exists('tags', $data)) {
+                    $spec['resources'][$data['tags'][0]][$path] = $methods;
+                    $spec['resources'][$data['tags'][0]][$path][$method]['id'] = strtolower($method).'-'.str_replace('/', '-', $path);
+                }
+            }
+        }
+
         return $this->twig->render(
             '@NelmioApiDoc/SwaggerUi/index.html.twig',
             [
-                'swagger_data' => ['spec' => json_decode($spec->toJson(), true)],
+                'swagger_data' => ['spec' => $spec],
                 'assets_mode' => $options['assets_mode'],
                 'swagger_ui_config' => $options['swagger_ui_config'],
             ]
