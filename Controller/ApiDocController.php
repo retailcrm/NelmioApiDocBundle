@@ -13,12 +13,12 @@ namespace Nelmio\ApiDocBundle\Controller;
 
 use Nelmio\ApiDocBundle\Formatter\RequestAwareSwaggerFormatter;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class ApiDocController extends Controller
+class ApiDocController extends AbstractController
 {
     public function indexAction(Request $request, $view = ApiDoc::DEFAULT_VIEW)
     {
