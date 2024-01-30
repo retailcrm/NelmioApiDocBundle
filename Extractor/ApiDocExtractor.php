@@ -627,7 +627,7 @@ class ApiDocExtractor
     {
         if ($actualType == DataTypes::MODEL) {
 
-            if (class_exists($subType)) {
+            if ($subType && class_exists($subType)) {
                 $parts = explode('\\', $subType);
 
                 return sprintf('object (%s)', end($parts));
@@ -642,7 +642,7 @@ class ApiDocExtractor
                 return sprintf('array of %ss', $subType);
             }
 
-            if (class_exists($subType)) {
+            if ($subType && class_exists($subType)) {
                 $parts = explode('\\', $subType);
 
                 return sprintf('array of objects (%s)', end($parts));

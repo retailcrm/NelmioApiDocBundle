@@ -93,7 +93,7 @@ class JmsMetadataParser implements ParserInterface, PostParserInterface
             return $result;
         }
 
-        if (class_exists($className)) {
+        if ($className && class_exists($className)) {
             $parts = explode('\\', $className);
             $dataType = sprintf('object (%s)', end($parts));
         } else {
@@ -180,7 +180,7 @@ class JmsMetadataParser implements ParserInterface, PostParserInterface
                 }
 
                 // we can use type property also for custom handlers, then we don't have here real class name
-                if (!class_exists($dataType['class'])) {
+                if (!$dataType['class'] || !class_exists($dataType['class'])) {
                     continue;
                 }
 
@@ -252,7 +252,7 @@ class JmsMetadataParser implements ParserInterface, PostParserInterface
         }
 
         // we can use type property also for custom handlers, then we don't have here real class name
-        if (!class_exists($type)) {
+        if (!$type || !class_exists($type)) {
             return array(
                 'normalized' => sprintf("custom handler result for (%s)", $type),
                 'class' => $type,

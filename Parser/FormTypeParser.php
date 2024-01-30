@@ -182,7 +182,7 @@ class FormTypeParser implements ParserInterface
 
         $subType = is_object($type) ? get_class($type) : $type;
 
-        if (class_exists($subType)) {
+        if ($subType && class_exists($subType)) {
             $parts = explode('\\', $subType);
             $dataType = sprintf('object (%s)', end($parts));
         } else {
@@ -294,7 +294,7 @@ class FormTypeParser implements ParserInterface
                         $actualType   = DataTypes::COLLECTION;
                         $subType      = is_object($embbededType) ? get_class($embbededType) : $embbededType;
 
-                        if (class_exists($subType)) {
+                        if ($subType && class_exists($subType)) {
                             $parts = explode('\\', $subType);
                             $bestType = sprintf('array of objects (%s)', end($parts));
                         } else {
@@ -441,7 +441,7 @@ class FormTypeParser implements ParserInterface
 
     private function implementsType($item)
     {
-        if (!class_exists($item)) {
+        if (null === $item || !class_exists($item)) {
             return false;
         }
 

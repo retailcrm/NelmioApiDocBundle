@@ -84,7 +84,7 @@ class ValidationParser implements ParserInterface, PostParserInterface
             return $parsed;
         }
 
-        if (class_exists($className)) {
+        if ($className && class_exists($className)) {
             $parts = explode('\\', $className);
             $dataType = sprintf('object (%s)', end($parts));
         } else {
@@ -313,7 +313,7 @@ class ValidationParser implements ParserInterface, PostParserInterface
                     if ($childConstraint instanceof Type) {
                         $nestedType = $childConstraint->type;
                         $exp = explode("\\", $nestedType);
-                        if (!class_exists($nestedType)) {
+                        if (!$nestedType || !class_exists($nestedType)) {
                             $nestedType = substr($className, 0, strrpos($className, '\\') + 1).$nestedType;
 
                             if (!class_exists($nestedType)) {
