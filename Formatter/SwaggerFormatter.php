@@ -594,6 +594,6 @@ class SwaggerFormatter implements FormatterInterface
         $resource = preg_replace('#/^#', '', $resource);
         $resource = $this->normalizeResourcePath($resource);
 
-        return sprintf('%s_%s', strtolower($method), $resource);
+        return sprintf('%s_%s', strtolower($method ?: ''), $resource);
     }
 }

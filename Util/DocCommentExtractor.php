@@ -10,7 +10,7 @@ class DocCommentExtractor
      */
     public function getDocComment(\Reflector $reflected)
     {
-        $comment = $reflected->getDocComment();
+        $comment = $reflected->getDocComment() ?? '';
 
         // let's clean the doc block
         $comment = str_replace('/**', '', $comment);

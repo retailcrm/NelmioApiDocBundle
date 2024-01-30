@@ -173,7 +173,7 @@ abstract class AbstractFormatter implements FormatterInterface
             }
         }
 
-        $annotation['id'] = strtolower($annotation['method']).'-'.str_replace('/', '-', $annotation['uri']);
+        $annotation['id'] = strtolower($annotation['method'] ?? '').'-'.str_replace('/', '-', $annotation['uri'] ?? '');
 
         return $annotation;
     }

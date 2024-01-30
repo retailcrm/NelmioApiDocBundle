@@ -149,7 +149,7 @@ class ApiDocExtractor
                             $resources[] = $resource;
                         } else {
                             // remove format from routes used for resource grouping
-                            $resources[] = str_replace('.{_format}', '', $route->getPath());
+                            $resources[] = str_replace('.{_format}', '', $route->getPath() ?: '');
                         }
                     }
 
@@ -168,7 +168,7 @@ class ApiDocExtractor
         rsort($resources);
         foreach ($array as $index => $element) {
             $hasResource = false;
-            $path        = $element['annotation']->getRoute()->getPath();
+            $path        = $element['annotation']->getRoute()->getPath() ?: '';
 
             foreach ($resources as $resource) {
                 if (0 === strpos($path, $resource) || $resource === $element['annotation']->getResource()) {
