@@ -1,65 +1,65 @@
 test_route_1:
     path: /tests.{_format}
     methods: [GET]
-    defaults: { _controller: NelmioApiDocTestBundle:Test:index, _format: json }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::indexAction, _format: json }
 
 test_route_2:
     path: /tests.{_format}
     host: api.test.dev
     methods: [POST]
-    defaults: { _controller: NelmioApiDocTestBundle:Test:postTest, _format: json }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::postTestAction, _format: json }
 
 test_route_3:
     path: /another
-    defaults: { _controller: NelmioApiDocTestBundle:Test:another }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::anotherAction }
 
 test_route_4:
     path: /any/{foo}
-    defaults: { _controller: NelmioApiDocTestBundle:Test:any, _format: json }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::anyAction, _format: json }
 
 test_route_5:
     path: /my-commented/{id}/{page}/{paramType}/{param}
-    defaults: { _controller: NelmioApiDocTestBundle:Test:myCommented }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::myCommentedAction }
 
 test_route_6:
     path: /yet-another/{id}
-    defaults: { _controller: NelmioApiDocTestBundle:Test:yetAnother }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::yetAnotherAction }
     requirements:
         id:  \d+
 
 test_route_7:
     path: /another-post
     methods: [POST]
-    defaults: { _controller: NelmioApiDocTestBundle:Test:anotherPost, _format: json }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::anotherPostAction, _format: json }
 
 test_route_8:
     path: /z-action-with-query-param
     methods: [GET]
-    defaults: { _controller: NelmioApiDocTestBundle:Test:zActionWithQueryParam }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::zActionWithQueryParamAction }
 
 test_route_9:
     path: /jms-input-test
     methods: [POST]
-    defaults: { _controller: NelmioApiDocTestBundle:Test:jmsInputTest }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::jmsInputTestAction }
 
 test_route_10:
     path: /jms-return-test
     methods: [GET]
-    defaults: { _controller: NelmioApiDocTestBundle:Test:jmsReturnTest }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::jmsReturnTestAction }
 
 test_route_11:
     path: /z-action-with-request-param
     methods: [POST]
-    defaults: { _controller: NelmioApiDocTestBundle:Test:zActionWithRequestParam }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::zActionWithRequestParamAction }
 
 test_route_12:
     path: /secure-route
     schemes: [https]
-    defaults: { _controller: NelmioApiDocTestBundle:Test:secureRoute }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::secureRouteAction }
 
 test_route_13:
     path: /authenticated
-    defaults: { _controller: NelmioApiDocTestBundle:Test:authenticated }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::authenticatedAction }
 
 test_service_route_1:
     path: /tests.{_format}
@@ -87,104 +87,104 @@ NelmioApiDocBundle:
 test_route_14:
     path: /tests2.{_format}
     methods: [POST]
-    defaults: { _controller: NelmioApiDocTestBundle:Test:postTest2, _format: json }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::postTest2Action, _format: json }
 
 test_route_15:
     path: /z-action-with-query-param-strict
     methods: [GET]
-    defaults: { _controller: NelmioApiDocTestBundle:Test:zActionWithQueryParamStrict }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::zActionWithQueryParamStrictAction }
 
 test_route_16:
     path: /z-action-with-query-param-no-default
     methods: [GET]
-    defaults: { _controller: NelmioApiDocTestBundle:Test:zActionWithQueryParamNoDefault }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::zActionWithQueryParamNoDefaultAction }
 
 test_route_17:
     path: /z-action-with-deprecated-indicator
     methods: [GET]
-    defaults: { _controller: NelmioApiDocTestBundle:Test:deprecated }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::deprecatedAction }
 
 test_return_nested_output:
     path: /return-nested-output
-    defaults: { _controller: NelmioApiDocTestBundle:Test:jmsReturnNestedOutput, _format: json }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::jmsReturnNestedOutputAction, _format: json }
 
 test_return_nested_extend_output:
     path: /return-nested-extend-output
-    defaults: { _controller: NelmioApiDocTestBundle:Test:jmsReturnNestedExtendOutput, _format: json }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::jmsReturnNestedExtendOutputAction, _format: json }
 
 test_route_18:
     path: /z-return-jms-and-validator-output
-    defaults: { _controller: NelmioApiDocTestBundle:Test:zReturnJmsAndValidationOutput }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::zReturnJmsAndValidationOutputAction }
 
 test_route_named_resource:
     path: /named-resource
-    defaults: { _controller: NelmioApiDocTestBundle:Test:namedResource }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::namedResourceAction }
 
 test_route_19:
     path: /z-return-selected-parsers-output
-    defaults: { _controller: NelmioApiDocTestBundle:Test:zReturnSelectedParsersOutput }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::zReturnSelectedParsersOutputAction }
 
 test_route_20:
     path: /z-return-selected-parsers-input
-    defaults: { _controller: NelmioApiDocTestBundle:Test:zReturnSelectedParsersInput }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::zReturnSelectedParsersInputAction }
 
 test_route_private:
     path: /private
-    defaults: { _controller: NelmioApiDocTestBundle:Test:private }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::privateAction }
 
 test_route_exclusive:
     path: /exclusive
-    defaults: { _controller: NelmioApiDocTestBundle:Test:exclusive }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::exclusiveAction }
 
 test_route_21:
     path: /z-action-with-constraint-requirements
     methods: [GET]
-    defaults: { _controller: NelmioApiDocTestBundle:Test:zActionWithConstraintAsRequirements }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::zActionWithConstraintAsRequirementsAction }
 
 test_route_22:
     path: /z-action-with-nullable-request-param
     methods: [POST]
-    defaults: { _controller: NelmioApiDocTestBundle:Test:zActionWithNullableRequestParam }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::zActionWithNullableRequestParamAction }
 
 test_route_list_resource:
     path: /api/resources.{_format}
     methods: [GET]
-    defaults: { _controller: NelmioApiDocTestBundle:Resource:listResources, _format: json }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\ResourceController::listResourcesAction, _format: json }
     requirements:
         _format: json|xml|html
 
 test_route_get_resource:
     path: /api/resources/{id}.{_format}
     methods: [GET]
-    defaults: { _controller: NelmioApiDocTestBundle:Resource:getResource, _format: json }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\ResourceController::getResourceAction, _format: json }
     requirements:
         _format: json|xml|html
 
 test_route_delete_resource:
     path: /api/resources/{id}.{_format}
     methods: [DELETE]
-    defaults: { _controller: NelmioApiDocTestBundle:Resource:deleteResource, _format: json }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\ResourceController::deleteResourceAction, _format: json }
     requirements:
         _format: json|xml|html
 
 test_route_create_resource:
     path: /api/resources.{_format}
     methods: [POST]
-    defaults: { _controller: NelmioApiDocTestBundle:Resource:createResource, _format: json }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\ResourceController::createResourceAction, _format: json }
     requirements:
         _format: json|xml|html
 
 test_route_list_another_resource:
     path: /api/other-resources.{_format}
     methods: [GET]
-    defaults: { _controller: NelmioApiDocTestBundle:Resource:listAnotherResources, _format: json }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\ResourceController::listAnotherResourcesAction, _format: json }
     requirements:
         _format: json|xml|html
 
 test_route_update_another_resource:
     path: /api/other-resources/{id}.{_format}
     methods: [PUT, PATCH]
-    defaults: { _controller: NelmioApiDocTestBundle:Resource:updateAnotherResource, _format: json }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\ResourceController::updateAnotherResourceAction, _format: json }
     requirements:
         _format: json|xml|html
 
@@ -195,41 +195,41 @@ swagger_doc:
 test_route_23:
     path: /zcached
     methods: [POST]
-    defaults: { _controller: NelmioApiDocTestBundle:Test:zCached }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::zCachedAction }
 
 test_route_24:
     path: /zsecured
     methods: [POST]
-    defaults: { _controller: NelmioApiDocTestBundle:Test:zSecured }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::zSecuredAction }
 
 test_required_parameters:
     path: /api/other-resources/{id}.{_format}
     methods: [POST]
-    defaults: { _controller: NelmioApiDocTestBundle:Resource:requiredParametersAction, _format: json }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\ResourceController::requiredParametersAction, _format: json }
     requirements:
         _format: json|xml|html
 
 test_patch_disables_required_parameters:
     path: /api/other-resources/{id}.{_format}
     methods: [PATCH]
-    defaults: { _controller: NelmioApiDocTestBundle:Resource:requiredParametersAction, _format: json }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\ResourceController::requiredParametersAction, _format: json }
     requirements:
         _format: json|xml|html
 
 test_route_25:
     path: /with-link
     methods: [GET]
-    defaults: { _controller: NelmioApiDocTestBundle:Test:withLinkAction }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::withLinkAction }
 
 test_route_26:
     path:  /z-action-with-array-request-param
     methods: [POST]
-    defaults: { _controller: NelmioApiDocTestBundle:Test:zActionWithArrayRequestParamAction }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::zActionWithArrayRequestParamAction }
 
 test_route_27:
     path: /api/overrride/properties
     methods: [POST, PUT]
-    defaults: { _controller: NelmioApiDocTestBundle:Test:overrideJmsAnnotationWithApiDocPropertiesAction, _format: json }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::overrideJmsAnnotationWithApiDocPropertiesAction, _format: json }
 
 test_route_28:
     path: /route_with_host.{_format}
@@ -237,25 +237,25 @@ test_route_28:
     methods: [GET]
     requirements:
         domain: "%domain_dev%|%domain_prod%"
-    defaults: { _controller: NelmioApiDocTestBundle:Test:routeWithHost, domain: "%domain_dev%", _format: json }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::routeWithHostAction, domain: "%domain_dev%", _format: json }
 
 test_route_29:
     path: /z-query-param-array-requirements
     methods: [GET]
-    defaults: { _controller: NelmioApiDocTestBundle:Test:routeWithQueryParamArrayRequirementsAction }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::routeWithQueryParamArrayRequirementsAction }
 
 test_route_30:
     path: /z-query-param-plain-array-requirements
     methods: [GET]
-    defaults: { _controller: NelmioApiDocTestBundle:Test:routeWithQueryParamPlainArrayRequirementsAction }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::routeWithQueryParamPlainArrayRequirementsAction }
 
 test_route_31:
     path: /z-query-requirement-param-not-set
     methods: [GET]
-    defaults: { _controller: NelmioApiDocTestBundle:Test:zActionWithRequirementParamNotSet }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::zActionWithRequirementParamNotSet }
 
 test_route_version_checking:
     path:  /zz-tests-route-version.{_format}
     methods: [GET]
-    defaults: { _controller: NelmioApiDocTestBundle:Test:routeVersion, _format: json, _version: "1.5" }
+    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::routeVersionAction, _format: json, _version: "1.5" }
 

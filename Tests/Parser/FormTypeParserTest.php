@@ -17,6 +17,7 @@ use Nelmio\ApiDocBundle\Parser\FormTypeParser;
 use Nelmio\ApiDocBundle\Tests\Fixtures;
 use Nelmio\ApiDocBundle\Tests\Fixtures\Form\DependencyType;
 use Nelmio\ApiDocBundle\Util\LegacyFormHelper;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Extension\Core\CoreExtension;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormFactory;
@@ -24,7 +25,7 @@ use Symfony\Component\Form\FormFactoryBuilder;
 use Symfony\Component\Form\ResolvedFormTypeFactory;
 use Symfony\Component\Translation\Translator;
 
-class FormTypeParserTest extends \PHPUnit_Framework_TestCase
+class FormTypeParserTest extends TestCase
 {
     /**
      * @dataProvider dataTestParse
@@ -118,10 +119,10 @@ class FormTypeParserTest extends \PHPUnit_Framework_TestCase
                 'subType' => null,
                 'default' => null,
                 'required' => true,
-                'description' => '',
+                'description' => null,
                 'readonly' => false,
             ),
-            LegacyFormHelper::isLegacy() ? array() : array('format' => '[bar|Array]',)
+            LegacyFormHelper::isLegacy() ? array() : array('format' => '[bar|bazgroup]',)
         );
 
         return array(
@@ -473,9 +474,9 @@ class FormTypeParserTest extends \PHPUnit_Framework_TestCase
                         'subType' => null,
                         'default' => null,
                         'required' => true,
-                        'description' => '',
+                        'description' => null,
                         'readonly' => false,
-                        'format' => '[bar|Array]',
+                        'format' => '[bar|bazgroup]',
                     ),
                     'e1' => $entityData
                 ),

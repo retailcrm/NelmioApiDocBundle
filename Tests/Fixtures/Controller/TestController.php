@@ -51,6 +51,7 @@ class TestController
 
     /**
      * @ApiDoc(
+     *  resource=true,
      *  description="create test",
      *  views={ "default", "premium" },
      *  input="Nelmio\ApiDocBundle\Tests\Fixtures\Form\TestType"

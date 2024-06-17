@@ -18,7 +18,7 @@ use Nelmio\ApiDocBundle\Tests\WebTestCase;
  */
 class DunglasApiProviderTest extends WebTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!class_exists('Dunglas\ApiBundle\DunglasApiBundle')) {
             $this->markTestSkipped(

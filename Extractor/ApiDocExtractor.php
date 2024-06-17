@@ -110,7 +110,7 @@ class ApiDocExtractor
             // ignore other api version's routes
             if (
                 $a['annotation']->getRoute()->getDefault('_version') &&
-                !version_compare($apiVersion, $a['annotation']->getRoute()->getDefault('_version'), '=')
+                !version_compare($apiVersion ?? '', $a['annotation']->getRoute()->getDefault('_version'), '=')
             ) {
                 unset($data[$k]);
             }

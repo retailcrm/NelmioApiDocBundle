@@ -16,7 +16,7 @@ class JsonSerializableTest implements \JsonSerializable
     /**
      * {@inheritdoc}
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return array(
             'id' => 123,

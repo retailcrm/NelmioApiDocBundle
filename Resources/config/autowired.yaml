@@ -1,0 +1,17 @@
+services:
+    _defaults:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    Nelmio\ApiDocBundle\Command\DumpCommand:
+        arguments:
+            $container: '@service_container'
+
+    Nelmio\ApiDocBundle\Command\SwaggerDumpCommand:
+        arguments:
+            $container: '@service_container'
+
+    Nelmio\ApiDocBundle\Controller\ApiDocController:
+        arguments:
+            $c: '@service_container'

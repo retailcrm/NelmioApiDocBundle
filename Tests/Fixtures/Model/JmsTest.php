@@ -24,7 +24,7 @@ class JmsTest
 
     /**
      * @JMS\Type("DateTime");
-     * @JMS\ReadOnly
+     * @JMS\ReadOnlyProperty
      */
     public $bar;
 

@@ -28,10 +28,9 @@ class SimpleType extends AbstractType
             'description' => 'Something that describes A.',
         ))
         ->add('b', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\NumberType'))
-        ->add('c', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\ChoiceType'), array_merge(
-            array('choices' => array('x' => 'X', 'y' => 'Y', 'z' => 'Z')),
-            LegacyFormHelper::isLegacy() ? array() : array('choices_as_values' => true)
-        ))
+        ->add('c', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\ChoiceType'),
+            array('choices' => array('X' => 'x', 'Y' => 'y', 'Z' => 'z'))
+        )
         ->add('d', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\DateTimeType'))
         ->add('e', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\DateType'))
         ->add('g', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\TextareaType'))

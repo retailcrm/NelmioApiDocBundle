@@ -1,21 +1,22 @@
 framework:
     secret:        test
     csrf_protection:
-        enabled: true
-    router:        { resource: "%kernel.root_dir%/config/routing.yml" }
+        enabled: false
+    router:        { resource: "%kernel.project_dir%/config/routing.yml" }
     validation:    { enabled: true, enable_annotations: true }
-    form: ~
+    form:
+        enabled: true
     test: ~
     default_locale: en
     session:
         storage_id:     session.storage.mock_file
     profiler:      { only_exceptions: false }
-    templating:    { engines: ['twig'] }
+    annotations: ~
 
 # Twig Configuration
 twig:
-    debug:            %kernel.debug%
-    strict_variables: %kernel.debug%
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
 
 services:
     nelmio.test.controller:
@@ -26,6 +27,12 @@ services:
             - [foo, bar]
         tags:
             - { name: form.type, alias: dependency_type, extended_type: Nelmio\ApiDocBundle\Tests\Fixtures\Form\DependencyType }
+    nelmio_api_doc.formatter.simple_formatter:
+        class: "%nelmio_api_doc.formatter.simple_formatter.class%"
+        public: true
+    nelmio_api_doc.formatter.markdown_formatter:
+        class: "%nelmio_api_doc.formatter.markdown_formatter.class%"
+        public: true
 
 parameters:
     domain_prod: test.com
@@ -44,7 +51,7 @@ jms_serializer:
 
     metadata:
         cache: file
-        debug: "%kernel.debug%"
+        debug: false
         file_cache:
             dir: "%kernel.cache_dir%/serializer"
 
@@ -55,6 +62,8 @@ jms_serializer:
         # class: My\FooBundle\Entity\User
         # expected path: @MyFooBundle/Resources/config/serializer/Entity.User.(yml|xml|php)
         auto_detection: true
+
+    profiler: false
 
 nelmio_api_doc:
     sandbox:

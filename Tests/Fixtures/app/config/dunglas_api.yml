@@ -1,15 +1,15 @@
 doctrine:
     dbal:
-        driver:                      'pdo_sqlite'
-        path:                        '%kernel.cache_dir%/db.sqlite'
-        charset:                     'UTF8'
+        driver:                      "pdo_sqlite"
+        path:                        "%kernel.cache_dir%/db.sqlite"
+        charset:                     "UTF8"
 
     orm:
-        auto_generate_proxy_classes: '%kernel.debug%'
+        auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping:                true
 
 framework:
-    router:        { resource: '%kernel.root_dir%/config/dunglas_api_routing.yml' }
+    router:        { resource: "%kernel.project_dir%/config/dunglas_api_routing.yml" }
 
 dunglas_api:
     title:       API
@@ -17,6 +17,6 @@ dunglas_api:
 
 services:
     dunglas_api.popo:
-        parent:    'api.resource'
-        arguments: [ 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\Popo' ]
-        tags:      [ { name: 'api.resource' } ]
+        parent:    api.resource
+        arguments: [ Nelmio\ApiDocBundle\Tests\Fixtures\Model\Popo ]
+        tags:      [ { name: api.resource } ]

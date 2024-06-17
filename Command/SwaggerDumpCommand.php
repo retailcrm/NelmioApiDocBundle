@@ -12,11 +12,13 @@
 namespace Nelmio\ApiDocBundle\Command;
 
 use Nelmio\ApiDocBundle\Formatter\SwaggerFormatter;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -25,7 +27,11 @@ use Symfony\Component\Filesystem\Filesystem;
  *
  * @author Bez Hermoso <bez@activelamp.com>
  */
-class SwaggerDumpCommand extends ContainerAwareCommand
+#[AsCommand(
+    name: 'api:swagger:dump',
+    description: 'Dumps Swagger-compliant API definitions.',
+)]
+class SwaggerDumpCommand extends Command
 {
     /**
      * @var Filesystem
@@ -37,25 +43,29 @@ class SwaggerDumpCommand extends ContainerAwareCommand
      */
     protected $formatter;
 
+    public function __construct(
+        private ContainerInterface $container,
+        string $name = null
+    ) {
+        parent::__construct($name);
+    }
+
     protected function configure()
     {
         $this->filesystem = new Filesystem();
 
         $this
-            ->setDescription('Dumps Swagger-compliant API definitions.')
             ->addOption('resource', 'r', InputOption::VALUE_OPTIONAL, 'A specific resource API declaration to dump.')
             ->addOption('list-only', 'l', InputOption::VALUE_NONE, 'Dump resource list only.')
             ->addOption('pretty', 'p', InputOption::VALUE_NONE, 'Dump as prettified JSON.')
             ->addArgument('destination', InputArgument::OPTIONAL, 'Directory to dump JSON files in.', null)
-            ->setName('api:swagger:dump');
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $container = $this->getContainer();
-
-        $extractor = $container->get('nelmio_api_doc.extractor.api_doc_extractor');
-        $this->formatter = $container->get('nelmio_api_doc.formatter.swagger_formatter');
+        $extractor = $this->container->get('nelmio_api_doc.extractor.api_doc_extractor');
+        $this->formatter = $this->container->get('nelmio_api_doc.formatter.swagger_formatter');
 
         if ($input->getOption('list-only') && $input->getOption('resource')) {
             throw new \RuntimeException('Cannot selectively dump a resource with the --list-only flag.');
