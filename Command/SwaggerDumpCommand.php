@@ -62,7 +62,7 @@ class SwaggerDumpCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $extractor = $this->container->get('nelmio_api_doc.extractor.api_doc_extractor');
         $this->formatter = $this->container->get('nelmio_api_doc.formatter.swagger_formatter');
@@ -77,7 +77,7 @@ class SwaggerDumpCommand extends Command
             $data = $this->getResourceList($apiDocs, $output);
             $this->dump($data, null, $input, $output);
 
-            return;
+            return 0;
         }
 
         if (false != ($resource = $input->getOption('resource'))) {
@@ -87,7 +87,7 @@ class SwaggerDumpCommand extends Command
             }
             $this->dump($data, $resource, $input, $output);
 
-            return;
+            return 0;
         }
 
         /*
@@ -112,6 +112,8 @@ class SwaggerDumpCommand extends Command
             $data = $this->getApiDeclaration($apiDocs, $resource, $output);
             $this->dump($data, $resource, $input, $output, false);
         }
+
+        return 0;
     }
 
     protected function dump(array $data, $resource, InputInterface $input, OutputInterface $output, $treatAsFile = true)
