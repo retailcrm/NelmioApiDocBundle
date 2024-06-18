@@ -25,7 +25,7 @@ class SwaggerFormatterTest extends WebTestCase
      */
     protected $formatter;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -938,80 +938,12 @@ With multiple lines.',
                                                 array(),
                                         ),
                                         array(
-                                            'method'           => 'GET',
-                                            'summary'          => 'index action',
-                                            'nickname'         => 'get_tests',
-                                            'parameters'       =>
-                                                array(
-
-                                                    array(
-                                                        'paramType' => 'path',
-                                                        'name'      => '_format',
-                                                        'type'      => 'string',
-                                                        'required'  => true,
-                                                    ),
-                                                    array(
-                                                        'paramType'   => 'query',
-                                                        'name'        => 'a',
-                                                        'type'        => 'integer',
-                                                        'description' => null,
-                                                    ),
-                                                    array(
-                                                        'paramType'   => 'query',
-                                                        'name'        => 'b',
-                                                        'type'        => 'string',
-                                                        'description' => null,
-                                                    ),
-                                                ),
-                                            'responseMessages' =>
-                                                array(),
-                                        ),
-                                        array(
                                             'method'           => 'POST',
                                             'summary'          => 'create test',
                                             'nickname'         => 'post_tests',
                                             'parameters'       =>
                                                 array(
 
-                                                    array(
-                                                        'paramType' => 'path',
-                                                        'name'      => '_format',
-                                                        'type'      => 'string',
-                                                        'required'  => true,
-                                                    ),
-                                                    array(
-                                                        'paramType'   => 'form',
-                                                        'name'        => 'a',
-                                                        'type'        => 'string',
-                                                        'description' => 'A nice description',
-                                                    ),
-                                                    array(
-                                                        'paramType' => 'form',
-                                                        'name'      => 'b',
-                                                        'type'      => 'string',
-                                                    ),
-                                                    array(
-                                                        'paramType'    => 'form',
-                                                        'name'         => 'c',
-                                                        'type'         => 'boolean',
-                                                        'defaultValue' => false,
-                                                    ),
-                                                    array(
-                                                        'paramType'    => 'form',
-                                                        'name'         => 'd',
-                                                        'type'         => 'string',
-                                                        'defaultValue' => 'DefaultTest',
-                                                    ),
-                                                ),
-                                            'responseMessages' =>
-                                                array(),
-                                        ),
-                                        array(
-                                            'method'           => 'POST',
-                                            'summary'          => 'create test',
-                                            'nickname'         => 'post_tests',
-                                            'parameters'       =>
-                                                array(
                                                     array(
                                                         'paramType' => 'path',
                                                         'name'      => '_format',

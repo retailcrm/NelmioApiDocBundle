@@ -17,8 +17,9 @@ use Nelmio\ApiDocBundle\Parser\JmsMetadataParser;
 use JMS\Serializer\Metadata\ClassMetadata;
 use JMS\Serializer\Metadata\PropertyMetadata;
 use JMS\Serializer\Naming\CamelCaseNamingStrategy;
+use PHPUnit\Framework\TestCase;
 
-class JmsMetadataParserTest extends \PHPUnit_Framework_TestCase
+class JmsMetadataParserTest extends TestCase
 {
     /**
      * @dataProvider dataTestParserWithNestedType
@@ -59,19 +60,14 @@ class JmsMetadataParserTest extends \PHPUnit_Framework_TestCase
         $propertyNamingStrategy = $this->createMock('JMS\Serializer\Naming\PropertyNamingStrategyInterface');
 
         $propertyNamingStrategy
-            ->expects($this->at(0))
+            ->expects($this->exactly(3))
             ->method('translateName')
-            ->will($this->returnValue('foo'));
-
-        $propertyNamingStrategy
-            ->expects($this->at(1))
-            ->method('translateName')
-            ->will($this->returnValue('bar'));
-
-        $propertyNamingStrategy
-            ->expects($this->at(2))
-            ->method('translateName')
-            ->will($this->returnValue('baz'));
+            ->willReturnOnConsecutiveCalls(
+                $this->returnValue('foo'),
+                $this->returnValue('bar'),
+                $this->returnValue('baz')
+            )
+        ;
 
         $input = 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested';
 
@@ -527,21 +523,19 @@ class JmsMetadataParserTest extends \PHPUnit_Framework_TestCase
         $subMetadata = new ClassMetadata($subInput);
         $subMetadata->addPropertyMetadata($propertyMetadataBar);
 
-        $metadataFactory->expects($this->at(0))
+        $metadataFactory
+            ->expects($this->exactly(3))
             ->method('getMetadataForClass')
-            ->with($input)
-            ->will($this->returnValue($metadata));
-
-        $metadataFactory->expects($this->at(1))
-            ->method('getMetadataForClass')
-            ->with($subInput)
-            ->will($this->returnValue($subMetadata));
-
-        $metadataFactory->expects($this->at(2))
-            ->method('getMetadataForClass')
-            ->with($subInput)
-            ->will($this->returnValue($subMetadata));
-
+            ->withConsecutive(
+                [$input],
+                [$subInput],
+                [$subInput]
+            )
+            ->willReturnOnConsecutiveCalls(
+                $metadata,
+                $subMetadata,
+                $subMetadata
+            );
         $propertyNamingStrategy = new CamelCaseNamingStrategy();
 
         $jmsMetadataParser = new JmsMetadataParser($metadataFactory, $propertyNamingStrategy, $docCommentExtractor);

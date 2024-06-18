@@ -11,15 +11,17 @@
 
 namespace Nelmio\ApiDocBundle\Tests;
 
+use PHPUnit\Util\ErrorHandler;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 abstract class WebTestCase extends BaseWebTestCase
 {
     public static $container;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -28,44 +30,23 @@ abstract class WebTestCase extends BaseWebTestCase
         }
     }
 
-    public static function handleDeprecation($errorNumber, $message, $file, $line, $context)
+    public static function handleDeprecation($errorNumber, $message, $file, $line)
     {
         if ($errorNumber & E_USER_DEPRECATED) {
             return true;
         }
 
-        return \PHPUnit_Util_ErrorHandler::handleError($errorNumber, $message, $file, $line);
+        return ErrorHandler::handleError($errorNumber, $message, $file, $line);
     }
 
-    /**
-     * @param array $options
-     * @return ContainerInterface
-     */
-    protected function getContainer(array $options = array())
-    {
-        if (!static::$kernel) {
-            static::$kernel = static::createKernel($options);
-        }
-
-        static::$kernel->boot();
-
-        if (!static::$container) {
-            static::$container = static::$kernel->getContainer();
-        }
-
-        static::$container->set('kernel', static::$kernel);
-
-        return static::$container;
-    }
-
-    protected static function getKernelClass()
+    protected static function getKernelClass(): string
     {
         require_once __DIR__.'/Fixtures/app/AppKernel.php';
 
         return 'Nelmio\ApiDocBundle\Tests\Functional\AppKernel';
     }
 
-    protected static function createKernel(array $options = array())
+    protected static function createKernel(array $options = array()): KernelInterface
     {
         $class = self::getKernelClass();
 

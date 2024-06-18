@@ -12,15 +12,16 @@
 namespace NelmioApiDocBundle\Tests\Parser;
 
 use Nelmio\ApiDocBundle\Parser\JsonSerializableParser;
+use PHPUnit\Framework\TestCase;
 
-class JsonSerializableParserTest extends \PHPUnit_Framework_TestCase
+class JsonSerializableParserTest extends TestCase
 {
     /**
      * @var JsonSerializableParser
      */
     private $parser;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->parser = new JsonSerializableParser();
     }

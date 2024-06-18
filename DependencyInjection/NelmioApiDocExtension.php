@@ -14,6 +14,7 @@ namespace Nelmio\ApiDocBundle\DependencyInjection;
 use Nelmio\ApiDocBundle\Parser\FormInfoParser;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -79,8 +80,13 @@ class NelmioApiDocExtension extends Extension
             $arguments[] = $config['cache']['file'];
             $arguments[] = '%kernel.debug%';
             $caching->setArguments($arguments);
+            $caching->setPublic(true);
             $container->setDefinition('nelmio_api_doc.extractor.api_doc_extractor', $caching);
         }
+
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('autowired.yaml');
+
     }
 
     /**

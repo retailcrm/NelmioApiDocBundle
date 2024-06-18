@@ -20,8 +20,9 @@ use Symfony\Component\HttpKernel\Kernel;
 class ValidationParserTest extends WebTestCase
 {
     protected $handler;
+    private ValidationParser $parser;
 
-    public function setUp()
+    public function setUp(): void
     {
         $container  = $this->getContainer();
 
@@ -34,7 +35,7 @@ class ValidationParserTest extends WebTestCase
         if (version_compare(Kernel::VERSION, '2.2.0', '<')) {
             $this->parser = new ValidationParserLegacy($factory);
         } else {
-            $this->parser = new ValidationParser($factory);
+             $this->parser = new ValidationParser($factory);
         }
     }
 

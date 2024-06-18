@@ -167,11 +167,10 @@ class ApiDocTest extends TestCase
         $this->assertNull($annot->getInput());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testConstructMethodHasFiltersWithoutName()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $data = array(
             'description'   => 'Heya',
             'filters'       => array(

@@ -18,7 +18,7 @@ class JmsNested
 
     /**
      * @JMS\Type("DateTime");
-     * @JMS\ReadOnly
+     * @JMS\ReadOnlyProperty
      */
     public $foo;
 

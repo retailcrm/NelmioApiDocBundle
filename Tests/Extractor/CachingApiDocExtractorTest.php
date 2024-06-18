@@ -47,7 +47,7 @@ class CachingApiDocExtractorTest extends WebTestCase
         $data = $extractor->all($view);
         restore_error_handler();
 
-        $this->assertInternalType(\PHPUnit_Framework_Constraint_IsType::TYPE_ARRAY, $data);
+        $this->assertIsArray($data);
         $this->assertNotSameSize($defaultData, $data);
         $this->assertNotEquals($defaultData, $data);
 
@@ -84,8 +84,8 @@ class CachingApiDocExtractorTest extends WebTestCase
         $cachedData = $extractor->all($view);
         restore_error_handler();
 
-        $this->assertInternalType(\PHPUnit_Framework_Constraint_IsType::TYPE_ARRAY, $data);
-        $this->assertInternalType(\PHPUnit_Framework_Constraint_IsType::TYPE_ARRAY, $cachedData);
+        $this->assertIsArray($data);
+        $this->assertIsArray($cachedData);
         $this->assertSameSize($data, $cachedData);
         $this->assertEquals($data, $cachedData);
     }

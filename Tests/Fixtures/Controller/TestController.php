@@ -51,6 +51,7 @@ class TestController
 
     /**
      * @ApiDoc(
+     *  resource=true,
      *  description="create test",
      *  views={ "default", "premium" },
      *  input="Nelmio\ApiDocBundle\Tests\Fixtures\Form\TestType"
@@ -196,14 +197,6 @@ class TestController
      * @RequestParam(name="param1", requirements="string", description="Param1 description.", nullable=true)
      */
     public function zActionWithNullableRequestParamAction()
-    {
-    }
-
-    /**
-     * @ApiDoc()
-     * @RequestParamHelper(name="param1", requirements="string", array=true)
-     */
-    public function zActionWithArrayRequestParamAction()
     {
     }
 

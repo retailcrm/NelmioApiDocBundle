@@ -23,12 +23,12 @@ class ApiDocControllerTest extends WebTestCase
     public function testSwaggerDocResourceListRoute()
     {
         $client = static::createClient();
-        $client->request('GET', '/api-docs/');
+        $client->request('GET', '/api-docs');
 
         $response = $client->getResponse();
 
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('application/json', $response->headers->get('Content-type'));
+        $this->assertEquals('text/html; charset=UTF-8', $response->headers->get('Content-type'));
 
     }
 

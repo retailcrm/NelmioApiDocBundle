@@ -12,25 +12,40 @@
 namespace Nelmio\ApiDocBundle\Command;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Contracts\Translation\LocaleAwareInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-class DumpCommand extends Command implements ContainerAwareInterface
+#[AsCommand(
+    name: 'api:doc:dump',
+    description: 'Dumps API documentation in various formats',
+)]
+class DumpCommand extends Command
 {
-    use \Symfony\Component\DependencyInjection\ContainerAwareTrait;
     /**
      * @var array
      */
     protected $availableFormats = array('markdown', 'json', 'html');
 
+    /**
+     * @param TranslatorInterface&LocaleAwareInterface $translator
+     */
+    public function __construct(
+        private ContainerInterface $container,
+        private TranslatorInterface $translator,
+        string $name = null
+    ) {
+        parent::__construct($name);
+    }
+
     protected function configure()
     {
         $this
-            ->setDescription('Dumps API documentation in various formats')
             ->addOption(
                 'format', '', InputOption::VALUE_REQUIRED,
                 'Output format like: ' . implode(', ', $this->availableFormats),
@@ -40,8 +55,7 @@ class DumpCommand extends Command implements ContainerAwareInterface
             ->addOption('locale', null, InputOption::VALUE_REQUIRED, 'Locale for translation')
             ->addOption('view', '', InputOption::VALUE_OPTIONAL, '', ApiDoc::DEFAULT_VIEW)
             ->addOption('no-sandbox', '', InputOption::VALUE_NONE)
-            ->setName('api:doc:dump')
-            ;
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -49,9 +63,7 @@ class DumpCommand extends Command implements ContainerAwareInterface
         $format = $input->getOption('format');
         $view = $input->getOption('view');
 
-        $routeCollection = $this->container->get('router')->getRouteCollection();
-
-        if ($format == 'json') {
+        if ($format === 'json') {
             $formatter = $this->container->get('nelmio_api_doc.formatter.simple_formatter');
         } else {
             if (!in_array($format, $this->availableFormats)) {
@@ -62,7 +74,7 @@ class DumpCommand extends Command implements ContainerAwareInterface
         }
 
         if ($input->hasOption('locale')) {
-            $this->container->get('translator')->setLocale($input->getOption('locale'));
+            $this->translator->setLocale($input->getOption('locale') ?? '');
         }
 
         if ($input->hasOption('api-version')) {
@@ -71,11 +83,6 @@ class DumpCommand extends Command implements ContainerAwareInterface
 
         if ($input->getOption('no-sandbox') && 'html' === $format) {
             $formatter->setEnableSandbox(false);
-        }
-
-        if ('html' === $format && method_exists($this->container, 'enterScope')) {
-            $this->container->enterScope('request');
-            $this->container->set('request', new Request(), 'request');
         }
 
         $extractor = $this->container->get('nelmio_api_doc.extractor.api_doc_extractor');

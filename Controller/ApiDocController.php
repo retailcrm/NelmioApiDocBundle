@@ -13,6 +13,7 @@ namespace Nelmio\ApiDocBundle\Controller;
 
 use Nelmio\ApiDocBundle\Formatter\RequestAwareSwaggerFormatter;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,10 +21,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ApiDocController extends AbstractController
 {
-    public function indexAction(Request $request, $view = ApiDoc::DEFAULT_VIEW)
+    public function __construct(
+        private ContainerInterface $c
+    ) {
+    }
+
+    public function index(Request $request, $view = ApiDoc::DEFAULT_VIEW)
     {
-        $extractor = $this->get('nelmio_api_doc.extractor.api_doc_extractor');
-        $formatter = $this->get('nelmio_api_doc.formatter.html_formatter');
+        $extractor = $this->c->get('nelmio_api_doc.extractor.api_doc_extractor');
+        $formatter = $this->c->get('nelmio_api_doc.formatter.html_formatter');
         $apiVersion = $request->query->get('_version', null);
 
         if ($apiVersion) {
@@ -37,11 +43,11 @@ class ApiDocController extends AbstractController
         return new Response($htmlContent, 200, array('Content-Type' => 'text/html'));
     }
 
-    public function swaggerAction(Request $request, $resource = null)
+    public function swagger(Request $request, $resource = null)
     {
 
-        $docs = $this->get('nelmio_api_doc.extractor.api_doc_extractor')->all();
-        $formatter = new RequestAwareSwaggerFormatter($request, $this->get('nelmio_api_doc.formatter.swagger_formatter'));
+        $docs = $this->c->get('nelmio_api_doc.extractor.api_doc_extractor')->all();
+        $formatter = new RequestAwareSwaggerFormatter($request, $this->c->get('nelmio_api_doc.formatter.swagger_formatter'));
 
         $spec = $formatter->format($docs, $resource ? '/' . $resource : null);
 
