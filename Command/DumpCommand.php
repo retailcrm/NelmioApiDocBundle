@@ -58,7 +58,7 @@ class DumpCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $format = $input->getOption('format');
         $view = $input->getOption('view');
