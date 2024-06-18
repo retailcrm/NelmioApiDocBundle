@@ -704,17 +704,6 @@ _Route with host placeholder_
   - Requirement: \d+
 
 
-### `POST` /z-action-with-array-request-param ###
-
-
-#### Parameters ####
-
-param1:
-
-  * type: string[]
-  * required: true
-
-
 ### `GET` /z-action-with-deprecated-indicator ###
 ### This method is deprecated ###
 

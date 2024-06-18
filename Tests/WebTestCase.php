@@ -15,6 +15,7 @@ use PHPUnit\Util\ErrorHandler;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 abstract class WebTestCase extends BaseWebTestCase
 {
@@ -38,35 +39,14 @@ abstract class WebTestCase extends BaseWebTestCase
         return ErrorHandler::handleError($errorNumber, $message, $file, $line);
     }
 
-    /**
-     * @param array $options
-     * @return ContainerInterface
-     */
-    protected static function getContainer(array $options = array()): ContainerInterface
-    {
-        if (!static::$kernel) {
-            static::$kernel = static::createKernel($options);
-        }
-
-        static::$kernel->boot();
-
-        if (!static::$container) {
-            static::$container = static::$kernel->getContainer();
-        }
-
-        static::$container->set('kernel', static::$kernel);
-
-        return static::$container;
-    }
-
-    protected static function getKernelClass()
+    protected static function getKernelClass(): string
     {
         require_once __DIR__.'/Fixtures/app/AppKernel.php';
 
         return 'Nelmio\ApiDocBundle\Tests\Functional\AppKernel';
     }
 
-    protected static function createKernel(array $options = array())
+    protected static function createKernel(array $options = array()): KernelInterface
     {
         $class = self::getKernelClass();
 

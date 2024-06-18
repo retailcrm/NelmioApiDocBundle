@@ -1942,30 +1942,7 @@ With multiple lines.',
       ),
       'deprecated' => false,
     ),
-    11 => 
-    array (
-      'method' => 'POST',
-      'uri' => '/z-action-with-array-request-param',
-      'parameters' => 
-      array (
-        'param1' => 
-        array (
-          'required' => true,
-          'dataType' => 'string[]',
-          'actualType' => 'string',
-          'subType' => NULL,
-          'description' => NULL,
-          'readonly' => false,
-        ),
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    12 => 
+    11 =>
     array (
       'method' => 'GET',
       'uri' => '/z-action-with-deprecated-indicator',
@@ -1976,7 +1953,7 @@ With multiple lines.',
       ),
       'deprecated' => true,
     ),
-    13 => 
+    12 =>
     array (
       'method' => 'POST',
       'uri' => '/z-action-with-nullable-request-param',
@@ -1999,7 +1976,7 @@ With multiple lines.',
       ),
       'deprecated' => false,
     ),
-    14 => 
+    13 =>
     array (
       'method' => 'GET',
       'uri' => '/z-action-with-query-param',
@@ -2019,7 +1996,7 @@ With multiple lines.',
       ),
       'deprecated' => false,
     ),
-    15 => 
+    14 =>
     array (
       'method' => 'GET',
       'uri' => '/z-action-with-query-param-no-default',
@@ -2038,7 +2015,7 @@ With multiple lines.',
       ),
       'deprecated' => false,
     ),
-    16 => 
+    15 =>
     array (
       'method' => 'GET',
       'uri' => '/z-action-with-query-param-strict',
@@ -2058,7 +2035,7 @@ With multiple lines.',
       ),
       'deprecated' => false,
     ),
-    17 => 
+    16 =>
     array (
       'method' => 'POST',
       'uri' => '/z-action-with-request-param',
@@ -2081,7 +2058,7 @@ With multiple lines.',
       ),
       'deprecated' => false,
     ),
-    18 => 
+    17 =>
     array (
       'method' => 'GET',
       'uri' => '/z-query-param-array-requirements',
@@ -2100,7 +2077,7 @@ With multiple lines.',
       ),
       'deprecated' => false,
     ),
-    19 => 
+    18 =>
     array (
       'method' => 'GET',
       'uri' => '/z-query-param-plain-array-requirements',
@@ -2119,7 +2096,7 @@ With multiple lines.',
       ),
       'deprecated' => false,
     ),
-    20 => 
+    19 =>
     array (
       'method' => 'GET',
       'uri' => '/z-query-requirement-param-not-set',
@@ -2137,7 +2114,7 @@ With multiple lines.',
       ),
       'deprecated' => false,
     ),
-    21 => 
+    20 =>
     array (
       'method' => 'ANY',
       'uri' => '/z-return-jms-and-validator-output',
@@ -2275,7 +2252,7 @@ With multiple lines.',
       ),
       'deprecated' => false,
     ),
-    22 => 
+    21 =>
     array (
       'method' => 'ANY',
       'uri' => '/z-return-selected-parsers-input',
@@ -2329,7 +2306,7 @@ With multiple lines.',
       ),
       'deprecated' => false,
     ),
-    23 => 
+    22 =>
     array (
       'method' => 'ANY',
       'uri' => '/z-return-selected-parsers-output',
@@ -2467,7 +2444,7 @@ With multiple lines.',
       ),
       'deprecated' => false,
     ),
-    24 => 
+    23 =>
     array (
       'method' => 'POST',
       'uri' => '/zcached',
@@ -2479,7 +2456,7 @@ With multiple lines.',
       ),
       'deprecated' => false,
     ),
-    25 => 
+    24 =>
     array (
       'method' => 'POST',
       'uri' => '/zsecured',
@@ -2490,7 +2467,7 @@ With multiple lines.',
       ),
       'deprecated' => false,
     ),
-    26 => 
+    25 =>
     array (
       'method' => 'GET',
       'uri' => '/zz-tests-route-version.{_format}',

@@ -32,7 +32,7 @@ class MarkdownFormatterTest extends WebTestCase
             $expected = str_replace('DependencyType', 'dependency_type', $expected);
         }
 
-        $this->assertEquals($expected, $result);
+        $this->assertEquals($expected, $result . "\n");
     }
 
     public function testFormatOne()

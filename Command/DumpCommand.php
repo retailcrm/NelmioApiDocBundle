@@ -18,7 +18,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Translation\LocaleAwareInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsCommand(
     name: 'api:doc:dump',
@@ -31,8 +32,12 @@ class DumpCommand extends Command
      */
     protected $availableFormats = array('markdown', 'json', 'html');
 
+    /**
+     * @param TranslatorInterface&LocaleAwareInterface $translator
+     */
     public function __construct(
         private ContainerInterface $container,
+        private TranslatorInterface $translator,
         string $name = null
     ) {
         parent::__construct($name);
@@ -58,9 +63,7 @@ class DumpCommand extends Command
         $format = $input->getOption('format');
         $view = $input->getOption('view');
 
-        $routeCollection = $this->container->get('router')->getRouteCollection();
-
-        if ($format == 'json') {
+        if ($format === 'json') {
             $formatter = $this->container->get('nelmio_api_doc.formatter.simple_formatter');
         } else {
             if (!in_array($format, $this->availableFormats)) {
@@ -71,7 +74,7 @@ class DumpCommand extends Command
         }
 
         if ($input->hasOption('locale')) {
-            $this->container->get('translator')->setLocale($input->getOption('locale') ?? '');
+            $this->translator->setLocale($input->getOption('locale') ?? '');
         }
 
         if ($input->hasOption('api-version')) {
@@ -80,11 +83,6 @@ class DumpCommand extends Command
 
         if ($input->getOption('no-sandbox') && 'html' === $format) {
             $formatter->setEnableSandbox(false);
-        }
-
-        if ('html' === $format && method_exists($this->container, 'enterScope')) {
-            $this->container->enterScope('request');
-            $this->container->set('request', new Request(), 'request');
         }
 
         $extractor = $this->container->get('nelmio_api_doc.extractor.api_doc_extractor');
