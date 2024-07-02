@@ -12,65 +12,36 @@
 namespace Nelmio\ApiDocBundle\Extractor;
 
 use Doctrine\Common\Annotations\Reader;
-use Doctrine\Common\Util\ClassUtils;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Nelmio\ApiDocBundle\DataTypes;
 use Nelmio\ApiDocBundle\Parser\ParserInterface;
 use Nelmio\ApiDocBundle\Parser\PostParserInterface;
 use Nelmio\ApiDocBundle\Util\DocCommentExtractor;
-use Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouterInterface;
 
 class ApiDocExtractor
 {
-    const ANNOTATION_CLASS = 'Nelmio\\ApiDocBundle\\Annotation\\ApiDoc';
-
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
-    /**
-     * @var RouterInterface
-     */
-    protected $router;
-
-    /**
-     * @var Reader
-     */
-    protected $reader;
-
-    /**
-     * @var DocCommentExtractor
-     */
-    private $commentExtractor;
+    public const ANNOTATION_CLASS = ApiDoc::class;
 
     /**
      * @var ParserInterface[]
      */
-    protected $parsers = array();
+    protected array $parsers = [];
 
     /**
-     * @var HandlerInterface[]
+     * @param HandlerInterface[]             $handlers
+     * @param AnnotationsProviderInterface[] $annotationsProviders
+     * @param string[]                       $excludeSections
      */
-    protected $handlers;
-
-    /**
-     * @var AnnotationsProviderInterface[]
-     */
-    protected $annotationsProviders;
-
-    public function __construct(ContainerInterface $container, RouterInterface $router, Reader $reader, DocCommentExtractor $commentExtractor, array $handlers, array $annotationsProviders)
-    {
-        $this->container            = $container;
-        $this->router               = $router;
-        $this->reader               = $reader;
-        $this->commentExtractor     = $commentExtractor;
-        $this->handlers             = $handlers;
-        $this->annotationsProviders = $annotationsProviders;
+    public function __construct(
+        protected RouterInterface $router,
+        protected Reader $reader,
+        protected DocCommentExtractor $commentExtractor,
+        protected array $handlers,
+        protected array $annotationsProviders,
+        protected array $excludeSections
+    ) {
     }
 
     /**
@@ -131,7 +102,6 @@ class ApiDocExtractor
     {
         $array     = array();
         $resources = array();
-        $excludeSections = $this->container->getParameter('nelmio_api_doc.exclude_sections');
 
         foreach ($routes as $route) {
             if (!$route instanceof Route) {
@@ -141,7 +111,7 @@ class ApiDocExtractor
             if ($method = $this->getReflectionMethod($route->getDefault('_controller'))) {
                 $annotation = $this->reader->getMethodAnnotation($method, static::ANNOTATION_CLASS);
                 if (
-                    $annotation && !in_array($annotation->getSection(), $excludeSections) &&
+                    $annotation && !in_array($annotation->getSection(), $this->excludeSections) &&
                     (in_array($view, $annotation->getViews()) || (0 === count($annotation->getViews()) && $view === ApiDoc::DEFAULT_VIEW))
                 ) {
                     if ($annotation->isResource()) {
@@ -228,28 +198,6 @@ class ApiDocExtractor
         if (preg_match('#(.+)::([\w]+)#', $controller, $matches)) {
             $class = $matches[1];
             $method = $matches[2];
-        } else {
-            if (preg_match('#(.+):([\w]+)#', $controller, $matches)) {
-                $controller = $matches[1];
-                $method = $matches[2];
-            }
-
-            if ($this->container->has($controller)) {
-                // BC SF < 3.0
-                if (method_exists($this->container, 'enterScope')) {
-                    $this->container->enterScope('request');
-                    $this->container->set('request', new Request(), 'request');
-                }
-                $class = ClassUtils::getRealClass(get_class($this->container->get($controller)));
-                // BC SF < 3.0
-                if (method_exists($this->container, 'enterScope')) {
-                    $this->container->leaveScope('request');
-                }
-
-                if (!isset($method) && method_exists($class, '__invoke')) {
-                    $method = '__invoke';
-                }
-            }
         }
 
         if (isset($class) && isset($method)) {
