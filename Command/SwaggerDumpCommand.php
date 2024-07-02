@@ -11,6 +11,7 @@
 
 namespace Nelmio\ApiDocBundle\Command;
 
+use Nelmio\ApiDocBundle\Extractor\ApiDocExtractor;
 use Nelmio\ApiDocBundle\Formatter\SwaggerFormatter;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -18,7 +19,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -33,24 +33,16 @@ use Symfony\Component\Filesystem\Filesystem;
 )]
 class SwaggerDumpCommand extends Command
 {
-    /**
-     * @var Filesystem
-     */
-    protected $filesystem;
-
-    /**
-     * @var SwaggerFormatter
-     */
-    protected $formatter;
+    private Filesystem $filesystem;
 
     public function __construct(
-        private ContainerInterface $container,
-        string $name = null
+        private readonly ApiDocExtractor $extractor,
+        private readonly SwaggerFormatter $formatter
     ) {
-        parent::__construct($name);
+        parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->filesystem = new Filesystem();
 
@@ -64,24 +56,21 @@ class SwaggerDumpCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $extractor = $this->container->get('nelmio_api_doc.extractor.api_doc_extractor');
-        $this->formatter = $this->container->get('nelmio_api_doc.formatter.swagger_formatter');
-
         if ($input->getOption('list-only') && $input->getOption('resource')) {
             throw new \RuntimeException('Cannot selectively dump a resource with the --list-only flag.');
         }
 
-        $apiDocs = $extractor->all();
+        $apiDocs = $this->extractor->all();
 
         if ($input->getOption('list-only')) {
-            $data = $this->getResourceList($apiDocs, $output);
+            $data = $this->getResourceList($apiDocs);
             $this->dump($data, null, $input, $output);
 
             return 0;
         }
 
-        if (false != ($resource = $input->getOption('resource'))) {
-            $data = $this->getApiDeclaration($apiDocs, $resource, $output);
+        if (false !== ($resource = $input->getOption('resource'))) {
+            $data = $this->getApiDeclaration($apiDocs, $resource);
             if (count($data['apis']) === 0) {
                 throw new \InvalidArgumentException(sprintf('Resource "%s" does not exist.', $resource));
             }
@@ -116,7 +105,7 @@ class SwaggerDumpCommand extends Command
         return 0;
     }
 
-    protected function dump(array $data, $resource, InputInterface $input, OutputInterface $output, $treatAsFile = true)
+    protected function dump(array $data, $resource, InputInterface $input, OutputInterface $output, $treatAsFile = true): void
     {
         $destination = $input->getArgument('destination');
 
@@ -154,7 +143,7 @@ class SwaggerDumpCommand extends Command
 
     }
 
-    protected function writeToFile($content, $file, OutputInterface $output, $message)
+    protected function writeToFile($content, $file, OutputInterface $output, $message): void
     {
         try {
             $this->filesystem->dumpFile($file, $content);

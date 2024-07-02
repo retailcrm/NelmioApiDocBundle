@@ -14,10 +14,8 @@ namespace Nelmio\ApiDocBundle\Extractor;
 use Doctrine\Common\Annotations\Reader;
 use Nelmio\ApiDocBundle\Util\DocCommentExtractor;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\Config\Resource\FileResource;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -28,39 +26,23 @@ use Symfony\Component\Routing\RouterInterface;
 class CachingApiDocExtractor extends ApiDocExtractor
 {
     /**
-     * @var string
-     */
-    private $cacheFile;
-
-    /**
-     * @var bool
-     */
-    private $debug;
-
-    /**
-     * @param ContainerInterface   $container
-     * @param RouterInterface      $router
-     * @param Reader               $reader
-     * @param DocCommentExtractor  $commentExtractor
-     * @param array                $handlers
-     * @param array                $annotationsProviders
-     * @param string               $cacheFile
-     * @param bool|false           $debug
+     * @param HandlerInterface[]             $handlers
+     * @param AnnotationsProviderInterface[] $annotationsProviders
+     * @param string[]                       $excludeSections
+     * @param string                         $cacheFile
+     * @param bool|false                     $debug
      */
     public function __construct(
-        ContainerInterface $container,
         RouterInterface $router,
         Reader $reader,
         DocCommentExtractor $commentExtractor,
         array $handlers,
         array $annotationsProviders,
-        $cacheFile,
-        $debug = false
+        array $excludeSections,
+        private string $cacheFile,
+        private bool $debug = false
     ) {
-        parent::__construct($container, $router, $reader, $commentExtractor, $handlers, $annotationsProviders);
-
-        $this->cacheFile = $cacheFile;
-        $this->debug = $debug;
+        parent::__construct($router, $reader, $commentExtractor, $handlers, $annotationsProviders, $excludeSections);
     }
 
     /**

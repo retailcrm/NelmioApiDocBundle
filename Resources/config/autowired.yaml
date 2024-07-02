@@ -6,12 +6,18 @@ services:
 
     Nelmio\ApiDocBundle\Command\DumpCommand:
         arguments:
-            $container: '@service_container'
+            $simpleFormatter: '@nelmio_api_doc.formatter.simple_formatter'
+            $markdownFormatter: '@nelmio_api_doc.formatter.markdown_formatter'
+            $htmlFormatter: '@nelmio_api_doc.formatter.html_formatter'
+            $apiDocExtractor: '@nelmio_api_doc.extractor.api_doc_extractor'
 
     Nelmio\ApiDocBundle\Command\SwaggerDumpCommand:
         arguments:
-            $container: '@service_container'
+            $extractor: '@nelmio_api_doc.extractor.api_doc_extractor'
+            $formatter: '@nelmio_api_doc.formatter.swagger_formatter'
 
     Nelmio\ApiDocBundle\Controller\ApiDocController:
         arguments:
-            $c: '@service_container'
+            $extractor: '@nelmio_api_doc.extractor.api_doc_extractor'
+            $htmlFormatter: '@nelmio_api_doc.formatter.html_formatter'
+            $swaggerFormatter: '@nelmio_api_doc.formatter.swagger_formatter'

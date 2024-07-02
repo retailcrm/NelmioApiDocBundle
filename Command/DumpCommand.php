@@ -12,12 +12,15 @@
 namespace Nelmio\ApiDocBundle\Command;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Nelmio\ApiDocBundle\Extractor\ApiDocExtractor;
+use Nelmio\ApiDocBundle\Formatter\HtmlFormatter;
+use Nelmio\ApiDocBundle\Formatter\MarkdownFormatter;
+use Nelmio\ApiDocBundle\Formatter\SimpleFormatter;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -27,29 +30,28 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 )]
 class DumpCommand extends Command
 {
-    /**
-     * @var array
-     */
-    protected $availableFormats = array('markdown', 'json', 'html');
+    private const AVAILABLE_FORMATS = ['markdown', 'json', 'html'];
 
     /**
      * @param TranslatorInterface&LocaleAwareInterface $translator
      */
     public function __construct(
-        private ContainerInterface $container,
-        private TranslatorInterface $translator,
-        string $name = null
+        private readonly SimpleFormatter $simpleFormatter,
+        private readonly MarkdownFormatter $markdownFormatter,
+        private readonly HtmlFormatter $htmlFormatter,
+        private readonly ApiDocExtractor $apiDocExtractor,
+        private readonly TranslatorInterface $translator
     ) {
-        parent::__construct($name);
+        parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->addOption(
                 'format', '', InputOption::VALUE_REQUIRED,
-                'Output format like: ' . implode(', ', $this->availableFormats),
-                $this->availableFormats[0]
+                'Output format like: ' . implode(', ', self::AVAILABLE_FORMATS),
+                self::AVAILABLE_FORMATS[0]
             )
             ->addOption('api-version', null, InputOption::VALUE_REQUIRED, 'The API version')
             ->addOption('locale', null, InputOption::VALUE_REQUIRED, 'Locale for translation')
@@ -63,15 +65,12 @@ class DumpCommand extends Command
         $format = $input->getOption('format');
         $view = $input->getOption('view');
 
-        if ($format === 'json') {
-            $formatter = $this->container->get('nelmio_api_doc.formatter.simple_formatter');
-        } else {
-            if (!in_array($format, $this->availableFormats)) {
-                throw new \RuntimeException(sprintf('Format "%s" not supported.', $format));
-            }
-
-            $formatter = $this->container->get(sprintf('nelmio_api_doc.formatter.%s_formatter', $format));
-        }
+        $formatter = match ($format) {
+            'json' => $this->simpleFormatter,
+            'markdown' => $this->markdownFormatter,
+            'html' => $this->htmlFormatter,
+            default => throw new \RuntimeException(sprintf('Format "%s" not supported.', $format)),
+        };
 
         if ($input->hasOption('locale')) {
             $this->translator->setLocale($input->getOption('locale') ?? '');
@@ -81,19 +80,18 @@ class DumpCommand extends Command
             $formatter->setVersion($input->getOption('api-version'));
         }
 
-        if ($input->getOption('no-sandbox') && 'html' === $format) {
+        if ($formatter instanceof HtmlFormatter && $input->getOption('no-sandbox')) {
             $formatter->setEnableSandbox(false);
         }
 
-        $extractor = $this->container->get('nelmio_api_doc.extractor.api_doc_extractor');
         $extractedDoc = $input->hasOption('api-version') ?
-            $extractor->allForVersion($input->getOption('api-version'), $view) :
-            $extractor->all($view);
+            $this->apiDocExtractor->allForVersion($input->getOption('api-version'), $view) :
+            $this->apiDocExtractor->all($view);
 
         $formattedDoc = $formatter->format($extractedDoc);
 
         if ('json' === $format) {
-            $output->writeln(json_encode($formattedDoc));
+            $output->writeln(json_encode($formattedDoc, JSON_THROW_ON_ERROR));
         } else {
             $output->writeln($formattedDoc, OutputInterface::OUTPUT_RAW);
         }
