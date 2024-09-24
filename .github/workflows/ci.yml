@@ -9,34 +9,36 @@ on:
 
 jobs:
   tests:
-    runs-on: ubuntu-20.04
+    name: PHPUnit PHP ${{ matrix.php-version }} ${{ matrix.dependency }} (Symfony ${{ matrix.symfony-version }})
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
         php-version:
           - '8.1'
           - '8.2'
+          - '8.3'
         symfony-version:
           - '5.4.*'
           - '6.4.*'
         coverage: [ 'none' ]
     steps:
       - name: "Checkout"
-        uses: "actions/checkout@v2"
+        uses: "actions/checkout@v4"
 
       - name: "Install PHP"
         uses: "shivammathur/setup-php@v2"
         with:
-          tools: flex
           php-version: "${{ matrix.php-version }}"
-          coverage: "${{ matrix.coverage }}"
 
-      - name: "Install dependencies"
-        uses: ramsey/composer-install@v2
-        env:
-          SYMFONY_REQUIRE: "${{ matrix.symfony-version }}"
+      - name: Configure Symfony
+        run: composer config extra.symfony.require "${{ matrix.symfony-version }}"
 
-      - name: "Run tests"
-        run: make phpunit
-        env:
-          PHP_IMAGE_TAG: "${{ matrix.php-version }}"
+      - name: Update project dependencies
+        run: composer update --no-progress --ansi --prefer-stable
+
+      - name: Validate composer
+        run: composer validate --strict --no-check-lock
+
+      - name: Run tests
+        run: vendor/bin/phpunit
