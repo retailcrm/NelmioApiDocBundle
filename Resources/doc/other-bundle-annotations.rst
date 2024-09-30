@@ -8,7 +8,6 @@ This bundle will get information from the following other annotations:
   (when strict parameter is true), ``filters`` (when strict is false)
 * ``@JMS\SecurityExtraBundle\Annotation\Secure`` - set ``authentication`` to true,
   ``authenticationRoles`` to the given roles
-* ``@Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache`` - set ``cache``
 
 PHPDoc
 ------

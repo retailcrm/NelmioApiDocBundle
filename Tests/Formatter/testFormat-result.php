@@ -2605,7 +2605,6 @@ With multiple lines.',
                 array (
                     'method' => 'POST',
                     'uri' => '/zcached',
-                    'cache' => 60,
                     'https' => false,
                     'authentication' => false,
                     'authenticationRoles' =>
@@ -2618,7 +2617,7 @@ With multiple lines.',
                     'method' => 'POST',
                     'uri' => '/zsecured',
                     'https' => false,
-                    'authentication' => true,
+                    'authentication' => false,
                     'authenticationRoles' =>
                         array (
                         ),
