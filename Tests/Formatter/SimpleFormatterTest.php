@@ -25,7 +25,7 @@ class SimpleFormatterTest extends WebTestCase
         restore_error_handler();
         $result = $container->get('nelmio_api_doc.formatter.simple_formatter')->format($data);
 
-        $suffix = class_exists('Dunglas\ApiBundle\DunglasApiBundle') ? '' : '_1';
+        $suffix = '_1';
         $expected = require __DIR__ . '/testFormat-result' . $suffix . '.php';
 
         $this->assertEquals($expected, $result, 'file ' . __DIR__ . '/testFormat-result' . $suffix . '.php');

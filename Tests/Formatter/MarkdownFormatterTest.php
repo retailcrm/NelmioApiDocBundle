@@ -26,7 +26,7 @@ class MarkdownFormatterTest extends WebTestCase
         restore_error_handler();
         $result = $container->get('nelmio_api_doc.formatter.markdown_formatter')->format($data);
 
-        $suffix = class_exists('Dunglas\ApiBundle\DunglasApiBundle') ? '' : '_1';
+        $suffix = '_1';
         $expected = file_get_contents(__DIR__ . '/testFormat-result' . $suffix . '.markdown');
         if (LegacyFormHelper::isLegacy()) {
             $expected = str_replace('DependencyType', 'dependency_type', $expected);

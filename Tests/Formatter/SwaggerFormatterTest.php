@@ -41,119 +41,51 @@ class SwaggerFormatterTest extends WebTestCase
         /** @var $formatter SwaggerFormatter */
         $actual = $this->formatter->format($data, null);
 
-        if (class_exists('Dunglas\ApiBundle\DunglasApiBundle')) {
-            $expected = [
-                'swaggerVersion' => '1.2',
-                'apis' => [
-                    0 => [
-                        'path' => '/other-resources',
-                        'description' => 'Operations on another resource.',
-                    ],
-                    1 => [
-                        'path' => '/resources',
-                        'description' => 'Operations on resource.',
-                    ],
-                    2 => [
-                        'path' => '/tests',
-                        'description' => null,
-                    ],
-                    3 => [
-                        'path' => '/tests',
-                        'description' => null,
-                    ],
-                    4 => [
-                        'path' => '/tests2',
-                        'description' => null,
-                    ],
-                    5 => [
-                        'path' => '/TestResource',
-                        'description' => null,
-                    ],
-                    6 => [
-                        'path' => '/others',
-                        'description' => 'Popo',
-                    ],
-                    7 => [
-                        'path' => '/others',
-                        'description' => 'Popo',
-                    ],
-                    8 => [
-                        'path' => '/others',
-                        'description' => 'Popo',
-                    ],
-                    9 => [
-                        'path' => '/others',
-                        'description' => 'Popo',
-                    ],
-                    10 => [
-                        'path' => '/others',
-                        'description' => 'Popo',
-                    ],
+        $expected = [
+            'swaggerVersion' => '1.2',
+            'apiVersion' => '3.14',
+            'info' => [
+                'title' => 'Nelmio Swagger',
+                'description' => 'Testing Swagger integration.',
+                'TermsOfServiceUrl' => 'https://github.com',
+                'contact' => 'user@domain.tld',
+                'license' => 'MIT',
+                'licenseUrl' => 'http://opensource.org/licenses/MIT',
+            ],
+            'authorizations' => [
+                'apiKey' => [
+                    'type' => 'apiKey',
+                    'passAs' => 'header',
+                    'keyname' => 'access_token',
                 ],
-                'apiVersion' => '3.14',
-                'info' => [
-                    'title' => 'Nelmio Swagger',
-                    'description' => 'Testing Swagger integration.',
-                    'TermsOfServiceUrl' => 'https://github.com',
-                    'contact' => 'user@domain.tld',
-                    'license' => 'MIT',
-                    'licenseUrl' => 'http://opensource.org/licenses/MIT',
+            ],
+            'apis' => [
+                [
+                    'path' => '/other-resources',
+                    'description' => 'Operations on another resource.',
                 ],
-                'authorizations' => [
-                    'apiKey' => [
-                        'type' => 'apiKey',
-                        'passAs' => 'header',
-                        'keyname' => 'access_token',
-                    ],
+                [
+                    'path' => '/resources',
+                    'description' => 'Operations on resource.',
                 ],
-            ];
-        } else {
-            $expected = [
-                'swaggerVersion' => '1.2',
-                'apiVersion' => '3.14',
-                'info' => [
-                    'title' => 'Nelmio Swagger',
-                    'description' => 'Testing Swagger integration.',
-                    'TermsOfServiceUrl' => 'https://github.com',
-                    'contact' => 'user@domain.tld',
-                    'license' => 'MIT',
-                    'licenseUrl' => 'http://opensource.org/licenses/MIT',
+                [
+                    'path' => '/tests',
+                    'description' => null,
                 ],
-                'authorizations' => [
-                    'apiKey' => [
-                        'type' => 'apiKey',
-                        'passAs' => 'header',
-                        'keyname' => 'access_token',
-                    ],
+                [
+                    'path' => '/tests',
+                    'description' => null,
                 ],
-                'apis' => [
-                    [
-                        'path' => '/other-resources',
-                        'description' => 'Operations on another resource.',
-                    ],
-                    [
-                        'path' => '/resources',
-                        'description' => 'Operations on resource.',
-                    ],
-                    [
-                        'path' => '/tests',
-                        'description' => null,
-                    ],
-                    [
-                        'path' => '/tests',
-                        'description' => null,
-                    ],
-                    [
-                        'path' => '/tests2',
-                        'description' => null,
-                    ],
-                    [
-                        'path' => '/TestResource',
-                        'description' => null,
-                    ],
+                [
+                    'path' => '/tests2',
+                    'description' => null,
                 ],
-            ];
-        }
+                [
+                    'path' => '/TestResource',
+                    'description' => null,
+                ],
+            ],
+        ];
 
         $this->assertEquals($expected, $actual);
     }

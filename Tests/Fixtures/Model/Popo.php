@@ -11,9 +11,6 @@
 
 namespace Nelmio\ApiDocBundle\Tests\Fixtures\Model;
 
-/**
- * @author Kévin Dunglas <dunglas@gmail.com>
- */
 class Popo
 {
     /**

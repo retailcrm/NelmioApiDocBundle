@@ -32,10 +32,5 @@ class LoadExtractorParsersPass implements CompilerPassInterface
         if ($container->hasDefinition('jms_serializer.serializer')) {
             $loader->load('services.jms.xml');
         }
-
-        // DunglasJsonLdApiBundle may or may not be installed, if it is, load that config as well
-        if ($container->hasDefinition('api.resource_collection')) {
-            $loader->load('services.dunglas_api.xml');
-        }
     }
 }
