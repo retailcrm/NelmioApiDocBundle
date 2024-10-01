@@ -15,20 +15,14 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class SimpleFormatter extends AbstractFormatter
 {
-    /**
-     * {@inheritdoc}
-     */
     public function formatOne(ApiDoc $annotation)
     {
         return $annotation->toArray();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function format(array $collection)
     {
-        $array = array();
+        $array = [];
         foreach ($collection as $coll) {
             $annotationArray = $coll['annotation']->toArray();
             unset($annotationArray['parsedResponseMap']);
@@ -39,17 +33,11 @@ class SimpleFormatter extends AbstractFormatter
         return $array;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function renderOne(array $data)
+    protected function renderOne(array $data): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function render(array $collection)
+    protected function render(array $collection): void
     {
     }
 }

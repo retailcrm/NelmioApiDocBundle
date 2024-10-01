@@ -11,12 +11,11 @@
 
 namespace NelmioApiDocBundle\Tests\Parser;
 
-use Nelmio\ApiDocBundle\DataTypes;
-use Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested;
-use Nelmio\ApiDocBundle\Parser\JmsMetadataParser;
 use JMS\Serializer\Metadata\ClassMetadata;
 use JMS\Serializer\Metadata\PropertyMetadata;
 use JMS\Serializer\Naming\CamelCaseNamingStrategy;
+use Nelmio\ApiDocBundle\DataTypes;
+use Nelmio\ApiDocBundle\Parser\JmsMetadataParser;
 use PHPUnit\Framework\TestCase;
 
 class JmsMetadataParserTest extends TestCase
@@ -24,33 +23,34 @@ class JmsMetadataParserTest extends TestCase
     /**
      * @dataProvider dataTestParserWithNestedType
      */
-    public function testParserWithNestedType($type)
+    public function testParserWithNestedType($type): void
     {
         $metadataFactory = $this->createMock('Metadata\MetadataFactoryInterface');
         $docCommentExtractor = $this->getMockBuilder('Nelmio\ApiDocBundle\Util\DocCommentExtractor')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getMock()
+        ;
 
         $propertyMetadataFoo = new PropertyMetadata('Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested', 'foo');
-        $propertyMetadataFoo->type = array(
-            'name' => 'DateTime'
-        );
+        $propertyMetadataFoo->type = [
+            'name' => 'DateTime',
+        ];
 
         $propertyMetadataBar = new PropertyMetadata('Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested', 'bar');
-        $propertyMetadataBar->type = array(
-            'name' => 'string'
-        );
+        $propertyMetadataBar->type = [
+            'name' => 'string',
+        ];
 
         $propertyMetadataBaz = new PropertyMetadata('Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested', 'baz');
-        $propertyMetadataBaz->type = array(
+        $propertyMetadataBaz->type = [
             'name' => $type,
-            'params' =>  array(
-                array(
+            'params' => [
+                [
                     'name' => 'integer',
-                    'params' => array()
-                )
-            )
-        );
+                    'params' => [],
+                ],
+            ],
+        ];
 
         $metadata = new ClassMetadata('Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested');
         $metadata->addPropertyMetadata($propertyMetadataFoo);
@@ -74,74 +74,76 @@ class JmsMetadataParserTest extends TestCase
         $metadataFactory->expects($this->once())
             ->method('getMetadataForClass')
             ->with($input)
-            ->will($this->returnValue($metadata));
+            ->willReturn($metadata)
+        ;
 
         $jmsMetadataParser = new JmsMetadataParser($metadataFactory, $propertyNamingStrategy, $docCommentExtractor);
 
         $output = $jmsMetadataParser->parse(
-            array(
-                'class'   => $input,
-                'groups'  => array(),
-            )
+            [
+                'class' => $input,
+                'groups' => [],
+            ]
         );
 
         $this->assertEquals(
-            array(
-                'foo' => array(
-                    'dataType'     => 'DateTime',
+            [
+                'foo' => [
+                    'dataType' => 'DateTime',
                     'actualType' => DataTypes::DATETIME,
                     'subType' => null,
                     'default' => null,
-                    'required'     => false,
-                    'description'  => null,
-                    'readonly'     => false,
+                    'required' => false,
+                    'description' => null,
+                    'readonly' => false,
                     'sinceVersion' => null,
                     'untilVersion' => null,
-                ),
-                'bar' => array(
-                    'dataType'     => 'string',
+                ],
+                'bar' => [
+                    'dataType' => 'string',
                     'actualType' => DataTypes::STRING,
                     'subType' => null,
                     'default' => 'baz',
-                    'required'     => false,
-                    'description'  => null,
-                    'readonly'     => false,
+                    'required' => false,
+                    'description' => null,
+                    'readonly' => false,
                     'sinceVersion' => null,
                     'untilVersion' => null,
-                ),
-                'baz' => array(
-                    'dataType'     => 'array of integers',
+                ],
+                'baz' => [
+                    'dataType' => 'array of integers',
                     'actualType' => DataTypes::COLLECTION,
                     'subType' => DataTypes::INTEGER,
                     'default' => null,
-                    'required'     => false,
-                    'description'  => null,
-                    'readonly'     => false,
+                    'required' => false,
+                    'description' => null,
+                    'readonly' => false,
                     'sinceVersion' => null,
                     'untilVersion' => null,
-                )
-            ),
+                ],
+            ],
             $output
         );
     }
 
-    public function testParserWithGroups()
+    public function testParserWithGroups(): void
     {
-        $metadataFactory     = $this->createMock('Metadata\MetadataFactoryInterface');
+        $metadataFactory = $this->createMock('Metadata\MetadataFactoryInterface');
         $docCommentExtractor = $this->getMockBuilder('Nelmio\ApiDocBundle\Util\DocCommentExtractor')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getMock()
+        ;
 
-        $propertyMetadataFoo       = new PropertyMetadata('Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested', 'foo');
-        $propertyMetadataFoo->type = array('name' => 'string');
+        $propertyMetadataFoo = new PropertyMetadata('Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested', 'foo');
+        $propertyMetadataFoo->type = ['name' => 'string'];
 
-        $propertyMetadataBar         = new PropertyMetadata('Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested', 'bar');
-        $propertyMetadataBar->type   = array('name' => 'string');
-        $propertyMetadataBar->groups = array('Default', 'Special');
+        $propertyMetadataBar = new PropertyMetadata('Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested', 'bar');
+        $propertyMetadataBar->type = ['name' => 'string'];
+        $propertyMetadataBar->groups = ['Default', 'Special'];
 
-        $propertyMetadataBaz         = new PropertyMetadata('Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested', 'baz');
-        $propertyMetadataBaz->type   = array('name' => 'string');
-        $propertyMetadataBaz->groups = array('Special');
+        $propertyMetadataBaz = new PropertyMetadata('Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested', 'baz');
+        $propertyMetadataBaz->type = ['name' => 'string'];
+        $propertyMetadataBaz->groups = ['Special'];
 
         $input = 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested';
 
@@ -153,7 +155,8 @@ class JmsMetadataParserTest extends TestCase
         $metadataFactory->expects($this->any())
             ->method('getMetadataForClass')
             ->with($input)
-            ->will($this->returnValue($metadata));
+            ->willReturn($metadata)
+        ;
 
         $propertyNamingStrategy = new CamelCaseNamingStrategy();
 
@@ -161,202 +164,203 @@ class JmsMetadataParserTest extends TestCase
 
         // No group specified.
         $output = $jmsMetadataParser->parse(
-            array(
-                'class'   => $input,
-                'groups'  => array(),
-            )
+            [
+                'class' => $input,
+                'groups' => [],
+            ]
         );
 
         $this->assertEquals(
-            array(
-                'foo' => array(
-                    'dataType'     => 'string',
+            [
+                'foo' => [
+                    'dataType' => 'string',
                     'actualType' => DataTypes::STRING,
                     'subType' => null,
                     'default' => null,
-                    'required'     => false,
-                    'description'  => null,
-                    'readonly'     => false,
+                    'required' => false,
+                    'description' => null,
+                    'readonly' => false,
                     'sinceVersion' => null,
                     'untilVersion' => null,
-                ),
-                'bar' => array(
-                    'dataType'     => 'string',
+                ],
+                'bar' => [
+                    'dataType' => 'string',
                     'actualType' => DataTypes::STRING,
                     'subType' => null,
                     'default' => 'baz',
-                    'required'     => false,
-                    'description'  => null,
-                    'readonly'     => false,
+                    'required' => false,
+                    'description' => null,
+                    'readonly' => false,
                     'sinceVersion' => null,
                     'untilVersion' => null,
-                ),
-                'baz' => array(
-                    'dataType'     => 'string',
+                ],
+                'baz' => [
+                    'dataType' => 'string',
                     'actualType' => DataTypes::STRING,
                     'subType' => null,
                     'default' => null,
-                    'required'     => false,
-                    'description'  => null,
-                    'readonly'     => false,
+                    'required' => false,
+                    'description' => null,
+                    'readonly' => false,
                     'sinceVersion' => null,
                     'untilVersion' => null,
-                ),
-            ),
+                ],
+            ],
             $output
         );
 
         // Default group.
         $output = $jmsMetadataParser->parse(
-            array(
-                'class'   => $input,
-                'groups'  => array('Default'),
-            )
+            [
+                'class' => $input,
+                'groups' => ['Default'],
+            ]
         );
 
         $this->assertEquals(
-            array(
-                'foo' => array(
-                    'dataType'     => 'string',
+            [
+                'foo' => [
+                    'dataType' => 'string',
                     'actualType' => DataTypes::STRING,
                     'subType' => null,
                     'default' => null,
-                    'required'     => false,
-                    'description'  => null,
-                    'readonly'     => false,
+                    'required' => false,
+                    'description' => null,
+                    'readonly' => false,
                     'sinceVersion' => null,
                     'untilVersion' => null,
-                ),
-                'bar' => array(
-                    'dataType'     => 'string',
+                ],
+                'bar' => [
+                    'dataType' => 'string',
                     'actualType' => DataTypes::STRING,
                     'subType' => null,
                     'default' => 'baz',
-                    'required'     => false,
-                    'description'  => null,
-                    'readonly'     => false,
+                    'required' => false,
+                    'description' => null,
+                    'readonly' => false,
                     'sinceVersion' => null,
                     'untilVersion' => null,
-                ),
-            ),
+                ],
+            ],
             $output
         );
 
         // Special group.
         $output = $jmsMetadataParser->parse(
-            array(
-                'class'   => $input,
-                'groups'  => array('Special'),
-            )
+            [
+                'class' => $input,
+                'groups' => ['Special'],
+            ]
         );
 
         $this->assertEquals(
-            array(
-                'bar' => array(
-                    'dataType'     => 'string',
+            [
+                'bar' => [
+                    'dataType' => 'string',
                     'actualType' => DataTypes::STRING,
                     'subType' => null,
                     'default' => 'baz',
-                    'required'     => false,
-                    'description'  => null,
-                    'readonly'     => false,
+                    'required' => false,
+                    'description' => null,
+                    'readonly' => false,
                     'sinceVersion' => null,
                     'untilVersion' => null,
-                ),
-                'baz' => array(
-                    'dataType'     => 'string',
+                ],
+                'baz' => [
+                    'dataType' => 'string',
                     'actualType' => DataTypes::STRING,
                     'subType' => null,
                     'default' => null,
-                    'required'     => false,
-                    'description'  => null,
-                    'readonly'     => false,
+                    'required' => false,
+                    'description' => null,
+                    'readonly' => false,
                     'sinceVersion' => null,
                     'untilVersion' => null,
-                ),
-            ),
+                ],
+            ],
             $output
         );
 
         // Default + Special groups.
         $output = $jmsMetadataParser->parse(
-            array(
-                'class'   => $input,
-                'groups'  => array('Default', 'Special'),
-            )
+            [
+                'class' => $input,
+                'groups' => ['Default', 'Special'],
+            ]
         );
 
         $this->assertEquals(
-            array(
-                'foo' => array(
-                    'dataType'     => 'string',
+            [
+                'foo' => [
+                    'dataType' => 'string',
                     'actualType' => DataTypes::STRING,
                     'subType' => null,
                     'default' => null,
-                    'required'     => false,
-                    'description'  => null,
-                    'readonly'     => false,
+                    'required' => false,
+                    'description' => null,
+                    'readonly' => false,
                     'sinceVersion' => null,
                     'untilVersion' => null,
-                ),
-                'bar' => array(
-                    'dataType'     => 'string',
+                ],
+                'bar' => [
+                    'dataType' => 'string',
                     'actualType' => DataTypes::STRING,
                     'subType' => null,
                     'default' => 'baz',
-                    'required'     => false,
-                    'description'  => null,
-                    'readonly'     => false,
+                    'required' => false,
+                    'description' => null,
+                    'readonly' => false,
                     'sinceVersion' => null,
                     'untilVersion' => null,
-                ),
-                'baz' => array(
-                    'dataType'     => 'string',
+                ],
+                'baz' => [
+                    'dataType' => 'string',
                     'actualType' => DataTypes::STRING,
                     'subType' => null,
                     'default' => null,
-                    'required'     => false,
-                    'description'  => null,
-                    'readonly'     => false,
+                    'required' => false,
+                    'description' => null,
+                    'readonly' => false,
                     'sinceVersion' => null,
                     'untilVersion' => null,
-                )
-            ),
+                ],
+            ],
             $output
         );
     }
 
-    public function testNestedGroups()
+    public function testNestedGroups(): void
     {
-        $metadataFactory     = $this->createMock('Metadata\MetadataFactoryInterface');
+        $metadataFactory = $this->createMock('Metadata\MetadataFactoryInterface');
         $docCommentExtractor = $this->getMockBuilder('Nelmio\ApiDocBundle\Util\DocCommentExtractor')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getMock()
+        ;
 
         $input = 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested';
         $nestedInput = 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest';
 
         $nestedPropertyMetadataHidden = new PropertyMetadata($nestedInput, 'hidden');
-        $nestedPropertyMetadataHidden->type = array('name' => 'string');
-        $nestedPropertyMetadataHidden->groups = array('hidden');
+        $nestedPropertyMetadataHidden->type = ['name' => 'string'];
+        $nestedPropertyMetadataHidden->groups = ['hidden'];
 
         $nestedPropertyMetadataFoo = new PropertyMetadata($nestedInput, 'foo');
-        $nestedPropertyMetadataFoo->type = array('name' => 'string');
+        $nestedPropertyMetadataFoo->type = ['name' => 'string'];
 
         $nestedMetadata = new ClassMetadata($nestedInput);
         $nestedMetadata->addPropertyMetadata($nestedPropertyMetadataHidden);
         $nestedMetadata->addPropertyMetadata($nestedPropertyMetadataFoo);
 
-        $propertyMetadataFoo       = new PropertyMetadata($input, 'foo');
-        $propertyMetadataFoo->type = array('name' => 'string');
+        $propertyMetadataFoo = new PropertyMetadata($input, 'foo');
+        $propertyMetadataFoo->type = ['name' => 'string'];
 
-        $propertyMetadataBar         = new PropertyMetadata($input, 'bar');
-        $propertyMetadataBar->type   = array('name' => 'string');
-        $propertyMetadataBar->groups = array('Default');
+        $propertyMetadataBar = new PropertyMetadata($input, 'bar');
+        $propertyMetadataBar->type = ['name' => 'string'];
+        $propertyMetadataBar->groups = ['Default'];
 
-        $propertyMetadataParent         = new PropertyMetadata($input, 'parent');
-        $propertyMetadataParent->type   = array('name' => $nestedInput);
-        $propertyMetadataParent->groups = array('hidden');
+        $propertyMetadataParent = new PropertyMetadata($input, 'parent');
+        $propertyMetadataParent->type = ['name' => $nestedInput];
+        $propertyMetadataParent->groups = ['hidden'];
 
         $metadata = new ClassMetadata($input);
         $metadata->addPropertyMetadata($propertyMetadataFoo);
@@ -365,25 +369,26 @@ class JmsMetadataParserTest extends TestCase
 
         $metadataFactory->expects($this->any())
             ->method('getMetadataForClass')
-            ->will($this->returnValueMap(array(
-                array($input, $metadata),
-                array($nestedInput, $nestedMetadata)
-            )));
+            ->willReturnMap([
+                [$input, $metadata],
+                [$nestedInput, $nestedMetadata],
+            ])
+        ;
 
         $propertyNamingStrategy = new CamelCaseNamingStrategy();
         $jmsMetadataParser = new JmsMetadataParser($metadataFactory, $propertyNamingStrategy, $docCommentExtractor);
 
         // No group specified.
         $output = $jmsMetadataParser->parse(
-            array(
-                'class'   => $input,
-                'groups'  => array('hidden'),
-            )
+            [
+                'class' => $input,
+                'groups' => ['hidden'],
+            ]
         );
 
         $this->assertEquals(
-            array(
-                'parent' => array(
+            [
+                'parent' => [
                     'dataType' => 'object (JmsTest)',
                     'actualType' => DataTypes::MODEL,
                     'subType' => $nestedInput,
@@ -394,8 +399,8 @@ class JmsMetadataParserTest extends TestCase
                     'sinceVersion' => null,
                     'untilVersion' => null,
                     'class' => $nestedInput,
-                    'children' => array(
-                        'hidden' => array(
+                    'children' => [
+                        'hidden' => [
                             'dataType' => 'string',
                             'actualType' => 'string',
                             'subType' => null,
@@ -404,31 +409,32 @@ class JmsMetadataParserTest extends TestCase
                             'description' => null,
                             'readonly' => false,
                             'sinceVersion' => null,
-                            'untilVersion' => null
-                        )
-                    )
-                )
-            ),
+                            'untilVersion' => null,
+                        ],
+                    ],
+                ],
+            ],
             $output
         );
     }
 
-    public function testParserWithVersion()
+    public function testParserWithVersion(): void
     {
-        $metadataFactory     = $this->createMock('Metadata\MetadataFactoryInterface');
+        $metadataFactory = $this->createMock('Metadata\MetadataFactoryInterface');
         $docCommentExtractor = $this->getMockBuilder('Nelmio\ApiDocBundle\Util\DocCommentExtractor')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getMock()
+        ;
 
-        $propertyMetadataFoo       = new PropertyMetadata('Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested', 'foo');
-        $propertyMetadataFoo->type = array('name' => 'string');
+        $propertyMetadataFoo = new PropertyMetadata('Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested', 'foo');
+        $propertyMetadataFoo->type = ['name' => 'string'];
 
-        $propertyMetadataBar               = new PropertyMetadata('Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested', 'bar');
-        $propertyMetadataBar->type         = array('name' => 'string');
+        $propertyMetadataBar = new PropertyMetadata('Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested', 'bar');
+        $propertyMetadataBar->type = ['name' => 'string'];
         $propertyMetadataBar->sinceVersion = '2.0';
 
-        $propertyMetadataBaz               = new PropertyMetadata('Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested', 'baz');
-        $propertyMetadataBaz->type         = array('name' => 'string');
+        $propertyMetadataBaz = new PropertyMetadata('Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested', 'baz');
+        $propertyMetadataBaz->type = ['name' => 'string'];
         $propertyMetadataBaz->untilVersion = '3.0';
 
         $input = 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested';
@@ -441,7 +447,8 @@ class JmsMetadataParserTest extends TestCase
         $metadataFactory->expects($this->any())
             ->method('getMetadataForClass')
             ->with($input)
-            ->will($this->returnValue($metadata));
+            ->willReturn($metadata)
+        ;
 
         $propertyNamingStrategy = new CamelCaseNamingStrategy();
 
@@ -449,15 +456,15 @@ class JmsMetadataParserTest extends TestCase
 
         // No group specified.
         $output = $jmsMetadataParser->parse(
-            array(
-                'class'   => $input,
-                'groups'  => array(),
-            )
+            [
+                'class' => $input,
+                'groups' => [],
+            ]
         );
 
         $this->assertEquals(
-            array(
-                'foo' => array(
+            [
+                'foo' => [
                     'dataType' => 'string',
                     'actualType' => DataTypes::STRING,
                     'subType' => null,
@@ -467,8 +474,8 @@ class JmsMetadataParserTest extends TestCase
                     'readonly' => false,
                     'sinceVersion' => null,
                     'untilVersion' => null,
-                ),
-                'bar' => array(
+                ],
+                'bar' => [
                     'dataType' => 'string',
                     'actualType' => DataTypes::STRING,
                     'subType' => null,
@@ -478,8 +485,8 @@ class JmsMetadataParserTest extends TestCase
                     'readonly' => false,
                     'sinceVersion' => '2.0',
                     'untilVersion' => null,
-                ),
-                'baz' => array(
+                ],
+                'baz' => [
                     'dataType' => 'string',
                     'actualType' => DataTypes::STRING,
                     'subType' => null,
@@ -489,24 +496,25 @@ class JmsMetadataParserTest extends TestCase
                     'readonly' => false,
                     'sinceVersion' => null,
                     'untilVersion' => '3.0',
-                )
-            ),
+                ],
+            ],
             $output
         );
     }
 
-    public function testParserWithInline()
+    public function testParserWithInline(): void
     {
-        $metadataFactory     = $this->createMock('Metadata\MetadataFactoryInterface');
+        $metadataFactory = $this->createMock('Metadata\MetadataFactoryInterface');
         $docCommentExtractor = $this->getMockBuilder('Nelmio\ApiDocBundle\Util\DocCommentExtractor')
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getMock()
+        ;
 
         $propertyMetadataFoo = new PropertyMetadata('Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsInline', 'foo');
-        $propertyMetadataFoo->type = array('name' => 'string');
+        $propertyMetadataFoo->type = ['name' => 'string'];
 
         $propertyMetadataInline = new PropertyMetadata('Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsInline', 'inline');
-        $propertyMetadataInline->type = array('name' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest');
+        $propertyMetadataInline->type = ['name' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest'];
         $propertyMetadataInline->inline = true;
 
         $input = 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsInline';
@@ -516,7 +524,7 @@ class JmsMetadataParserTest extends TestCase
         $metadata->addPropertyMetadata($propertyMetadataInline);
 
         $propertyMetadataBar = new PropertyMetadata('Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest', 'bar');
-        $propertyMetadataBar->type = array('name' => 'string');
+        $propertyMetadataBar->type = ['name' => 'string'];
 
         $subInput = 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest';
 
@@ -535,21 +543,22 @@ class JmsMetadataParserTest extends TestCase
                 $metadata,
                 $subMetadata,
                 $subMetadata
-            );
+            )
+        ;
         $propertyNamingStrategy = new CamelCaseNamingStrategy();
 
         $jmsMetadataParser = new JmsMetadataParser($metadataFactory, $propertyNamingStrategy, $docCommentExtractor);
 
         $output = $jmsMetadataParser->parse(
-            array(
-                'class'   => $input,
-                'groups'  => array(),
-            )
+            [
+                'class' => $input,
+                'groups' => [],
+            ]
         );
 
         $this->assertEquals(
-            array(
-                'foo' => array(
+            [
+                'foo' => [
                     'dataType' => 'string',
                     'actualType' => DataTypes::STRING,
                     'subType' => null,
@@ -559,8 +568,8 @@ class JmsMetadataParserTest extends TestCase
                     'readonly' => false,
                     'sinceVersion' => null,
                     'untilVersion' => null,
-                ),
-                'bar' => array(
+                ],
+                'bar' => [
                     'dataType' => 'string',
                     'actualType' => DataTypes::STRING,
                     'subType' => null,
@@ -570,17 +579,17 @@ class JmsMetadataParserTest extends TestCase
                     'readonly' => false,
                     'sinceVersion' => null,
                     'untilVersion' => null,
-                ),
-            ),
+                ],
+            ],
             $output
         );
     }
 
     public function dataTestParserWithNestedType()
     {
-        return array(
-            array('array'),
-            array('ArrayCollection')
-        );
+        return [
+            ['array'],
+            ['ArrayCollection'],
+        ];
     }
 }

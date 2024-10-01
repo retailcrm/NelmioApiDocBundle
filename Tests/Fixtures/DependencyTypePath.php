@@ -13,7 +13,7 @@ namespace Nelmio\ApiDocBundle\Tests\Fixtures;
 
 use Nelmio\ApiDocBundle\Util\LegacyFormHelper;
 
-/**
+/*
  * This class is used to have dynamic annotations for BC.
  * {@see Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController}
  *
@@ -22,11 +22,11 @@ use Nelmio\ApiDocBundle\Util\LegacyFormHelper;
 if (LegacyFormHelper::isLegacy()) {
     class DependencyTypePath
     {
-        const TYPE = 'dependency_type';
+        public const TYPE = 'dependency_type';
     }
 } else {
     class DependencyTypePath
     {
-        const TYPE = 'Nelmio\ApiDocBundle\Tests\Fixtures\Form\DependencyType';
+        public const TYPE = 'Nelmio\ApiDocBundle\Tests\Fixtures\Form\DependencyType';
     }
 }

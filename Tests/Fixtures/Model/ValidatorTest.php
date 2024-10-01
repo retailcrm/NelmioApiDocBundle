@@ -97,13 +97,16 @@ class ValidatorTest
 
     /**
      * @Assert\NotNull()
+     *
      * @Assert\Type("string")
+     *
      * @Assert\Email()
      */
     public $multipleassertions;
 
     /**
      * @Assert\Url()
+     *
      * @Assert\Length(min=10)
      */
     public $multipleformats;

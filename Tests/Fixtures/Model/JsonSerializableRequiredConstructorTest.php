@@ -15,14 +15,10 @@ class JsonSerializableRequiredConstructorTest implements \JsonSerializable
 {
     public function __construct($required)
     {
-
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function jsonSerialize(): mixed
     {
-        return array();
+        return [];
     }
 }

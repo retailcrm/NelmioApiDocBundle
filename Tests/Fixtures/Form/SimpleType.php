@@ -22,14 +22,14 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class SimpleType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('a', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\TextType'), array(
+        $builder->add('a', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\TextType'), [
             'description' => 'Something that describes A.',
-        ))
+        ])
         ->add('b', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\NumberType'))
         ->add('c', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\ChoiceType'),
-            array('choices' => array('X' => 'x', 'Y' => 'y', 'Z' => 'z'))
+            ['choices' => ['X' => 'x', 'Y' => 'y', 'Z' => 'z']]
         )
         ->add('d', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\DateTimeType'))
         ->add('e', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\DateType'))
@@ -46,9 +46,6 @@ class SimpleType extends AbstractType
         return $this->getBlockPrefix();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'simple';

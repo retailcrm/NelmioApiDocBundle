@@ -18,85 +18,85 @@ use Symfony\Component\Routing\Route;
  */
 class ApiDoc
 {
-    const DEFAULT_VIEW = 'default';
+    public const DEFAULT_VIEW = 'default';
 
     /**
      * Requirements are mandatory parameters in a route.
      *
      * @var array
      */
-    private $requirements = array();
+    private $requirements = [];
 
     /**
      * Which views is this route used. Defaults to "Default"
      *
      * @var array
      */
-    private $views = array();
+    private $views = [];
 
     /**
      * Filters are optional parameters in the query string.
      *
      * @var array
      */
-    private $filters  = array();
+    private $filters = [];
 
     /**
      * Parameters are data a client can send.
      *
      * @var array
      */
-    private $parameters = array();
+    private $parameters = [];
     /**
      * Headers that client can send.
      *
      * @var array
      */
-    private $headers = array();
+    private $headers = [];
 
     /**
      * @var string
      */
-    private $input = null;
+    private $input;
 
     /**
      * @var string
      */
-    private $inputs = null;
+    private $inputs;
 
     /**
      * @var string
      */
-    private $output = null;
+    private $output;
 
     /**
      * @var string
      */
-    private $link = null;
+    private $link;
 
     /**
      * Most of the time, a single line of text describing the action.
      *
      * @var string
      */
-    private $description = null;
+    private $description;
 
     /**
      * Section to group actions together.
      *
      * @var string
      */
-    private $section = null;
+    private $section;
 
     /**
      * Extended documentation.
      *
      * @var string
      */
-    private $documentation = null;
+    private $documentation;
 
     /**
-     * @var Boolean
+     * @var bool
      */
     private $resource = false;
 
@@ -118,7 +118,7 @@ class ApiDoc
     /**
      * @var array
      */
-    private $response = array();
+    private $response = [];
 
     /**
      * @var Route
@@ -126,19 +126,19 @@ class ApiDoc
     private $route;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $https = false;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $authentication = false;
 
     /**
      * @var array
      */
-    private $authenticationRoles = array();
+    private $authenticationRoles = [];
 
     /**
      * @var int
@@ -146,34 +146,34 @@ class ApiDoc
     private $cache;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $deprecated = false;
 
     /**
      * @var array
      */
-    private $statusCodes = array();
+    private $statusCodes = [];
 
     /**
      * @var string|null
      */
-    private $resourceDescription = null;
+    private $resourceDescription;
 
     /**
      * @var array
      */
-    private $responseMap = array();
+    private $responseMap = [];
 
     /**
      * @var array
      */
-    private $parsedResponseMap = array();
+    private $parsedResponseMap = [];
 
     /**
      * @var array
      */
-    private $tags = array();
+    private $tags = [];
 
     public function __construct(array $data)
     {
@@ -218,8 +218,8 @@ class ApiDoc
         }
 
         if (isset($data['views'])) {
-            if (! is_array($data['views'])) {
-                $data['views'] = array($data['views']);
+            if (!is_array($data['views'])) {
+                $data['views'] = [$data['views']];
             }
 
             foreach ($data['views'] as $view) {
@@ -324,44 +324,38 @@ class ApiDoc
 
     /**
      * @param string $name
-     * @param array  $filter
      */
-    public function addFilter($name, array $filter)
+    public function addFilter($name, array $filter): void
     {
         $this->filters[$name] = $filter;
     }
 
     /**
      * @param string $statusCode
-     * @param mixed  $description
      */
-    public function addStatusCode($statusCode, $description)
+    public function addStatusCode($statusCode, $description): void
     {
-        $this->statusCodes[$statusCode] = !is_array($description) ? array($description) : $description;
+        $this->statusCodes[$statusCode] = !is_array($description) ? [$description] : $description;
     }
 
     /**
      * @param string $tag
      * @param string $colorCode
      */
-    public function addTag($tag, $colorCode = '#d9534f')
+    public function addTag($tag, $colorCode = '#d9534f'): void
     {
         $this->tags[$tag] = $colorCode;
     }
 
     /**
      * @param string $name
-     * @param array  $requirement
      */
-    public function addRequirement($name, array $requirement)
+    public function addRequirement($name, array $requirement): void
     {
         $this->requirements[$name] = $requirement;
     }
 
-    /**
-     * @param array $requirements
-     */
-    public function setRequirements(array $requirements)
+    public function setRequirements(array $requirements): void
     {
         $this->requirements = array_merge($this->requirements, $requirements);
     }
@@ -401,7 +395,7 @@ class ApiDoc
     /**
      * @param string $description
      */
-    public function setDescription($description)
+    public function setDescription($description): void
     {
         $this->description = $description;
     }
@@ -409,7 +403,7 @@ class ApiDoc
     /**
      * @param string $link
      */
-    public function setLink($link)
+    public function setLink($link): void
     {
         $this->link = $link;
     }
@@ -417,7 +411,7 @@ class ApiDoc
     /**
      * @param string $section
      */
-    public function setSection($section)
+    public function setSection($section): void
     {
         $this->section = $section;
     }
@@ -449,7 +443,7 @@ class ApiDoc
     /**
      * @param string $documentation
      */
-    public function setDocumentation($documentation)
+    public function setDocumentation($documentation): void
     {
         $this->documentation = $documentation;
     }
@@ -463,16 +457,13 @@ class ApiDoc
     }
 
     /**
-     * @return Boolean
+     * @return bool
      */
     public function isResource()
     {
         return (bool) $this->resource;
     }
 
-    /**
-     * @return mixed
-     */
     public function getResource()
     {
         return $this->resource && is_string($this->resource) ? $this->resource : false;
@@ -480,51 +471,38 @@ class ApiDoc
 
     /**
      * @param string $name
-     * @param array  $parameter
      */
-    public function addParameter($name, array $parameter)
+    public function addParameter($name, array $parameter): void
     {
         $this->parameters[$name] = $parameter;
     }
 
-    /**
-     * @param array $parameters
-     */
-    public function setParameters(array $parameters)
+    public function setParameters(array $parameters): void
     {
         $this->parameters = $parameters;
     }
 
-    /**
-     * @param $name
-     * @param array $header
-     */
-    public function addHeader($name, array $header)
+    public function addHeader($name, array $header): void
     {
         $this->headers[$name] = $header;
     }
 
     /**
      * Sets the response data as processed by the parsers - same format as parameters
-     *
-     * @param array $response
      */
-    public function setResponse(array $response)
+    public function setResponse(array $response): void
     {
         $this->response = $response;
     }
 
-    /**
-     * @param Route $route
-     */
-    public function setRoute(Route $route)
+    public function setRoute(Route $route): void
     {
-        $this->route  = $route;
+        $this->route = $route;
 
         if (method_exists($route, 'getHost')) {
-            $this->host = $route->getHost() ? : null;
+            $this->host = $route->getHost() ?: null;
 
-            //replace route placeholders
+            // replace route placeholders
             foreach ($route->getDefaults() as $key => $value) {
                 if (null !== $this->host && is_string($value)) {
                     $this->host = str_replace('{' . $key . '}', $value, $this->host);
@@ -534,7 +512,7 @@ class ApiDoc
             $this->host = null;
         }
 
-        $this->uri    = $route->getPath();
+        $this->uri = $route->getPath();
         $this->method = $route->getMethods() ? implode('|', $route->getMethods()) : 'ANY';
     }
 
@@ -557,13 +535,13 @@ class ApiDoc
     /**
      * @param string $host
      */
-    public function setHost($host)
+    public function setHost($host): void
     {
         $this->host = $host;
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getHttps()
     {
@@ -571,15 +549,15 @@ class ApiDoc
     }
 
     /**
-     * @param boolean $https
+     * @param bool $https
      */
-    public function setHttps($https)
+    public function setHttps($https): void
     {
         $this->https = $https;
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getAuthentication()
     {
@@ -587,9 +565,9 @@ class ApiDoc
     }
 
     /**
-     * @param boolean $authentication
+     * @param bool $authentication
      */
-    public function setAuthentication($authentication)
+    public function setAuthentication($authentication): void
     {
         $this->authentication = $authentication;
     }
@@ -605,7 +583,7 @@ class ApiDoc
     /**
      * @param array $authenticationRoles
      */
-    public function setAuthenticationRoles($authenticationRoles)
+    public function setAuthenticationRoles($authenticationRoles): void
     {
         $this->authenticationRoles = $authenticationRoles;
     }
@@ -621,13 +599,13 @@ class ApiDoc
     /**
      * @param int $cache
      */
-    public function setCache($cache)
+    public function setCache($cache): void
     {
         $this->cache = (int) $cache;
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getDeprecated()
     {
@@ -667,7 +645,8 @@ class ApiDoc
     }
 
     /**
-     * @param boolean $deprecated
+     * @param bool $deprecated
+     *
      * @return $this
      */
     public function setDeprecated($deprecated)
@@ -690,10 +669,10 @@ class ApiDoc
      */
     public function toArray()
     {
-        $data = array(
+        $data = [
             'method' => $this->method,
-            'uri'    => $this->uri,
-        );
+            'uri' => $this->uri,
+        ];
 
         if ($host = $this->host) {
             $data['host'] = $host;
@@ -768,7 +747,7 @@ class ApiDoc
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getResourceDescription()
     {
@@ -796,14 +775,12 @@ class ApiDoc
     }
 
     /**
-     * @param $model
-     * @param $type
      * @param int $statusCode
      */
-    public function setResponseForStatusCode($model, $type, $statusCode = 200)
+    public function setResponseForStatusCode($model, $type, $statusCode = 200): void
     {
-        $this->parsedResponseMap[$statusCode] = array('type' => $type, 'model' => $model);
-        if ($statusCode == 200 && $this->response !== $model) {
+        $this->parsedResponseMap[$statusCode] = ['type' => $type, 'model' => $model];
+        if (200 == $statusCode && $this->response !== $model) {
             $this->response = $model;
         }
     }

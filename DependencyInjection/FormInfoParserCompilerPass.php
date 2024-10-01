@@ -8,9 +8,9 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class FormInfoParserCompilerPass implements CompilerPassInterface
 {
-    const TAG_NAME = 'nelmio_api_doc.extractor.form_info_parser';
+    public const TAG_NAME = 'nelmio_api_doc.extractor.form_info_parser';
 
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!$container->has('nelmio_api_doc.parser.form_type_parser')) {
             return;

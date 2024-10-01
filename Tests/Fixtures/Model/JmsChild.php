@@ -19,5 +19,4 @@ class JmsChild extends JmsTest
      * @JMS\Type("string");
      */
     public $child;
-
 }

@@ -24,12 +24,14 @@ class JmsTest
 
     /**
      * @JMS\Type("DateTime");
+     *
      * @JMS\ReadOnlyProperty
      */
     public $bar;
 
     /**
      * @JMS\Type("double");
+     *
      * @JMS\SerializedName("number");
      */
     public $baz;

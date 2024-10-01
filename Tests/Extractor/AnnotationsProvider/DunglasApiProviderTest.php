@@ -27,7 +27,7 @@ class DunglasApiProviderTest extends WebTestCase
         }
     }
 
-    public function testGetAnnotations()
+    public function testGetAnnotations(): void
     {
         $container = $this->getContainer();
         $provider = $container->get('nelmio_api_doc.annotations_provider.dunglas_api_annotation_provider');

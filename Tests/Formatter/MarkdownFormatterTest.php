@@ -16,12 +16,12 @@ use Nelmio\ApiDocBundle\Util\LegacyFormHelper;
 
 class MarkdownFormatterTest extends WebTestCase
 {
-    public function testFormat()
+    public function testFormat(): void
     {
         $container = $this->getContainer();
 
         $extractor = $container->get('nelmio_api_doc.extractor.api_doc_extractor');
-        set_error_handler(array($this, 'handleDeprecation'));
+        set_error_handler([$this, 'handleDeprecation']);
         $data = $extractor->all();
         restore_error_handler();
         $result = $container->get('nelmio_api_doc.formatter.markdown_formatter')->format($data);
@@ -35,13 +35,13 @@ class MarkdownFormatterTest extends WebTestCase
         $this->assertEquals($expected, $result . "\n");
     }
 
-    public function testFormatOne()
+    public function testFormatOne(): void
     {
         $container = $this->getContainer();
 
-        $extractor  = $container->get('nelmio_api_doc.extractor.api_doc_extractor');
+        $extractor = $container->get('nelmio_api_doc.extractor.api_doc_extractor');
         $annotation = $extractor->get('Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::indexAction', 'test_route_1');
-        $result     = $container->get('nelmio_api_doc.formatter.markdown_formatter')->formatOne($annotation);
+        $result = $container->get('nelmio_api_doc.formatter.markdown_formatter')->formatOne($annotation);
 
         $expected = <<<MARKDOWN
 ### `GET` /tests.{_format} ###

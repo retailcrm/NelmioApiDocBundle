@@ -13,31 +13,24 @@ namespace Nelmio\ApiDocBundle\Tests\Fixtures\Form;
 
 use Nelmio\ApiDocBundle\Util\LegacyFormHelper;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\ChoiceList\SimpleChoiceList;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class EntityType extends AbstractType
 {
     /**
-     * {@inheritdoc}
-     *
      * @deprecated Remove it when bumping requirements to Symfony 2.7+
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver): void
     {
         $this->configureOptions($resolver);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\EntityTest',
-        ));
+        ]);
 
         return;
     }
@@ -56,9 +49,6 @@ class EntityType extends AbstractType
         return $this->getBlockPrefix();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'entity';

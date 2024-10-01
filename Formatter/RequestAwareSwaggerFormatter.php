@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
 class RequestAwareSwaggerFormatter implements FormatterInterface
 {
     /**
-     * @var \Symfony\Component\HttpFoundation\Request
+     * @var Request
      */
     protected $request;
 
@@ -31,10 +31,6 @@ class RequestAwareSwaggerFormatter implements FormatterInterface
      */
     protected $formatter;
 
-    /**
-     * @param Request          $request
-     * @param SwaggerFormatter $formatter
-     */
     public function __construct(Request $request, SwaggerFormatter $formatter)
     {
         $this->request = $request;
@@ -44,16 +40,17 @@ class RequestAwareSwaggerFormatter implements FormatterInterface
     /**
      * Format a collection of documentation data.
      *
-     * @param  array        $collection
-     * @param  null         $resource
+     * @param null $resource
+     *
      * @internal param $array [ApiDoc] $collection
+     *
      * @return string|array
      */
     public function format(array $collection, $resource = null)
     {
         $result = $this->formatter->format($collection, $resource);
 
-        if ($resource !== null) {
+        if (null !== $resource) {
             $result['basePath'] = $this->request->getBaseUrl() . $result['basePath'];
         }
 

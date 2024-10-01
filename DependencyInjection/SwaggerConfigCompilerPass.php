@@ -21,31 +21,28 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class SwaggerConfigCompilerPass implements CompilerPassInterface
 {
-
     /**
      * You can modify the container here before it is dumped to PHP code.
      *
-     * @param ContainerBuilder $container
-     *
      * @api
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $formatter = $container->getDefinition('nelmio_api_doc.formatter.swagger_formatter');
 
-        $formatter->addMethodCall('setBasePath', array($container->getParameter('nelmio_api_doc.swagger.base_path')));
-        $formatter->addMethodCall('setApiVersion', array($container->getParameter('nelmio_api_doc.swagger.api_version')));
-        $formatter->addMethodCall('setSwaggerVersion', array($container->getParameter('nelmio_api_doc.swagger.swagger_version')));
-        $formatter->addMethodCall('setInfo', array($container->getParameter('nelmio_api_doc.swagger.info')));
+        $formatter->addMethodCall('setBasePath', [$container->getParameter('nelmio_api_doc.swagger.base_path')]);
+        $formatter->addMethodCall('setApiVersion', [$container->getParameter('nelmio_api_doc.swagger.api_version')]);
+        $formatter->addMethodCall('setSwaggerVersion', [$container->getParameter('nelmio_api_doc.swagger.swagger_version')]);
+        $formatter->addMethodCall('setInfo', [$container->getParameter('nelmio_api_doc.swagger.info')]);
 
         $authentication = $container->getParameter('nelmio_api_doc.sandbox.authentication');
 
-        $formatter->setArguments(array(
+        $formatter->setArguments([
             $container->getParameter('nelmio_api_doc.swagger.model_naming_strategy'),
-        ));
+        ]);
 
-        if ($authentication !== null) {
-            $formatter->addMethodCall('setAuthenticationConfig', array($authentication));
+        if (null !== $authentication) {
+            $formatter->addMethodCall('setAuthenticationConfig', [$authentication]);
         }
     }
 }

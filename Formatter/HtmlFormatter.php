@@ -37,7 +37,7 @@ class HtmlFormatter extends AbstractFormatter
     protected $engine;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $enableSandbox;
 
@@ -77,14 +77,11 @@ class HtmlFormatter extends AbstractFormatter
     private $motdTemplate;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $defaultSectionsOpened;
 
-    /**
-     * @param array $authentication
-     */
-    public function setAuthentication(array $authentication = null)
+    public function setAuthentication(?array $authentication = null): void
     {
         $this->authentication = $authentication;
     }
@@ -92,7 +89,7 @@ class HtmlFormatter extends AbstractFormatter
     /**
      * @param string $apiName
      */
-    public function setApiName($apiName)
+    public function setApiName($apiName): void
     {
         $this->apiName = $apiName;
     }
@@ -100,15 +97,15 @@ class HtmlFormatter extends AbstractFormatter
     /**
      * @param string $endpoint
      */
-    public function setEndpoint($endpoint)
+    public function setEndpoint($endpoint): void
     {
         $this->endpoint = $endpoint;
     }
 
     /**
-     * @param boolean $enableSandbox
+     * @param bool $enableSandbox
      */
-    public function setEnableSandbox($enableSandbox)
+    public function setEnableSandbox($enableSandbox): void
     {
         $this->enableSandbox = $enableSandbox;
     }
@@ -116,7 +113,7 @@ class HtmlFormatter extends AbstractFormatter
     /**
      * @param EngineInterface|TwigEnvironment $engine
      */
-    public function setTemplatingEngine($engine)
+    public function setTemplatingEngine($engine): void
     {
         $this->engine = $engine;
     }
@@ -124,15 +121,12 @@ class HtmlFormatter extends AbstractFormatter
     /**
      * @param string $acceptType
      */
-    public function setAcceptType($acceptType)
+    public function setAcceptType($acceptType): void
     {
         $this->acceptType = $acceptType;
     }
 
-    /**
-     * @param array $bodyFormats
-     */
-    public function setBodyFormats(array $bodyFormats)
+    public function setBodyFormats(array $bodyFormats): void
     {
         $this->bodyFormats = $bodyFormats;
     }
@@ -140,7 +134,7 @@ class HtmlFormatter extends AbstractFormatter
     /**
      * @param string $defaultBodyFormat
      */
-    public function setDefaultBodyFormat($defaultBodyFormat)
+    public function setDefaultBodyFormat($defaultBodyFormat): void
     {
         $this->defaultBodyFormat = $defaultBodyFormat;
     }
@@ -148,15 +142,12 @@ class HtmlFormatter extends AbstractFormatter
     /**
      * @param string $method
      */
-    public function setRequestFormatMethod($method)
+    public function setRequestFormatMethod($method): void
     {
         $this->requestFormatMethod = $method;
     }
 
-    /**
-     * @param array $formats
-     */
-    public function setRequestFormats(array $formats)
+    public function setRequestFormats(array $formats): void
     {
         $this->requestFormats = $formats;
     }
@@ -164,7 +155,7 @@ class HtmlFormatter extends AbstractFormatter
     /**
      * @param string $format
      */
-    public function setDefaultRequestFormat($format)
+    public function setDefaultRequestFormat($format): void
     {
         $this->defaultRequestFormat = $format;
     }
@@ -172,7 +163,7 @@ class HtmlFormatter extends AbstractFormatter
     /**
      * @param string $motdTemplate
      */
-    public function setMotdTemplate($motdTemplate)
+    public function setMotdTemplate($motdTemplate): void
     {
         $this->motdTemplate = $motdTemplate;
     }
@@ -186,36 +177,30 @@ class HtmlFormatter extends AbstractFormatter
     }
 
     /**
-     * @param boolean $defaultSectionsOpened
+     * @param bool $defaultSectionsOpened
      */
-    public function setDefaultSectionsOpened($defaultSectionsOpened)
+    public function setDefaultSectionsOpened($defaultSectionsOpened): void
     {
         $this->defaultSectionsOpened = $defaultSectionsOpened;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function renderOne(array $data)
     {
         return $this->engine->render('@NelmioApiDoc/resource.html.twig', array_merge(
-            array(
-                'data'           => $data,
+            [
+                'data' => $data,
                 'displayContent' => true,
-            ),
+            ],
             $this->getGlobalVars()
         ));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function render(array $collection)
     {
         return $this->engine->render('@NelmioApiDoc/resources.html.twig', array_merge(
-            array(
+            [
                 'resources' => $collection,
-            ),
+            ],
             $this->getGlobalVars()
         ));
     }
@@ -225,22 +210,22 @@ class HtmlFormatter extends AbstractFormatter
      */
     private function getGlobalVars()
     {
-        return array(
-            'apiName'               => $this->apiName,
-            'authentication'        => $this->authentication,
-            'endpoint'              => $this->endpoint,
-            'enableSandbox'         => $this->enableSandbox,
-            'requestFormatMethod'   => $this->requestFormatMethod,
-            'acceptType'            => $this->acceptType,
-            'bodyFormats'           => $this->bodyFormats,
-            'defaultBodyFormat'     => $this->defaultBodyFormat,
-            'requestFormats'        => $this->requestFormats,
-            'defaultRequestFormat'  => $this->defaultRequestFormat,
-            'date'                  => date(DATE_RFC822),
-            'css'                   => file_get_contents(__DIR__ . '/../Resources/public/css/screen.css'),
-            'js'                    => file_get_contents(__DIR__ . '/../Resources/public/js/all.js'),
-            'motdTemplate'          => $this->motdTemplate,
+        return [
+            'apiName' => $this->apiName,
+            'authentication' => $this->authentication,
+            'endpoint' => $this->endpoint,
+            'enableSandbox' => $this->enableSandbox,
+            'requestFormatMethod' => $this->requestFormatMethod,
+            'acceptType' => $this->acceptType,
+            'bodyFormats' => $this->bodyFormats,
+            'defaultBodyFormat' => $this->defaultBodyFormat,
+            'requestFormats' => $this->requestFormats,
+            'defaultRequestFormat' => $this->defaultRequestFormat,
+            'date' => date(DATE_RFC822),
+            'css' => file_get_contents(__DIR__ . '/../Resources/public/css/screen.css'),
+            'js' => file_get_contents(__DIR__ . '/../Resources/public/js/all.js'),
+            'motdTemplate' => $this->motdTemplate,
             'defaultSectionsOpened' => $this->defaultSectionsOpened,
-        );
+        ];
     }
 }

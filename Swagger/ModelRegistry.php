@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Nelmio\ApiDocBundle\Swagger;
 
 use Nelmio\ApiDocBundle\DataTypes;
@@ -22,24 +23,24 @@ class ModelRegistry
     /**
      * @var array
      */
-    protected $namingStrategies = array(
+    protected $namingStrategies = [
         'dot_notation' => 'nameDotNotation',
         'last_segment_only' => 'nameLastSegmentOnly',
-    );
+    ];
 
     /**
      * @var array
      */
-    protected $models = array();
+    protected $models = [];
 
-    protected $classes = array();
+    protected $classes = [];
 
     /**
      * @var callable
      */
     protected $namingStategy;
 
-    protected $typeMap = array(
+    protected $typeMap = [
         DataTypes::INTEGER => 'integer',
         DataTypes::FLOAT => 'number',
         DataTypes::STRING => 'string',
@@ -47,15 +48,15 @@ class ModelRegistry
         DataTypes::FILE => 'string',
         DataTypes::DATE => 'string',
         DataTypes::DATETIME => 'string',
-    );
+    ];
 
-    protected $formatMap = array(
+    protected $formatMap = [
         DataTypes::INTEGER => 'int32',
         DataTypes::FLOAT => 'float',
         DataTypes::FILE => 'byte',
         DataTypes::DATE => 'date',
         DataTypes::DATETIME => 'date-time',
-    );
+    ];
 
     public function __construct($namingStrategy)
     {
@@ -66,16 +67,16 @@ class ModelRegistry
             ));
         }
 
-        $this->namingStategy = array($this, $this->namingStrategies[$namingStrategy]);
+        $this->namingStategy = [$this, $this->namingStrategies[$namingStrategy]];
     }
 
-    public function register($className, array $parameters = null, $description = '')
+    public function register($className, ?array $parameters = null, $description = '')
     {
         if (!isset($this->classes[$className])) {
-            $this->classes[$className] = array();
+            $this->classes[$className] = [];
         }
 
-        $id = call_user_func_array($this->namingStategy, array($className));
+        $id = call_user_func_array($this->namingStategy, [$className]);
 
         if (isset($this->models[$id])) {
             return $id;
@@ -83,30 +84,25 @@ class ModelRegistry
 
         $this->classes[$className][] = $id;
 
-        $model = array(
+        $model = [
             'id' => $id,
             'description' => $description,
-        );
+        ];
 
         if (is_array($parameters)) {
-
-            $required = array();
-            $properties = array();
+            $required = [];
+            $properties = [];
 
             foreach ($parameters as $name => $prop) {
+                $subParam = [];
 
-                $subParam = array();
-
-                if ($prop['actualType'] === DataTypes::MODEL) {
-
+                if (DataTypes::MODEL === $prop['actualType']) {
                     $subParam['$ref'] = $this->register(
                         $prop['subType'],
-                        isset($prop['children']) ? $prop['children'] : null,
+                        $prop['children'] ?? null,
                         $prop['description'] ?: $prop['dataType']
                     );
-
                 } else {
-
                     $type = null;
                     $format = null;
                     $items = null;
@@ -114,11 +110,8 @@ class ModelRegistry
                     $ref = null;
 
                     if (isset($this->typeMap[$prop['actualType']])) {
-
                         $type = $this->typeMap[$prop['actualType']];
-
                     } else {
-
                         switch ($prop['actualType']) {
                             case DataTypes::ENUM:
                                 $type = 'string';
@@ -130,31 +123,30 @@ class ModelRegistry
                             case DataTypes::COLLECTION:
                                 $type = 'array';
 
-                                    if ($prop['subType'] === null) {
-                                         $items = array(
-                                             'type' => 'string',
-                                         );
-                                     } elseif (isset($this->typeMap[$prop['subType']])) {
-                                        $items = array(
-                                            'type' => $this->typeMap[$prop['subType']]
-                                        );
-                                    } elseif (!isset($this->typeMap[$prop['subType']])) {
-                                        $items = array(
-                                            '$ref' =>
-                                                $this->register(
-                                                    $prop['subType'],
-                                                    isset($prop['children']) ? $prop['children'] : null,
-                                                    $prop['description'] ?: $prop['dataType']
-                                                )
-                                        );
-                                    }
+                                if (null === $prop['subType']) {
+                                    $items = [
+                                        'type' => 'string',
+                                    ];
+                                } elseif (isset($this->typeMap[$prop['subType']])) {
+                                    $items = [
+                                        'type' => $this->typeMap[$prop['subType']],
+                                    ];
+                                } elseif (!isset($this->typeMap[$prop['subType']])) {
+                                    $items = [
+                                        '$ref' => $this->register(
+                                            $prop['subType'],
+                                            $prop['children'] ?? null,
+                                            $prop['description'] ?: $prop['dataType']
+                                        ),
+                                    ];
+                                }
                                 /* @TODO: Handle recursion if subtype is a model. */
                                 break;
 
                             case DataTypes::MODEL:
                                 $ref = $this->register(
                                     $prop['subType'],
-                                    isset($prop['children']) ? $prop['children'] : null,
+                                    $prop['children'] ?? null,
                                     $prop['description'] ?: $prop['dataType']
                                 );
 
@@ -168,31 +160,30 @@ class ModelRegistry
                         $format = $this->formatMap[$prop['actualType']];
                     }
 
-                    $subParam = array(
+                    $subParam = [
                         'type' => $type,
-                        'description' => empty($prop['description']) === false ? (string) $prop['description'] : $prop['dataType'],
-                    );
+                        'description' => false === empty($prop['description']) ? (string) $prop['description'] : $prop['dataType'],
+                    ];
 
-                    if ($format !== null) {
+                    if (null !== $format) {
                         $subParam['format'] = $format;
                     }
 
-                    if ($enum !== null) {
+                    if (null !== $enum) {
                         $subParam['enum'] = $enum;
                     }
 
-                    if ($ref !== null) {
+                    if (null !== $ref) {
                         $subParam['$ref'] = $ref;
                     }
 
-                    if ($items !== null) {
+                    if (null !== $items) {
                         $subParam['items'] = $items;
                     }
 
                     if ($prop['required']) {
                         $required[] = $name;
                     }
-
                 }
 
                 $properties[$name] = $subParam;
@@ -204,7 +195,6 @@ class ModelRegistry
         }
 
         return $id;
-
     }
 
     public function nameDotNotation($className)
@@ -214,13 +204,12 @@ class ModelRegistry
          * "[...]" in aliased and non-aliased collections preserved.
          */
         $id = preg_replace('#(\\\|[^A-Za-z0-9\[\]])#', '.', $className);
-        //Replace duplicate dots.
+        // Replace duplicate dots.
         $id = preg_replace('/\.+/', '.', $id);
-        //Replace trailing dots.
+        // Replace trailing dots.
         $id = preg_replace('/^\./', '', $id);
 
         return $id;
-
     }
 
     public function nameLastSegmentOnly($className)
@@ -239,9 +228,9 @@ class ModelRegistry
         return $this->models;
     }
 
-    public function clear()
+    public function clear(): void
     {
-        $this->models = array();
-        $this->classes = array();
+        $this->models = [];
+        $this->classes = [];
     }
 }

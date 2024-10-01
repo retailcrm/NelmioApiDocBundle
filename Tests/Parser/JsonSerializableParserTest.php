@@ -21,7 +21,7 @@ class JsonSerializableParserTest extends TestCase
      */
     private $parser;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->parser = new JsonSerializableParser();
     }
@@ -29,9 +29,9 @@ class JsonSerializableParserTest extends TestCase
     /**
      * @dataProvider dataTestParser
      */
-    public function testParser($property, $expected)
+    public function testParser($property, $expected): void
     {
-        $result = $this->parser->parse(array('class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JsonSerializableTest'));
+        $result = $this->parser->parse(['class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JsonSerializableTest']);
         foreach ($expected as $name => $value) {
             $this->assertArrayHasKey($property, $result);
             $this->assertArrayHasKey($name, $result[$property]);
@@ -42,34 +42,34 @@ class JsonSerializableParserTest extends TestCase
     /**
      * @dataProvider dataTestSupports
      */
-    public function testSupports($class, $expected)
+    public function testSupports($class, $expected): void
     {
-        $this->assertEquals($this->parser->supports(array('class' => $class)), $expected);
+        $this->assertEquals($this->parser->supports(['class' => $class]), $expected);
     }
 
     public function dataTestParser()
     {
-        return array(
-            array(
+        return [
+            [
                 'property' => 'id',
-                'expected' => array(
+                'expected' => [
                     'dataType' => 'integer',
-                    'default'  => 123
-                )
-            ),
-            array(
+                    'default' => 123,
+                ],
+            ],
+            [
                 'property' => 'name',
-                'expected' => array(
+                'expected' => [
                     'dataType' => 'string',
-                    'default'  => 'My name',
-                )
-            ),
-            array(
+                    'default' => 'My name',
+                ],
+            ],
+            [
                 'property' => 'child',
-                'expected' => array(
+                'expected' => [
                     'dataType' => 'object',
-                    'children' => array(
-                        'value' => array(
+                    'children' => [
+                        'value' => [
                             'dataType' => 'array',
                             'actualType' => 'array',
                             'subType' => null,
@@ -77,32 +77,32 @@ class JsonSerializableParserTest extends TestCase
                             'description' => null,
                             'readonly' => null,
                             'default' => null,
-                        )
-                    )
-                )
-            )
-        );
+                        ],
+                    ],
+                ],
+            ],
+        ];
     }
 
     public function dataTestSupports()
     {
-        return array(
-            array(
+        return [
+            [
                 'class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JsonSerializableTest',
-                'expected' => true
-            ),
-            array(
+                'expected' => true,
+            ],
+            [
                 'class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JsonSerializableRequiredConstructorTest',
-                'expected' => false
-            ),
-            array(
+                'expected' => false,
+            ],
+            [
                 'class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\JsonSerializableOptionalConstructorTest',
-                'expected' => true
-            ),
-            array(
+                'expected' => true,
+            ],
+            [
                 'class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\Popo',
-                'expected' => false
-            )
-        );
+                'expected' => false,
+            ],
+        ];
     }
 }

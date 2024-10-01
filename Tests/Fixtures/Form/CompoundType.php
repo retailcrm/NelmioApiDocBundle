@@ -22,12 +22,12 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class CompoundType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('sub_form', LegacyFormHelper::isLegacy() ? new SimpleType() : __NAMESPACE__.'\SimpleType')
+            ->add('sub_form', LegacyFormHelper::isLegacy() ? new SimpleType() : __NAMESPACE__ . '\SimpleType')
             ->add('a', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\NumberType'))
-            ;
+        ;
     }
 
     /**
@@ -39,9 +39,6 @@ class CompoundType extends AbstractType
         return $this->getBlockPrefix();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return '';

@@ -37,7 +37,7 @@ class SwaggerDumpCommand extends Command
 
     public function __construct(
         private readonly ApiDocExtractor $extractor,
-        private readonly SwaggerFormatter $formatter
+        private readonly SwaggerFormatter $formatter,
     ) {
         parent::__construct();
     }
@@ -71,7 +71,7 @@ class SwaggerDumpCommand extends Command
 
         if (false !== ($resource = $input->getOption('resource'))) {
             $data = $this->getApiDeclaration($apiDocs, $resource);
-            if (count($data['apis']) === 0) {
+            if (0 === count($data['apis'])) {
                 throw new \InvalidArgumentException(sprintf('Resource "%s" does not exist.', $resource));
             }
             $this->dump($data, $resource, $input, $output);
@@ -92,7 +92,6 @@ class SwaggerDumpCommand extends Command
         $this->dump($data, null, $input, $output, false);
 
         foreach ($data['apis'] as $api) {
-
             $resource = substr($api['path'], 1);
             if (!$input->getArgument('destination')) {
                 $output->writeln('');
@@ -117,14 +116,13 @@ class SwaggerDumpCommand extends Command
             return;
         }
 
-        if ($treatAsFile === false) {
+        if (false === $treatAsFile) {
             if (!$this->filesystem->exists($destination)) {
                 $this->filesystem->mkdir($destination);
             }
         }
 
         if (!$resource) {
-
             if (!$treatAsFile) {
                 $destination = sprintf('%s/api-docs.json', rtrim($destination, '\\/'));
             }
@@ -134,13 +132,12 @@ class SwaggerDumpCommand extends Command
             return;
         }
 
-        if ($treatAsFile === false) {
+        if (false === $treatAsFile) {
             $destination = sprintf('%s/%s.json', rtrim($destination, '\\/'), $resource);
         }
 
         $message = sprintf('<comment>Dump API declaration to %s: </comment>', $destination);
         $this->writeToFile($content, $destination, $output, $message);
-
     }
 
     protected function writeToFile($content, $file, OutputInterface $output, $message): void

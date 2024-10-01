@@ -15,14 +15,14 @@ use Nelmio\ApiDocBundle\Tests\WebTestCase;
 
 class RequestListenerTest extends WebTestCase
 {
-    public function testDocQueryArg()
+    public function testDocQueryArg(): void
     {
         $client = $this->createClient();
 
         $client->request('GET', '/tests?_doc=1');
         $content = $client->getResponse()->getContent();
-        $this->assertTrue(0 !== strpos($content, '<h1>API documentation</h1>'), 'Event listener should capture ?_doc=1 requests');
-        $this->assertTrue(0 !== strpos($content, '/tests.{_format}'), 'Event listener should capture ?_doc=1 requests');
+        $this->assertTrue(!str_starts_with($content, '<h1>API documentation</h1>'), 'Event listener should capture ?_doc=1 requests');
+        $this->assertTrue(!str_starts_with($content, '/tests.{_format}'), 'Event listener should capture ?_doc=1 requests');
 
         $client->request('GET', '/tests');
         $this->assertEquals('tests', $client->getResponse()->getContent(), 'Event listener should let normal requests through');

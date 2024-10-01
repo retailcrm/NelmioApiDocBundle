@@ -20,29 +20,26 @@ use Nelmio\ApiDocBundle\DataTypes;
  */
 class CollectionParser implements ParserInterface, PostParserInterface
 {
-
     /**
      * Return true/false whether this class supports parsing the given class.
      *
      * @param array $item containing the following fields: class, groups. Of which groups is optional
      *
-     * @return boolean
+     * @return bool
      */
     public function supports(array $item)
     {
-        return isset($item['collection']) && $item['collection'] === true;
+        return isset($item['collection']) && true === $item['collection'];
     }
 
     /**
      * This doesn't parse anything at this stage.
      *
-     * @param array $item
-     *
      * @return array
      */
     public function parse(array $item)
     {
-        return array();
+        return [];
     }
 
     /**
@@ -59,9 +56,9 @@ class CollectionParser implements ParserInterface, PostParserInterface
             $parameters[$name] = null;
         }
 
-        $collectionName = isset($item['collectionName']) ? $item['collectionName'] : '';
+        $collectionName = $item['collectionName'] ?? '';
 
-        $parameters[$collectionName] = array(
+        $parameters[$collectionName] = [
             'dataType' => null, // Delegates to ApiDocExtractor#generateHumanReadableTypes
             'subType' => $item['class'],
             'actualType' => DataTypes::COLLECTION,
@@ -70,7 +67,7 @@ class CollectionParser implements ParserInterface, PostParserInterface
             'default' => true,
             'description' => '',
             'children' => $origParameters,
-        );
+        ];
 
         return $parameters;
     }

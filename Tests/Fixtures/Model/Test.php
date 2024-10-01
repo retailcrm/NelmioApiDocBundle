@@ -17,7 +17,9 @@ class Test
 {
     /**
      * @Assert\Length(min="foo");
+     *
      * @Assert\NotBlank
+     *
      * @Assert\Type("string")
      */
     public $a = 'nelmio';

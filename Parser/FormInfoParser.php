@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Nelmio\ApiDocBundle\Parser;
 
 use Symfony\Component\Form\FormConfigInterface;

@@ -29,22 +29,21 @@ class DunglasApiParserTest extends WebTestCase
         }
     }
 
-    public function testParser()
+    public function testParser(): void
     {
         $container = $this->getContainer();
         $parser = $container->get('nelmio_api_doc.parser.dunglas_api_parser');
 
-        $item = array('class' => DunglasApiParser::OUT_PREFIX.':Nelmio\ApiDocBundle\Tests\Fixtures\Model\Popo');
+        $item = ['class' => DunglasApiParser::OUT_PREFIX . ':Nelmio\ApiDocBundle\Tests\Fixtures\Model\Popo'];
 
-        $expected = array (
-            'foo' =>
-                array (
-                    'required' => false,
-                    'description' => '',
-                    'readonly' => false,
-                    'dataType' => DataTypes::STRING,
-                ),
-        );
+        $expected = [
+            'foo' => [
+                'required' => false,
+                'description' => '',
+                'readonly' => false,
+                'dataType' => DataTypes::STRING,
+            ],
+        ];
 
         $this->assertTrue($parser->supports($item));
         $this->assertEquals($expected, $parser->parse($item));

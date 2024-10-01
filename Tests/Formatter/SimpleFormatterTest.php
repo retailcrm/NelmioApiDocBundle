@@ -15,54 +15,54 @@ use Nelmio\ApiDocBundle\Tests\WebTestCase;
 
 class SimpleFormatterTest extends WebTestCase
 {
-    public function testFormat()
+    public function testFormat(): void
     {
         $container = $this->getContainer();
 
         $extractor = $container->get('nelmio_api_doc.extractor.api_doc_extractor');
-        set_error_handler(array($this, 'handleDeprecation'));
-        $data      = $extractor->all();
+        set_error_handler([$this, 'handleDeprecation']);
+        $data = $extractor->all();
         restore_error_handler();
-        $result    = $container->get('nelmio_api_doc.formatter.simple_formatter')->format($data);
+        $result = $container->get('nelmio_api_doc.formatter.simple_formatter')->format($data);
 
         $suffix = class_exists('Dunglas\ApiBundle\DunglasApiBundle') ? '' : '_1';
-        $expected  = require __DIR__ . '/testFormat-result'.$suffix.'.php';
+        $expected = require __DIR__ . '/testFormat-result' . $suffix . '.php';
 
         $this->assertEquals($expected, $result);
     }
 
-    public function testFormatOne()
+    public function testFormatOne(): void
     {
         $container = $this->getContainer();
 
-        $extractor  = $container->get('nelmio_api_doc.extractor.api_doc_extractor');
+        $extractor = $container->get('nelmio_api_doc.extractor.api_doc_extractor');
         $annotation = $extractor->get('Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::indexAction', 'test_route_1');
-        $result     = $container->get('nelmio_api_doc.formatter.simple_formatter')->formatOne($annotation);
+        $result = $container->get('nelmio_api_doc.formatter.simple_formatter')->formatOne($annotation);
 
-        $expected = array(
+        $expected = [
             'method' => 'GET',
             'uri' => '/tests.{_format}',
-            'filters' => array(
-                'a' => array(
+            'filters' => [
+                'a' => [
                     'dataType' => 'integer',
-                ),
-                'b' => array(
+                ],
+                'b' => [
                     'dataType' => 'string',
-                    'arbitrary' => array(
+                    'arbitrary' => [
                         'arg1',
                         'arg2',
-                    ),
-                ),
-            ),
+                    ],
+                ],
+            ],
             'description' => 'index action',
-            'requirements' => array(
-                '_format' => array('dataType' => '', 'description' => '', 'requirement' => ''),
-            ),
+            'requirements' => [
+                '_format' => ['dataType' => '', 'description' => '', 'requirement' => ''],
+            ],
             'https' => false,
             'authentication' => false,
-            'authenticationRoles' => array(),
+            'authenticationRoles' => [],
             'deprecated' => false,
-        );
+        ];
 
         $this->assertEquals($expected, $result);
     }

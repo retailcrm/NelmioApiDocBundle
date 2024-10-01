@@ -15,14 +15,10 @@ class JsonSerializableOptionalConstructorTest implements \JsonSerializable
 {
     public function __construct($optional = null)
     {
-
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function jsonSerialize(): mixed
     {
-        return array();
+        return [];
     }
 }

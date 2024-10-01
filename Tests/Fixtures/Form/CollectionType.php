@@ -14,23 +14,19 @@ namespace Nelmio\ApiDocBundle\Tests\Fixtures\Form;
 use Nelmio\ApiDocBundle\Util\LegacyFormHelper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class CollectionType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $collectionType = 'Symfony\Component\Form\Extension\Core\Type\CollectionType';
         $builder
-            ->add('a', LegacyFormHelper::getType($collectionType), array(
-                LegacyFormHelper::hasBCBreaks() ? 'entry_type' : 'type' => LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\TextType')
-            ))
-            ->add('b', LegacyFormHelper::getType($collectionType), array(
-                LegacyFormHelper::hasBCBreaks() ? 'entry_type' : 'type' => LegacyFormHelper::isLegacy() ? new TestType() : __NAMESPACE__.'\TestType'
-            ))
+            ->add('a', LegacyFormHelper::getType($collectionType), [
+                LegacyFormHelper::hasBCBreaks() ? 'entry_type' : 'type' => LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\TextType'),
+            ])
+            ->add('b', LegacyFormHelper::getType($collectionType), [
+                LegacyFormHelper::hasBCBreaks() ? 'entry_type' : 'type' => LegacyFormHelper::isLegacy() ? new TestType() : __NAMESPACE__ . '\TestType',
+            ])
         ;
     }
 
@@ -43,9 +39,6 @@ class CollectionType extends AbstractType
         return $this->getBlockPrefix();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'collection_type';

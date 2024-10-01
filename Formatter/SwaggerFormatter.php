@@ -32,9 +32,9 @@ class SwaggerFormatter implements FormatterInterface
 
     protected $swaggerVersion;
 
-    protected $info = array();
+    protected $info = [];
 
-    protected $typeMap = array(
+    protected $typeMap = [
         DataTypes::INTEGER => 'integer',
         DataTypes::FLOAT => 'number',
         DataTypes::STRING => 'string',
@@ -42,18 +42,18 @@ class SwaggerFormatter implements FormatterInterface
         DataTypes::FILE => 'string',
         DataTypes::DATE => 'string',
         DataTypes::DATETIME => 'string',
-    );
+    ];
 
-    protected $formatMap = array(
+    protected $formatMap = [
         DataTypes::INTEGER => 'int32',
         DataTypes::FLOAT => 'float',
         DataTypes::FILE => 'byte',
         DataTypes::DATE => 'date',
         DataTypes::DATETIME => 'date-time',
-    );
+    ];
 
     /**
-     * @var \Nelmio\ApiDocBundle\Swagger\ModelRegistry
+     * @var ModelRegistry
      */
     protected $modelRegistry;
 
@@ -65,9 +65,9 @@ class SwaggerFormatter implements FormatterInterface
     /**
      * @var array
      */
-    protected $authConfig = null;
+    protected $authConfig;
 
-    public function setAuthenticationConfig(array $config)
+    public function setAuthenticationConfig(array $config): void
     {
         $this->authConfig = $config;
     }
@@ -77,13 +77,14 @@ class SwaggerFormatter implements FormatterInterface
      *
      * If resource is provided, an API declaration for that resource is produced. Otherwise, a resource listing is returned.
      *
-     * @param  array|ApiDoc[] $collection
-     * @param  null|string    $resource
+     * @param array|ApiDoc[] $collection
+     * @param string|null    $resource
+     *
      * @return string|array
      */
     public function format(array $collection, $resource = null)
     {
-        if ($resource === null) {
+        if (null === $resource) {
             return $this->produceResourceListing($collection);
         } else {
             return $this->produceApiDeclaration($collection, $resource);
@@ -93,23 +94,21 @@ class SwaggerFormatter implements FormatterInterface
     /**
      * Formats the collection into Swagger-compliant output.
      *
-     * @param  array $collection
      * @return array
      */
     public function produceResourceListing(array $collection)
     {
-        $resourceList = array(
+        $resourceList = [
             'swaggerVersion' => (string) $this->swaggerVersion,
-            'apis' => array(),
+            'apis' => [],
             'apiVersion' => (string) $this->apiVersion,
             'info' => $this->getInfo(),
             'authorizations' => $this->getAuthorizations(),
-        );
+        ];
 
         $apis = &$resourceList['apis'];
 
         foreach ($collection as $item) {
-
             /** @var $apiDoc ApiDoc */
             $apiDoc = $item['annotation'];
             $resource = $item['resource'];
@@ -121,11 +120,10 @@ class SwaggerFormatter implements FormatterInterface
             $subPath = $this->stripBasePath($resource);
             $normalizedName = $this->normalizeResourcePath($subPath);
 
-            $apis[] = array(
+            $apis[] = [
                 'path' => '/' . $normalizedName,
                 'description' => $apiDoc->getResourceDescription(),
-            );
-
+            ];
         }
 
         return $resourceList;
@@ -133,23 +131,23 @@ class SwaggerFormatter implements FormatterInterface
 
     protected function getAuthorizations()
     {
-        $auth = array();
+        $auth = [];
 
-        if ($this->authConfig === null) {
+        if (null === $this->authConfig) {
             return $auth;
         }
 
         $config = $this->authConfig;
 
-        if ($config['delivery'] === 'http') {
+        if ('http' === $config['delivery']) {
             return $auth;
         }
 
-        $auth['apiKey'] = array(
+        $auth['apiKey'] = [
             'type' => 'apiKey',
             'passAs' => $config['delivery'],
             'keyname' => $config['name'],
-        );
+        ];
 
         return $auth;
     }
@@ -165,11 +163,12 @@ class SwaggerFormatter implements FormatterInterface
     /**
      * Format documentation data for one route.
      *
-     * @param  ApiDoc                  $annotation
-     *                                             return string|array
+     * @param ApiDoc $annotation
+     *                           return string|array
+     *
      * @throws \BadMethodCallException
      */
-    public function formatOne(ApiDoc $annotation)
+    public function formatOne(ApiDoc $annotation): void
     {
         throw new \BadMethodCallException(sprintf('%s does not support formatting a single ApiDoc only.', __CLASS__));
     }
@@ -177,41 +176,39 @@ class SwaggerFormatter implements FormatterInterface
     /**
      * Formats collection to produce a Swagger-compliant API declaration for the given resource.
      *
-     * @param  array  $collection
-     * @param  string $resource
+     * @param string $resource
+     *
      * @return array
      */
     protected function produceApiDeclaration(array $collection, $resource)
     {
-
-        $apiDeclaration = array(
+        $apiDeclaration = [
             'swaggerVersion' => (string) $this->swaggerVersion,
             'apiVersion' => (string) $this->apiVersion,
             'basePath' => $this->basePath,
             'resourcePath' => $resource,
-            'apis' => array(),
-            'models' => array(),
-            'produces' => array(),
-            'consumes' => array(),
+            'apis' => [],
+            'models' => [],
+            'produces' => [],
+            'consumes' => [],
             'authorizations' => $this->getAuthorizations(),
-        );
+        ];
 
         $main = null;
 
-        $apiBag = array();
+        $apiBag = [];
 
         foreach ($collection as $item) {
-
             /** @var $apiDoc ApiDoc */
             $apiDoc = $item['annotation'];
             $itemResource = $this->stripBasePath($item['resource']);
             $input = $apiDoc->getInput();
 
             if (!is_array($input)) {
-                $input = array(
+                $input = [
                     'class' => $input,
                     'paramType' => 'form',
-                );
+                ];
             } elseif (empty($input['paramType'])) {
                 $input['paramType'] = 'form';
             }
@@ -229,21 +226,21 @@ class SwaggerFormatter implements FormatterInterface
             $path = $this->stripBasePath($route->getPath());
 
             if (!isset($apiBag[$path])) {
-                $apiBag[$path] = array();
+                $apiBag[$path] = [];
             }
 
-            $parameters = array();
-            $responseMessages = array();
+            $parameters = [];
+            $responseMessages = [];
 
             foreach ($compiled->getPathVariables() as $paramValue) {
-                $parameter = array(
+                $parameter = [
                     'paramType' => 'path',
                     'name' => $paramValue,
                     'type' => 'string',
                     'required' => true,
-                );
+                ];
 
-                if ($paramValue === '_format' && false != ($req = $route->getRequirement('_format'))) {
+                if ('_format' === $paramValue && false != ($req = $route->getRequirement('_format'))) {
                     $parameter['enum'] = explode('|', $req);
                 }
 
@@ -262,10 +259,9 @@ class SwaggerFormatter implements FormatterInterface
 
             $responseMap = $apiDoc->getParsedResponseMap();
 
-            $statusMessages = isset($data['statusCodes']) ? $data['statusCodes'] : array();
+            $statusMessages = $data['statusCodes'] ?? [];
 
             foreach ($responseMap as $statusCode => $prop) {
-
                 if (isset($statusMessages[$statusCode])) {
                     $message = is_array($statusMessages[$statusCode]) ? implode('; ', $statusMessages[$statusCode]) : $statusCode[$statusCode];
                 } else {
@@ -274,8 +270,7 @@ class SwaggerFormatter implements FormatterInterface
 
                 $className = !empty($prop['type']['form_errors']) ? $prop['type']['class'] . '.ErrorResponse' : $prop['type']['class'];
 
-                if (isset($prop['type']['collection']) && $prop['type']['collection'] === true) {
-
+                if (isset($prop['type']['collection']) && true === $prop['type']['collection']) {
                     /*
                      * Without alias:       Fully\Qualified\Class\Name[]
                      * With alias:          Fully\Qualified\Class\Name[alias]
@@ -286,32 +281,31 @@ class SwaggerFormatter implements FormatterInterface
                     $collId =
                         $this->registerModel(
                             $newName,
-                            array(
-                                $alias => array(
-                                    'dataType'    => null,
-                                    'subType'     => $className,
-                                    'actualType'  => DataTypes::COLLECTION,
-                                    'required'    => true,
-                                    'readonly'    => true,
+                            [
+                                $alias => [
+                                    'dataType' => null,
+                                    'subType' => $className,
+                                    'actualType' => DataTypes::COLLECTION,
+                                    'required' => true,
+                                    'readonly' => true,
                                     'description' => null,
-                                    'default'     => null,
-                                    'children'    => $prop['model'][$alias]['children'],
-                                )
-                            ),
+                                    'default' => null,
+                                    'children' => $prop['model'][$alias]['children'],
+                                ],
+                            ],
                             ''
                         );
-                    $responseModel = array(
+                    $responseModel = [
                         'code' => $statusCode,
                         'message' => $message,
-                        'responseModel' => $collId
-                    );
+                        'responseModel' => $collId,
+                    ];
                 } else {
-
-                    $responseModel = array(
+                    $responseModel = [
                         'code' => $statusCode,
                         'message' => $message,
                         'responseModel' => $this->registerModel($className, $prop['model'], ''),
-                    );
+                    ];
                 }
                 $responseMessages[$statusCode] = $responseModel;
             }
@@ -319,24 +313,24 @@ class SwaggerFormatter implements FormatterInterface
             $unmappedMessages = array_diff(array_keys($statusMessages), array_keys($responseMessages));
 
             foreach ($unmappedMessages as $code) {
-                $responseMessages[$code] = array(
+                $responseMessages[$code] = [
                     'code' => $code,
                     'message' => is_array($statusMessages[$code]) ? implode('; ', $statusMessages[$code]) : $statusMessages[$code],
-                );
+                ];
             }
 
-            $type = isset($responseMessages[200]['responseModel']) ? $responseMessages[200]['responseModel'] : null;
+            $type = $responseMessages[200]['responseModel'] ?? null;
 
             foreach ($apiDoc->getRoute()->getMethods() as $method) {
-                $operation = array(
+                $operation = [
                     'method' => $method,
                     'summary' => $apiDoc->getDescription(),
                     'nickname' => $this->generateNickname($method, $itemResource),
                     'parameters' => $parameters,
                     'responseMessages' => array_values($responseMessages),
-                );
+                ];
 
-                if ($type !== null) {
+                if (null !== $type) {
                     $operation['type'] = $type;
                 }
 
@@ -347,10 +341,10 @@ class SwaggerFormatter implements FormatterInterface
         $apiDeclaration['resourcePath'] = $resource;
 
         foreach ($apiBag as $path => $operations) {
-            $apiDeclaration['apis'][] = array(
+            $apiDeclaration['apis'][] = [
                 'path' => $path,
                 'operations' => $operations,
-            );
+            ];
         }
 
         $apiDeclaration['models'] = $this->modelRegistry->getModels();
@@ -362,7 +356,6 @@ class SwaggerFormatter implements FormatterInterface
     /**
      * Slugify a URL path. Trims out path parameters wrapped in curly brackets.
      *
-     * @param $path
      * @return string
      */
     protected function normalizeResourcePath($path)
@@ -374,10 +367,7 @@ class SwaggerFormatter implements FormatterInterface
         return $path;
     }
 
-    /**
-     * @param $path
-     */
-    public function setBasePath($path)
+    public function setBasePath($path): void
     {
         $this->basePath = $path;
     }
@@ -385,34 +375,29 @@ class SwaggerFormatter implements FormatterInterface
     /**
      * Formats query parameters to Swagger-compliant form.
      *
-     * @param  array $input
      * @return array
      */
     protected function deriveQueryParameters(array $input)
     {
-        $parameters = array();
+        $parameters = [];
 
         foreach ($input as $name => $prop) {
             if (!isset($prop['dataType'])) {
                 $prop['dataType'] = 'string';
             }
-            $parameters[] = array(
+            $parameters[] = [
                 'paramType' => 'query',
                 'name' => $name,
-                'type' => isset($this->typeMap[$prop['dataType']]) ? $this->typeMap[$prop['dataType']] : 'string',
-                'description' => isset($prop['description']) ? $prop['description'] : null,
-            );
+                'type' => $this->typeMap[$prop['dataType']] ?? 'string',
+                'description' => $prop['description'] ?? null,
+            ];
         }
 
         return $parameters;
-
     }
 
     /**
      * Builds a Swagger-compliant parameter list from the provided parameter array. Models are built when necessary.
-     *
-     * @param array $input
-     * @param array $models
      *
      * @param string $paramType
      *
@@ -420,11 +405,9 @@ class SwaggerFormatter implements FormatterInterface
      */
     protected function deriveParameters(array $input, $paramType = 'form')
     {
-
-        $parameters = array();
+        $parameters = [];
 
         foreach ($input as $name => $prop) {
-
             $type = null;
             $format = null;
             $ref = null;
@@ -435,7 +418,7 @@ class SwaggerFormatter implements FormatterInterface
                 $prop['actualType'] = 'string';
             }
 
-            if (isset ($this->typeMap[$prop['actualType']])) {
+            if (isset($this->typeMap[$prop['actualType']])) {
                 $type = $this->typeMap[$prop['actualType']];
             } else {
                 switch ($prop['actualType']) {
@@ -450,27 +433,27 @@ class SwaggerFormatter implements FormatterInterface
                         $ref =
                             $this->registerModel(
                                 $prop['subType'],
-                                isset($prop['children']) ? $prop['children'] : null,
+                                $prop['children'] ?? null,
                                 $prop['description'] ?: $prop['dataType']
                             );
                         break;
 
                     case DataTypes::COLLECTION:
                         $type = 'array';
-                        if ($prop['subType'] === null) {
-                            $items = array('type' => 'string');
+                        if (null === $prop['subType']) {
+                            $items = ['type' => 'string'];
                         } elseif (isset($this->typeMap[$prop['subType']])) {
-                            $items = array('type' => $this->typeMap[$prop['subType']]);
+                            $items = ['type' => $this->typeMap[$prop['subType']]];
                         } else {
                             $ref =
                                 $this->registerModel(
                                     $prop['subType'],
-                                    isset($prop['children']) ? $prop['children'] : null,
+                                    $prop['children'] ?? null,
                                     $prop['description'] ?: $prop['dataType']
                                 );
-                            $items = array(
+                            $items = [
                                 '$ref' => $ref,
-                            );
+                            ];
                         }
                         break;
                 }
@@ -485,10 +468,10 @@ class SwaggerFormatter implements FormatterInterface
                 continue;
             }
 
-            $parameter = array(
+            $parameter = [
                 'paramType' => $paramType,
                 'name' => $name,
-            );
+            ];
 
             if (null !== $type) {
                 $parameter['type'] = $type;
@@ -528,47 +511,32 @@ class SwaggerFormatter implements FormatterInterface
     /**
      * Registers a model into the model array. Returns a unique identifier for the model to be used in `$ref` properties.
      *
-     * @param        $className
-     * @param array  $parameters
      * @param string $description
      *
      * @internal param $models
-     * @return mixed
      */
-    public function registerModel($className, array $parameters = null, $description = '')
+    public function registerModel($className, ?array $parameters = null, $description = '')
     {
         return $this->modelRegistry->register($className, $parameters, $description);
     }
 
-    /**
-     * @param mixed $swaggerVersion
-     */
-    public function setSwaggerVersion($swaggerVersion)
+    public function setSwaggerVersion($swaggerVersion): void
     {
         $this->swaggerVersion = $swaggerVersion;
     }
 
-    /**
-     * @param mixed $apiVersion
-     */
-    public function setApiVersion($apiVersion)
+    public function setApiVersion($apiVersion): void
     {
         $this->apiVersion = $apiVersion;
     }
 
-    /**
-     * @param mixed $info
-     */
-    public function setInfo($info)
+    public function setInfo($info): void
     {
         $this->info = $info;
     }
 
     /**
      * Strips the base path from a URL path.
-     *
-     * @param $basePath
-     * @return mixed
      */
     protected function stripBasePath($basePath)
     {
@@ -585,8 +553,6 @@ class SwaggerFormatter implements FormatterInterface
     /**
      * Generate nicknames based on support HTTP methods and the resource name.
      *
-     * @param $method
-     * @param $resource
      * @return string
      */
     protected function generateNickname($method, $resource)

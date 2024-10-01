@@ -10,17 +10,17 @@
  */
 
 namespace NelmioApiDocBundle\Tests\Controller;
+
 use Nelmio\ApiDocBundle\Tests\WebTestCase;
 
 /**
  * Class ApiDocControllerTest
  *
- * @package NelmioApiDocBundle\Tests\Controller
  * @author Bez Hermoso <bez@activelamp.com>
  */
 class ApiDocControllerTest extends WebTestCase
 {
-    public function testSwaggerDocResourceListRoute()
+    public function testSwaggerDocResourceListRoute(): void
     {
         $client = static::createClient();
         $client->request('GET', '/api-docs');
@@ -29,23 +29,22 @@ class ApiDocControllerTest extends WebTestCase
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('text/html; charset=UTF-8', $response->headers->get('Content-type'));
-
     }
 
     public function dataTestApiDeclarations()
     {
-        return array(
-            array('resources'),
-            array('tests'),
-            array('tests2'),
-            array('TestResource'),
-        );
+        return [
+            ['resources'],
+            ['tests'],
+            ['tests2'],
+            ['TestResource'],
+        ];
     }
 
     /**
      * @dataProvider dataTestApiDeclarations
      */
-    public function testApiDeclarationRoutes($resource)
+    public function testApiDeclarationRoutes($resource): void
     {
         $client = static::createClient();
         $client->request('GET', '/api-docs/' . $resource);
@@ -56,13 +55,12 @@ class ApiDocControllerTest extends WebTestCase
         $this->assertEquals('application/json', $response->headers->get('Content-type'));
     }
 
-    public function testNonExistingApiDeclaration()
+    public function testNonExistingApiDeclaration(): void
     {
         $client = static::createClient();
         $client->request('GET', '/api-docs/santa');
 
         $response = $client->getResponse();
         $this->assertEquals(404, $response->getStatusCode());
-
     }
 }

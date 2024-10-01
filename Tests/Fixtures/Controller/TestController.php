@@ -26,7 +26,7 @@ class TestController
      *     views="default"
      * )
      */
-    public function namedResourceAction()
+    public function namedResourceAction(): void
     {
     }
 
@@ -53,7 +53,7 @@ class TestController
      *  input="Nelmio\ApiDocBundle\Tests\Fixtures\Form\TestType"
      * )
      */
-    public function postTestAction()
+    public function postTestAction(): void
     {
     }
 
@@ -64,7 +64,7 @@ class TestController
      *     resource=true
      * )
      */
-    public function postTest2Action()
+    public function postTest2Action(): void
     {
     }
 
@@ -73,25 +73,25 @@ class TestController
      *  input="Nelmio\ApiDocBundle\Tests\Fixtures\Form\RequiredType"
      * )
      */
-    public function requiredParametersAction()
+    public function requiredParametersAction(): void
     {
     }
 
-    public function anotherAction()
+    public function anotherAction(): void
     {
     }
 
     /**
      * @ApiDoc()
      */
-    public function routeVersionAction()
+    public function routeVersionAction(): void
     {
     }
 
     /**
      * @ApiDoc(description="Action without HTTP verb")
      */
-    public function anyAction()
+    public function anyAction(): void
     {
     }
 
@@ -106,14 +106,14 @@ class TestController
      * @param int $paramType The param type
      * @param int $param     The param id
      */
-    public function myCommentedAction()
+    public function myCommentedAction($id, $page, int $paramType, int $param): void
     {
     }
 
     /**
      * @ApiDoc()
      */
-    public function yetAnotherAction()
+    public function yetAnotherAction(): void
     {
     }
 
@@ -124,39 +124,43 @@ class TestController
      *  input=DependencyTypePath::TYPE
      * )
      */
-    public function anotherPostAction()
+    public function anotherPostAction(): void
     {
     }
 
     /**
      * @ApiDoc()
+     *
      * @QueryParam(strict=true, name="page", requirements="\d+", description="Page of the overview.")
      */
-    public function zActionWithQueryParamStrictAction()
+    public function zActionWithQueryParamStrictAction(): void
     {
     }
 
     /**
      * @ApiDoc()
+     *
      * @QueryParam(name="page", requirements="\d+", default="1", description="Page of the overview.")
      */
-    public function zActionWithQueryParamAction()
+    public function zActionWithQueryParamAction(): void
     {
     }
 
     /**
      * @ApiDoc()
+     *
      * @QueryParam(name="page", requirements="\d+", description="Page of the overview.")
      */
-    public function zActionWithQueryParamNoDefaultAction()
+    public function zActionWithQueryParamNoDefaultAction(): void
     {
     }
 
     /**
      * @ApiDoc()
+     *
      * @QueryParam(name="mail", requirements=@Assert\Email, description="Email of someone.")
      */
-    public function zActionWithConstraintAsRequirements()
+    public function zActionWithConstraintAsRequirements(): void
     {
     }
 
@@ -166,7 +170,7 @@ class TestController
      *  input="Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest"
      * )
      */
-    public function jmsInputTestAction()
+    public function jmsInputTestAction(): void
     {
     }
 
@@ -176,30 +180,32 @@ class TestController
      *  output=DependencyTypePath::TYPE
      * )
      */
-    public function jmsReturnTestAction()
+    public function jmsReturnTestAction(): void
     {
     }
 
     /**
      * @ApiDoc()
+     *
      * @RequestParam(name="param1", requirements="string", description="Param1 description.")
      */
-    public function zActionWithRequestParamAction()
+    public function zActionWithRequestParamAction(): void
     {
     }
 
     /**
      * @ApiDoc()
+     *
      * @RequestParam(name="param1", requirements="string", description="Param1 description.", nullable=true)
      */
-    public function zActionWithNullableRequestParamAction()
+    public function zActionWithNullableRequestParamAction(): void
     {
     }
 
     /**
      * @ApiDoc()
      */
-    public function secureRouteAction()
+    public function secureRouteAction(): void
     {
     }
 
@@ -209,29 +215,30 @@ class TestController
      *  authenticationRoles={"ROLE_USER","ROLE_FOOBAR"}
      * )
      */
-    public function authenticatedAction()
+    public function authenticatedAction(): void
     {
     }
 
     /**
      * @ApiDoc()
      */
-    public function zCachedAction()
+    public function zCachedAction(): void
     {
     }
 
     /**
      * @ApiDoc()
      */
-    public function zSecuredAction()
+    public function zSecuredAction(): void
     {
     }
 
     /**
      * @ApiDoc()
+     *
      * @deprecated
      */
-    public function deprecatedAction()
+    public function deprecatedAction(): void
     {
     }
 
@@ -240,7 +247,7 @@ class TestController
      *     output="Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest"
      * )
      */
-    public function jmsReturnNestedOutputAction()
+    public function jmsReturnNestedOutputAction(): void
     {
     }
 
@@ -249,7 +256,7 @@ class TestController
      *     output="Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsChild"
      * )
      */
-    public function jmsReturnNestedExtendedOutputAction()
+    public function jmsReturnNestedExtendedOutputAction(): void
     {
     }
 
@@ -258,7 +265,7 @@ class TestController
      *     output="Nelmio\ApiDocBundle\Tests\Fixtures\Model\MultipleTest"
      * )
      */
-    public function zReturnJmsAndValidationOutputAction()
+    public function zReturnJmsAndValidationOutputAction(): void
     {
     }
 
@@ -273,7 +280,7 @@ class TestController
      *  }
      * )
      */
-    public function cgetAction($id)
+    public function cgetAction($id): void
     {
     }
 
@@ -287,7 +294,7 @@ class TestController
      *     }
      * )
      */
-    public function zReturnSelectedParsersInputAction()
+    public function zReturnSelectedParsersInputAction(): void
     {
     }
 
@@ -302,7 +309,7 @@ class TestController
      *     }
      * )
      */
-    public function zReturnSelectedParsersOutputAction()
+    public function zReturnSelectedParsersOutputAction(): void
     {
     }
 
@@ -311,7 +318,7 @@ class TestController
      *     section="private"
      * )
      */
-    public function privateAction()
+    public function privateAction(): void
     {
     }
 
@@ -320,15 +327,16 @@ class TestController
      *     section="exclusive"
      * )
      */
-    public function exclusiveAction()
+    public function exclusiveAction(): void
     {
     }
 
     /**
      * @ApiDoc()
-     * @link http://symfony.com
+     *
+     * @see http://symfony.com
      */
-    public function withLinkAction()
+    public function withLinkAction(): void
     {
     }
 
@@ -367,7 +375,7 @@ class TestController
      *     }
      * )
      */
-    public function overrideJmsAnnotationWithApiDocParametersAction()
+    public function overrideJmsAnnotationWithApiDocParametersAction(): void
     {
     }
 
@@ -379,7 +387,7 @@ class TestController
      *     }
      * )
      */
-    public function defaultJmsAnnotations()
+    public function defaultJmsAnnotations(): void
     {
     }
 
@@ -389,31 +397,34 @@ class TestController
      *  views={ "default" }
      * )
      */
-    public function routeWithHostAction()
+    public function routeWithHostAction(): void
     {
     }
 
     /**
      * @ApiDoc()
+     *
      * @QueryParam(name="param1", requirements={"rule": "regexp", "error_message": "warning"}, description="Param1 description.")
      */
-    public function routeWithQueryParamArrayRequirementsAction()
+    public function routeWithQueryParamArrayRequirementsAction(): void
     {
     }
 
     /**
      * @ApiDoc()
+     *
      * @QueryParam(name="param1", requirements={@Assert\NotNull(), @Assert\NotBlank()}, description="Param1 description.")
      */
-    public function routeWithQueryParamPlainArrayRequirementsAction()
+    public function routeWithQueryParamPlainArrayRequirementsAction(): void
     {
     }
 
     /**
      * @ApiDoc()
+     *
      * @QueryParam(name="param1", description="Param1 description.")
      */
-    public function zActionWithRequirementParamNotSet()
+    public function zActionWithRequirementParamNotSet(): void
     {
     }
 }

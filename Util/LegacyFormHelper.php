@@ -18,7 +18,7 @@ namespace Nelmio\ApiDocBundle\Util;
  */
 final class LegacyFormHelper
 {
-    private static $map = array(
+    private static $map = [
         'Symfony\Component\Form\Extension\Core\Type\FormType' => 'form',
 
         // Tests
@@ -31,7 +31,7 @@ final class LegacyFormHelper
         'Symfony\Component\Form\Extension\Core\Type\TextareaType' => 'textarea',
         'Symfony\Component\Form\Extension\Core\Type\CheckboxType' => 'checkbox',
         'Nelmio\ApiDocBundle\Tests\Fixtures\Form\DependencyType' => 'dependency_type',
-    );
+    ];
 
     public static function getType($class)
     {

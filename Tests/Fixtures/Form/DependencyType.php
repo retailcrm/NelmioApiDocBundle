@@ -22,34 +22,26 @@ class DependencyType extends AbstractType
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('a', null, array('description' => 'A nice description'))
+            ->add('a', null, ['description' => 'A nice description'])
         ;
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @deprecated Remove it when bumping requirements to Symfony 2.7+
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver): void
     {
         $this->configureOptions($resolver);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\Test',
-        ));
+        ]);
 
         return;
     }
@@ -63,9 +55,6 @@ class DependencyType extends AbstractType
         return $this->getBlockPrefix();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'dependency_type';

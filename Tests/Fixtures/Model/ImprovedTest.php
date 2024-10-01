@@ -11,8 +11,6 @@
 
 namespace Nelmio\ApiDocBundle\Tests\Fixtures\Model;
 
-use Symfony\Component\Validator\Constraints as Assert;
-
 class ImprovedTest
 {
     public $dt1;

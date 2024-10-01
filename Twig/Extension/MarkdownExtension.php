@@ -14,19 +14,13 @@ class MarkdownExtension extends AbstractExtension
         $this->markdownParser = new MarkdownExtra();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilters()
     {
-        return array(
-            new \Twig\TwigFilter('extra_markdown', array($this, 'markdown'), array('is_safe' => array('html'))),
-        );
+        return [
+            new \Twig\TwigFilter('extra_markdown', [$this, 'markdown'], ['is_safe' => ['html']]),
+        ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return 'nelmio_api_doc';
