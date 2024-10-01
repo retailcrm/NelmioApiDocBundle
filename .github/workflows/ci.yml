@@ -40,5 +40,8 @@ jobs:
       - name: Validate composer
         run: composer validate --strict --no-check-lock
 
+      - name: "Run code-style check"
+        run: vendor/bin/php-cs-fixer fix --dry-run --config=.php-cs-fixer.dist.php --using-cache=no --show-progress=none -v
+
       - name: Run tests
         run: vendor/bin/phpunit

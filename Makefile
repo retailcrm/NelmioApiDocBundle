@@ -10,6 +10,9 @@ vendor: composer.json
 	@$(PHP) composer install -o -n --no-ansi
 	@touch vendor || true
 
+php-cs: $(PHP_CONSOLE_DEPS)
+	@$(PHP) vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --using-cache=no -v
+
 phpunit: $(PHP_CONSOLE_DEPS)
 	@$(PHP) vendor/bin/phpunit --color=always
 
