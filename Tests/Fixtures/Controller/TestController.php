@@ -148,13 +148,6 @@ class TestController
     /**
      * @ApiDoc()
      */
-    public function secureRouteAction(): void
-    {
-    }
-
-    /**
-     * @ApiDoc()
-     */
     public function zCachedAction(): void
     {
     }

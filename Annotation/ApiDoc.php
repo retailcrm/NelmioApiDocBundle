@@ -126,11 +126,6 @@ class ApiDoc
     private $route;
 
     /**
-     * @var bool
-     */
-    private $https = false;
-
-    /**
      * @var int
      */
     private $cache;
@@ -286,10 +281,6 @@ class ApiDoc
             } else {
                 $this->tags[] = $data['tags'];
             }
-        }
-
-        if (isset($data['https'])) {
-            $this->https = $data['https'];
         }
 
         if (isset($data['resourceDescription'])) {
@@ -523,22 +514,6 @@ class ApiDoc
     }
 
     /**
-     * @return bool
-     */
-    public function getHttps()
-    {
-        return $this->https;
-    }
-
-    /**
-     * @param bool $https
-     */
-    public function setHttps($https): void
-    {
-        $this->https = $https;
-    }
-
-    /**
      * @return int
      */
     public function getCache()
@@ -698,7 +673,6 @@ class ApiDoc
             $data['resourceDescription'] = $resourceDescription;
         }
 
-        $data['https'] = $this->https;
         $data['deprecated'] = $this->deprecated;
         $data['scope'] = $this->scope;
 

@@ -682,10 +682,6 @@ _Route with host placeholder_
 
 
 
-### `ANY` /secure-route ###
-
-
-
 ### `GET` /with-link ###
 
 

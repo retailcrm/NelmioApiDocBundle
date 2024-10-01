@@ -54,15 +54,6 @@ class PhpDocHandler implements HandlerInterface
                     'description' => '',
                 ];
             }
-
-            if ('_scheme' === $name) {
-                $https = ('https' == $value);
-                $annotation->setHttps($https);
-            }
-        }
-
-        if (method_exists($route, 'getSchemes')) {
-            $annotation->setHttps(in_array('https', $route->getSchemes()));
         }
 
         $paramDocs = [];

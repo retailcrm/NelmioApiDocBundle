@@ -17,7 +17,7 @@ use Nelmio\ApiDocBundle\Tests\WebTestCase;
 
 class ApiDocExtractorTest extends WebTestCase
 {
-    private static $ROUTES_QUANTITY_DEFAULT = 27; // Routes in the default view
+    private static $ROUTES_QUANTITY_DEFAULT = 26; // Routes in the default view
     private static $ROUTES_QUANTITY_PREMIUM = 5;  // Routes in the premium view
     private static $ROUTES_QUANTITY_TEST = 2;  // Routes in the test view
 
