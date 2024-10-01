@@ -1114,6 +1114,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
             'views' => [
                 'default',
                 'test',
@@ -1128,6 +1129,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         2 => [
             'method' => 'ANY',
@@ -1145,6 +1147,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         3 => [
             'method' => 'ANY',
@@ -1156,6 +1159,7 @@ With multiple lines.',
                 1 => 'ROLE_FOOBAR',
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         4 => [
             'method' => 'POST',
@@ -1422,6 +1426,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         5 => [
             'method' => 'GET',
@@ -1456,6 +1461,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         6 => [
             'method' => 'ANY',
@@ -1490,6 +1496,7 @@ And, it supports multilines until the first \'@\' char.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         7 => [
             'method' => 'GET',
@@ -1509,6 +1516,7 @@ And, it supports multilines until the first \'@\' char.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
             'resourceDescription' => 'Popo',
             'section' => 'Popo',
         ],
@@ -1538,6 +1546,7 @@ And, it supports multilines until the first \'@\' char.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
             'resourceDescription' => 'Popo',
             'section' => 'Popo',
         ],
@@ -1558,6 +1567,7 @@ And, it supports multilines until the first \'@\' char.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
             'resourceDescription' => 'Popo',
             'section' => 'Popo',
         ],
@@ -1586,6 +1596,7 @@ And, it supports multilines until the first \'@\' char.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
             'resourceDescription' => 'Popo',
             'section' => 'Popo',
         ],
@@ -1622,6 +1633,7 @@ And, it supports multilines until the first \'@\' char.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
             'resourceDescription' => 'Popo',
             'section' => 'Popo',
         ],
@@ -1889,6 +1901,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         13 => [
             'method' => 'GET',
@@ -1915,6 +1928,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         14 => [
             'method' => 'ANY',
@@ -1924,6 +1938,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         15 => [
             'method' => 'ANY',
@@ -1940,6 +1955,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         16 => [
             'method' => 'GET',
@@ -1949,6 +1965,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => true,
+            'scope' => null,
         ],
         17 => [
             'method' => 'POST',
@@ -1968,6 +1985,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         18 => [
             'method' => 'GET',
@@ -1984,6 +2002,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         19 => [
             'method' => 'GET',
@@ -1999,6 +2018,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         20 => [
             'method' => 'GET',
@@ -2034,6 +2054,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         22 => [
             'method' => 'ANY',
@@ -2135,6 +2156,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         23 => [
             'method' => 'ANY',
@@ -2182,6 +2204,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         24 => [
             'method' => 'ANY',
@@ -2283,6 +2306,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         25 => [
             'method' => 'POST',
@@ -2292,6 +2316,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         26 => [
             'method' => 'POST',
@@ -2301,6 +2326,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         27 => [
             'authentication' => false,
@@ -2309,6 +2335,7 @@ With multiple lines.',
             'https' => false,
             'authenticationRoles' => [],
             'deprecated' => false,
+            'scope' => null,
             'requirements' => [
                 '_format' => [
                     'requirement' => '',

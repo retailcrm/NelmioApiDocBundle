@@ -506,10 +506,13 @@ class ApiDocExtractor
                 if (isset($v['children'])) {
                     if (isset($v['class'])) {
                         foreach ($v['children'] as $key => $item) {
-                            $array[$k]['children'][$key]['parentClass'] = $v['class'];
+                            if (empty($item['parentClass'] ?? null)) {
+                                $array[$k]['children'][$key]['parentClass'] = $v['class'];
+                            }
                             $array[$k]['children'][$key]['field'] = $key;
                         }
                     }
+
                     $array[$k]['children'] = $this->setParentClasses($array[$k]['children']);
                 }
             }

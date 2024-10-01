@@ -290,6 +290,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         1 => [
             'method' => 'PUT|PATCH',
@@ -312,6 +313,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
     ],
     '/api/resources' => [
@@ -383,6 +385,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         1 => [
             'method' => 'POST',
@@ -821,6 +824,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         2 => [
             'method' => 'DELETE',
@@ -843,6 +847,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         3 => [
             'method' => 'GET',
@@ -865,6 +870,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
     ],
     '/tests' => [
@@ -896,6 +902,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         1 => [
             'method' => 'POST',
@@ -956,6 +963,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
     ],
     '/tests2' => [
@@ -979,6 +987,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
     ],
     'TestResource' => [
@@ -993,6 +1002,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
     ],
     'others' => [
@@ -1031,6 +1041,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         1 => [
             'method' => 'ANY',
@@ -1048,6 +1059,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         2 => [
             'method' => 'ANY',
@@ -1059,6 +1071,7 @@ With multiple lines.',
                 1 => 'ROLE_FOOBAR',
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         3 => [
             'method' => 'POST',
@@ -1325,6 +1338,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         4 => [
             'method' => 'GET',
@@ -1357,6 +1371,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         5 => [
             'method' => 'ANY',
@@ -1391,6 +1406,7 @@ And, it supports multilines until the first \'@\' char.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         6 => [
             'method' => 'ANY',
@@ -1656,6 +1672,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         7 => [
             'method' => 'GET',
@@ -1682,6 +1699,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         8 => [
             'method' => 'ANY',
@@ -1691,6 +1709,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         9 => [
             'method' => 'GET',
@@ -1701,6 +1720,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         10 => [
             'method' => 'ANY',
@@ -1717,6 +1737,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         11 => [
             'method' => 'GET',
@@ -1726,6 +1747,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => true,
+            'scope' => null,
         ],
         12 => [
             'method' => 'POST',
@@ -1745,6 +1767,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         13 => [
             'method' => 'GET',
@@ -1761,6 +1784,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         14 => [
             'method' => 'GET',
@@ -1776,6 +1800,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         15 => [
             'method' => 'GET',
@@ -1792,6 +1817,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         16 => [
             'method' => 'POST',
@@ -1811,6 +1837,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         17 => [
             'method' => 'GET',
@@ -1826,6 +1853,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         18 => [
             'method' => 'GET',
@@ -1841,6 +1869,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         19 => [
             'method' => 'GET',
@@ -1855,6 +1884,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         20 => [
             'method' => 'ANY',
@@ -1974,6 +2004,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         21 => [
             'method' => 'ANY',
@@ -2021,6 +2052,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         22 => [
             'method' => 'ANY',
@@ -2140,6 +2172,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         23 => [
             'method' => 'POST',
@@ -2149,6 +2182,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         24 => [
             'method' => 'POST',
@@ -2158,6 +2192,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
         25 => [
             'method' => 'GET',
@@ -2174,6 +2209,7 @@ With multiple lines.',
             'authenticationRoles' => [
             ],
             'deprecated' => false,
+            'scope' => null,
         ],
     ],
 ];
