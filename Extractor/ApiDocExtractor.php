@@ -30,16 +30,14 @@ class ApiDocExtractor
     protected array $parsers = [];
 
     /**
-     * @param HandlerInterface[]             $handlers
-     * @param AnnotationsProviderInterface[] $annotationsProviders
-     * @param string[]                       $excludeSections
+     * @param HandlerInterface[] $handlers
+     * @param string[]           $excludeSections
      */
     public function __construct(
         protected RouterInterface $router,
         protected Reader $reader,
         protected DocCommentExtractor $commentExtractor,
         protected array $handlers,
-        protected array $annotationsProviders,
         protected array $excludeSections,
     ) {
     }
@@ -126,13 +124,6 @@ class ApiDocExtractor
 
                     $array[] = ['annotation' => $this->extractData($annotation, $route, $method)];
                 }
-            }
-        }
-
-        foreach ($this->annotationsProviders as $annotationProvider) {
-            foreach ($annotationProvider->getAnnotations() as $annotation) {
-                $route = $annotation->getRoute();
-                $array[] = ['annotation' => $this->extractData($annotation, $route, $this->getReflectionMethod($route->getDefault('_controller')))];
             }
         }
 

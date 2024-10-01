@@ -2,7 +2,6 @@
 
 namespace Nelmio\ApiDocBundle;
 
-use Nelmio\ApiDocBundle\DependencyInjection\AnnotationsProviderCompilerPass;
 use Nelmio\ApiDocBundle\DependencyInjection\ExtractorHandlerCompilerPass;
 use Nelmio\ApiDocBundle\DependencyInjection\FormInfoParserCompilerPass;
 use Nelmio\ApiDocBundle\DependencyInjection\LoadExtractorParsersPass;
@@ -20,7 +19,6 @@ class NelmioApiDocBundle extends Bundle
         $container->addCompilerPass(new LoadExtractorParsersPass());
         $container->addCompilerPass(new RegisterExtractorParsersPass());
         $container->addCompilerPass(new ExtractorHandlerCompilerPass());
-        $container->addCompilerPass(new AnnotationsProviderCompilerPass());
         $container->addCompilerPass(new SwaggerConfigCompilerPass());
         $container->addCompilerPass(new FormInfoParserCompilerPass());
     }

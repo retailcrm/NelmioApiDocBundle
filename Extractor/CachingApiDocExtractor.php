@@ -26,22 +26,20 @@ use Symfony\Component\Routing\RouterInterface;
 class CachingApiDocExtractor extends ApiDocExtractor
 {
     /**
-     * @param HandlerInterface[]             $handlers
-     * @param AnnotationsProviderInterface[] $annotationsProviders
-     * @param string[]                       $excludeSections
-     * @param bool|false                     $debug
+     * @param HandlerInterface[] $handlers
+     * @param string[]           $excludeSections
+     * @param bool|false         $debug
      */
     public function __construct(
         RouterInterface $router,
         Reader $reader,
         DocCommentExtractor $commentExtractor,
         array $handlers,
-        array $annotationsProviders,
         array $excludeSections,
         private string $cacheFile,
         private bool $debug = false,
     ) {
-        parent::__construct($router, $reader, $commentExtractor, $handlers, $annotationsProviders, $excludeSections);
+        parent::__construct($router, $reader, $commentExtractor, $handlers, $excludeSections);
     }
 
     /**
