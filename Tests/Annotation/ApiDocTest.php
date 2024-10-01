@@ -11,7 +11,7 @@
 
 namespace Nelmio\ApiDocBundle\Tests\Annotation;
 
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Nelmio\ApiDocBundle\Attribute\ApiDoc;
 use Nelmio\ApiDocBundle\Tests\TestCase;
 use Symfony\Component\Routing\Route;
 
@@ -19,9 +19,7 @@ class ApiDocTest extends TestCase
 {
     public function testConstructWithoutData(): void
     {
-        $data = [];
-
-        $annot = new ApiDoc($data);
+        $annot = new ApiDoc();
         $array = $annot->toArray();
 
         $this->assertTrue(is_array($array));
@@ -38,12 +36,7 @@ class ApiDocTest extends TestCase
 
     public function testConstructWithInvalidData(): void
     {
-        $data = [
-            'unknown' => 'foo',
-            'array' => ['bar' => 'bar'],
-        ];
-
-        $annot = new ApiDoc($data);
+        $annot = new ApiDoc();
         $array = $annot->toArray();
 
         $this->assertTrue(is_array($array));
@@ -62,7 +55,7 @@ class ApiDocTest extends TestCase
             'description' => 'Heya',
         ];
 
-        $annot = new ApiDoc($data);
+        $annot = new ApiDoc(description: $data['description']);
         $array = $annot->toArray();
 
         $this->assertTrue(is_array($array));
@@ -82,7 +75,10 @@ class ApiDocTest extends TestCase
             'input' => 'My\Form\Type',
         ];
 
-        $annot = new ApiDoc($data);
+        $annot = new ApiDoc(
+            description: $data['description'],
+            input: $data['input']
+        );
         $array = $annot->toArray();
 
         $this->assertTrue(is_array($array));
@@ -104,7 +100,12 @@ class ApiDocTest extends TestCase
             'input' => 'My\Form\Type',
         ];
 
-        $annot = new ApiDoc($data);
+        $annot = new ApiDoc(
+            resource: $data['resource'],
+            description: $data['description'],
+            deprecated: $data['deprecated'],
+            input: $data['input']
+        );
         $array = $annot->toArray();
 
         $this->assertTrue(is_array($array));
@@ -126,7 +127,12 @@ class ApiDocTest extends TestCase
             'input' => 'My\Form\Type',
         ];
 
-        $annot = new ApiDoc($data);
+        $annot = new ApiDoc(
+            resource: $data['resource'],
+            description: $data['description'],
+            deprecated: $data['deprecated'],
+            input: $data['input']
+        );
         $array = $annot->toArray();
 
         $this->assertTrue(is_array($array));
@@ -150,7 +156,12 @@ class ApiDocTest extends TestCase
             ],
         ];
 
-        $annot = new ApiDoc($data);
+        $annot = new ApiDoc(
+            resource: $data['resource'],
+            description: $data['description'],
+            deprecated: $data['deprecated'],
+            filters: $data['filters']
+        );
         $array = $annot->toArray();
 
         $this->assertTrue(is_array($array));
@@ -176,7 +187,10 @@ class ApiDocTest extends TestCase
             ],
         ];
 
-        $annot = new ApiDoc($data);
+        $annot = new ApiDoc(
+            description: $data['description'],
+            filters: $data['filters']
+        );
     }
 
     public function testConstructWithStatusCodes(): void
@@ -193,7 +207,10 @@ class ApiDocTest extends TestCase
             ],
         ];
 
-        $annot = new ApiDoc($data);
+        $annot = new ApiDoc(
+            description: $data['description'],
+            statusCodes: $data['statusCodes']
+        );
         $array = $annot->toArray();
 
         $this->assertTrue(is_array($array));
@@ -216,7 +233,9 @@ class ApiDocTest extends TestCase
             ],
         ];
 
-        $annot = new ApiDoc($data);
+        $annot = new ApiDoc(
+            requirements: $data['requirements']
+        );
         $array = $annot->toArray();
 
         $this->assertTrue(is_array($array));
@@ -236,7 +255,9 @@ class ApiDocTest extends TestCase
             ],
         ];
 
-        $annot = new ApiDoc($data);
+        $annot = new ApiDoc(
+            parameters: $data['parameters']
+        );
         $array = $annot->toArray();
 
         $this->assertTrue(is_array($array));
@@ -255,7 +276,9 @@ class ApiDocTest extends TestCase
             ],
         ];
 
-        $annot = new ApiDoc($data);
+        $annot = new ApiDoc(
+            headers: $data['headers']
+        );
         $array = $annot->toArray();
 
         $this->assertArrayHasKey('headerName', $array['headers']);
@@ -272,7 +295,9 @@ class ApiDocTest extends TestCase
             'tags' => 'beta',
         ];
 
-        $annot = new ApiDoc($data);
+        $annot = new ApiDoc(
+            tags: $data['tags']
+        );
         $array = $annot->toArray();
 
         $this->assertTrue(is_array($array));
@@ -288,7 +313,9 @@ class ApiDocTest extends TestCase
             ],
         ];
 
-        $annot = new ApiDoc($data);
+        $annot = new ApiDoc(
+            tags: $data['tags']
+        );
         $array = $annot->toArray();
 
         $this->assertTrue(is_array($array));
@@ -305,7 +332,9 @@ class ApiDocTest extends TestCase
             ],
         ];
 
-        $annot = new ApiDoc($data);
+        $annot = new ApiDoc(
+            tags: $data['tags']
+        );
         $array = $annot->toArray();
 
         $this->assertTrue(is_array($array));
@@ -322,7 +351,10 @@ class ApiDocTest extends TestCase
             ],
         ];
 
-        $apiDoc = new ApiDoc($data);
+        $apiDoc = new ApiDoc(
+            output: $data['output'],
+            responseMap: $data['responseMap']
+        );
 
         $map = $apiDoc->getResponseMap();
 
@@ -341,7 +373,9 @@ class ApiDocTest extends TestCase
             ],
         ];
 
-        $apiDoc = new ApiDoc($data);
+        $apiDoc = new ApiDoc(
+            responseMap: $data['responseMap']
+        );
         $map = $apiDoc->getResponseMap();
 
         $this->assertCount(2, $map);
@@ -366,7 +400,7 @@ class ApiDocTest extends TestCase
             '{foo}.awesome_host.com'
         );
 
-        $apiDoc = new ApiDoc([]);
+        $apiDoc = new ApiDoc();
         $apiDoc->setRoute($route);
 
         $this->assertSame($route, $apiDoc->getRoute());

@@ -11,8 +11,7 @@
 
 namespace Nelmio\ApiDocBundle\Extractor;
 
-use Doctrine\Common\Annotations\Reader;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Nelmio\ApiDocBundle\Attribute\ApiDoc;
 use Nelmio\ApiDocBundle\DataTypes;
 use Nelmio\ApiDocBundle\Parser\ParserInterface;
 use Nelmio\ApiDocBundle\Parser\PostParserInterface;
@@ -22,8 +21,6 @@ use Symfony\Component\Routing\RouterInterface;
 
 class ApiDocExtractor
 {
-    public const ANNOTATION_CLASS = ApiDoc::class;
-
     /**
      * @var ParserInterface[]
      */
@@ -35,7 +32,6 @@ class ApiDocExtractor
      */
     public function __construct(
         protected RouterInterface $router,
-        protected Reader $reader,
         protected DocCommentExtractor $commentExtractor,
         protected array $handlers,
         protected array $excludeSections,
@@ -49,17 +45,15 @@ class ApiDocExtractor
      *
      * @return Route[] An array of routes
      */
-    public function getRoutes()
+    public function getRoutes(): array
     {
         return $this->router->getRouteCollection()->all();
     }
 
-    /**
+    /*
      * Extracts annotations from all known routes
-     *
-     * @return array
      */
-    public function all($view = ApiDoc::DEFAULT_VIEW)
+    public function all($view = ApiDoc::DEFAULT_VIEW): array
     {
         return $this->extractAnnotations($this->getRoutes(), $view);
     }
@@ -69,10 +63,8 @@ class ApiDocExtractor
      *
      * @param string $apiVersion API version
      * @param string $view
-     *
-     * @return array
      */
-    public function allForVersion($apiVersion, $view = ApiDoc::DEFAULT_VIEW)
+    public function allForVersion($apiVersion, $view = ApiDoc::DEFAULT_VIEW): array
     {
         $data = $this->all($view);
         foreach ($data as $k => $a) {
@@ -94,10 +86,8 @@ class ApiDocExtractor
      *  - resource
      *
      * @param array $routes array of Route-objects for which the annotations should be extracted
-     *
-     * @return array
      */
-    public function extractAnnotations(array $routes, $view = ApiDoc::DEFAULT_VIEW)
+    public function extractAnnotations(array $routes, $view = ApiDoc::DEFAULT_VIEW): array
     {
         $array = [];
         $resources = [];
@@ -108,7 +98,7 @@ class ApiDocExtractor
             }
 
             if ($method = $this->getReflectionMethod($route->getDefault('_controller'))) {
-                $annotation = $this->reader->getMethodAnnotation($method, static::ANNOTATION_CLASS);
+                $annotation = $this->getMethodApiDoc($method);
                 if (
                     $annotation && !in_array($annotation->getSection(), $this->excludeSections)
                     && (in_array($view, $annotation->getViews()) || (0 === count($annotation->getViews()) && ApiDoc::DEFAULT_VIEW === $view))
@@ -214,7 +204,7 @@ class ApiDocExtractor
     public function get($controller, $route)
     {
         if ($method = $this->getReflectionMethod($controller)) {
-            if ($annotation = $this->reader->getMethodAnnotation($method, static::ANNOTATION_CLASS)) {
+            if ($annotation = $this->getMethodApiDoc($method)) {
                 if ($route = $this->router->getRouteCollection()->get($route)) {
                     return $this->extractData($annotation, $route, $method);
                 }
@@ -222,6 +212,16 @@ class ApiDocExtractor
         }
 
         return null;
+    }
+
+    protected function getMethodApiDoc(\ReflectionMethod $method): ?ApiDoc
+    {
+        $attributes = $method->getAttributes(ApiDoc::class, \ReflectionAttribute::IS_INSTANCEOF);
+        if (!$attributes) {
+            return null;
+        }
+
+        return $attributes[0]->newInstance();
     }
 
     /**
@@ -444,13 +444,13 @@ class ApiDocExtractor
                     } elseif (null !== $value) {
                         if (in_array($name, ['required', 'readonly'])) {
                             $v1[$name] = $v1[$name] || $value;
-                        } elseif (in_array($name, ['requirement'])) {
+                        } elseif ('requirement' === $name) {
                             if (isset($v1[$name])) {
                                 $v1[$name] .= ', ' . $value;
                             } else {
                                 $v1[$name] = $value;
                             }
-                        } elseif ('default' == $name) {
+                        } elseif ('default' === $name) {
                             if (isset($v1[$name])) {
                                 $v1[$name] = $value ?? $v1[$name];
                             } else {
@@ -472,8 +472,6 @@ class ApiDocExtractor
     /**
      * Parses annotations for a given method, and adds new information to the given ApiDoc
      * annotation. Useful to extract information from the FOSRestBundle annotations.
-     *
-     * @param ReflectionMethod $method
      */
     protected function parseAnnotations(ApiDoc $annotation, Route $route, \ReflectionMethod $method): void
     {

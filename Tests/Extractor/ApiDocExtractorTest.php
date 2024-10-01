@@ -11,7 +11,7 @@
 
 namespace Nelmio\ApiDocBundle\Tests\Extractor;
 
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Nelmio\ApiDocBundle\Attribute\ApiDoc;
 use Nelmio\ApiDocBundle\Extractor\ApiDocExtractor;
 use Nelmio\ApiDocBundle\Tests\WebTestCase;
 
@@ -41,7 +41,7 @@ class ApiDocExtractorTest extends WebTestCase
             $this->assertArrayHasKey('annotation', $d);
             $this->assertArrayHasKey('resource', $d);
 
-            $this->assertInstanceOf('Nelmio\ApiDocBundle\Annotation\ApiDoc', $d['annotation']);
+            $this->assertInstanceOf('Nelmio\ApiDocBundle\Attribute\ApiDoc', $d['annotation']);
             $this->assertInstanceOf('Symfony\Component\Routing\Route', $d['annotation']->getRoute());
             $this->assertNotNull($d['resource']);
         }
@@ -65,7 +65,7 @@ class ApiDocExtractorTest extends WebTestCase
         $extractor = $container->get('nelmio_api_doc.extractor.api_doc_extractor');
         $annotation = $extractor->get('Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::indexAction', 'test_route_1');
 
-        $this->assertInstanceOf('Nelmio\ApiDocBundle\Annotation\ApiDoc', $annotation);
+        $this->assertInstanceOf('Nelmio\ApiDocBundle\Attribute\ApiDoc', $annotation);
 
         $this->assertTrue($annotation->isResource());
         $this->assertEquals('index action', $annotation->getDescription());
@@ -312,7 +312,7 @@ class ApiDocExtractorTest extends WebTestCase
             'test_route_27'
         );
 
-        $this->assertInstanceOf('Nelmio\ApiDocBundle\Annotation\ApiDoc', $annotation);
+        $this->assertInstanceOf('Nelmio\ApiDocBundle\Attribute\ApiDoc', $annotation);
 
         $array = $annotation->toArray();
         $this->assertTrue(is_array($array['parameters']));
@@ -345,7 +345,7 @@ class ApiDocExtractorTest extends WebTestCase
             'test_route_27'
         );
 
-        $this->assertInstanceOf('Nelmio\ApiDocBundle\Annotation\ApiDoc', $annotation);
+        $this->assertInstanceOf('Nelmio\ApiDocBundle\Attribute\ApiDoc', $annotation);
 
         $array = $annotation->toArray();
         $this->assertTrue(is_array($array['parameters']));

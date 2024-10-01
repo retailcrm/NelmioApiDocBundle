@@ -11,7 +11,7 @@
 
 namespace Nelmio\ApiDocBundle\Controller;
 
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Nelmio\ApiDocBundle\Attribute\ApiDoc;
 use Nelmio\ApiDocBundle\Extractor\ApiDocExtractor;
 use Nelmio\ApiDocBundle\Formatter\HtmlFormatter;
 use Nelmio\ApiDocBundle\Formatter\RequestAwareSwaggerFormatter;

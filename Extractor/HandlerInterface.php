@@ -11,7 +11,7 @@
 
 namespace Nelmio\ApiDocBundle\Extractor;
 
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Nelmio\ApiDocBundle\Attribute\ApiDoc;
 use Symfony\Component\Routing\Route;
 
 interface HandlerInterface
