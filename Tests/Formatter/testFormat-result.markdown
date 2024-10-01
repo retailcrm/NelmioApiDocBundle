@@ -853,64 +853,6 @@ _Route with host placeholder_
 
 
 
-### `POST` /z-action-with-nullable-request-param ###
-
-
-#### Parameters ####
-
-param1:
-
-  * type: string
-  * required: false
-  * description: Param1 description.
-
-
-### `GET` /z-action-with-query-param ###
-
-
-#### Filters ####
-
-page:
-
-  * Requirement: \d+
-  * Description: Page of the overview.
-  * Default: 1
-
-
-### `GET` /z-action-with-query-param-no-default ###
-
-
-#### Filters ####
-
-page:
-
-  * Requirement: \d+
-  * Description: Page of the overview.
-
-
-### `GET` /z-action-with-query-param-strict ###
-
-
-#### Requirements ####
-
-**page**
-
-  - Requirement: \d+
-  - Description: Page of the overview.
-
-
-### `POST` /z-action-with-request-param ###
-
-
-#### Parameters ####
-
-param1:
-
-  * type: string
-  * required: true
-  * description: Param1 description.
-
-
 ### `ANY` /z-return-jms-and-validator-output ###
 
 

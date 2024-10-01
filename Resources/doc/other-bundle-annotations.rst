@@ -1,14 +1,6 @@
 Other Bundle Annotations
 ========================
 
-This bundle will get information from the following other annotations:
-
-* ``@FOS\RestBundle\Controller\Annotations\RequestParam`` - use as ``parameters``
-* ``@FOS\RestBundle\Controller\Annotations\QueryParam`` - use as ``requirements``
-  (when strict parameter is true), ``filters`` (when strict is false)
-* ``@JMS\SecurityExtraBundle\Annotation\Secure`` - set ``authentication`` to true,
-  ``authenticationRoles`` to the given roles
-
 PHPDoc
 ------
 

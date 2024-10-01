@@ -28,7 +28,7 @@ class SimpleFormatterTest extends WebTestCase
         $suffix = class_exists('Dunglas\ApiBundle\DunglasApiBundle') ? '' : '_1';
         $expected = require __DIR__ . '/testFormat-result' . $suffix . '.php';
 
-        $this->assertEquals($expected, $result);
+        $this->assertEquals($expected, $result, 'file ' . __DIR__ . '/testFormat-result' . $suffix . '.php');
     }
 
     public function testFormatOne(): void
