@@ -126,11 +126,6 @@ class ApiDoc
     private $route;
 
     /**
-     * @var int
-     */
-    private $cache;
-
-    /**
      * @var bool
      */
     private $deprecated = false;
@@ -255,10 +250,6 @@ class ApiDoc
             foreach ($data['statusCodes'] as $statusCode => $description) {
                 $this->addStatusCode($statusCode, $description);
             }
-        }
-
-        if (isset($data['cache'])) {
-            $this->setCache($data['cache']);
         }
 
         if (isset($data['section'])) {
@@ -514,22 +505,6 @@ class ApiDoc
     }
 
     /**
-     * @return int
-     */
-    public function getCache()
-    {
-        return $this->cache;
-    }
-
-    /**
-     * @param int $cache
-     */
-    public function setCache($cache): void
-    {
-        $this->cache = (int) $cache;
-    }
-
-    /**
      * @return bool
      */
     public function getDeprecated()
@@ -659,10 +634,6 @@ class ApiDoc
 
         if ($section = $this->section) {
             $data['section'] = $section;
-        }
-
-        if ($cache = $this->cache) {
-            $data['cache'] = $cache;
         }
 
         if ($tags = $this->tags) {

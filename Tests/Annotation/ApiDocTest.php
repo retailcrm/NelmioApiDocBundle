@@ -203,18 +203,6 @@ class ApiDocTest extends TestCase
         }
     }
 
-    public function testConstructWithCache(): void
-    {
-        $data = [
-            'cache' => '60',
-        ];
-
-        $annot = new ApiDoc($data);
-        $array = $annot->toArray();
-
-        $this->assertEquals($data['cache'], $array['cache']);
-    }
-
     public function testConstructWithRequirements(): void
     {
         $data = [
