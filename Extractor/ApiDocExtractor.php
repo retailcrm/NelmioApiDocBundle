@@ -477,9 +477,8 @@ class ApiDocExtractor
      */
     protected function parseAnnotations(ApiDoc $annotation, Route $route, \ReflectionMethod $method): void
     {
-        $annots = $this->reader->getMethodAnnotations($method);
         foreach ($this->handlers as $handler) {
-            $handler->handle($annotation, $annots, $route, $method);
+            $handler->handle($annotation, $route, $method);
         }
     }
 

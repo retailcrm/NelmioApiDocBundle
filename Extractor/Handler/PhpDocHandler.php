@@ -28,7 +28,7 @@ class PhpDocHandler implements HandlerInterface
         $this->commentExtractor = $commentExtractor;
     }
 
-    public function handle(ApiDoc $annotation, array $annotations, Route $route, \ReflectionMethod $method): void
+    public function handle(ApiDoc $annotation, Route $route, \ReflectionMethod $method): void
     {
         // description
         if (null === $annotation->getDescription()) {
