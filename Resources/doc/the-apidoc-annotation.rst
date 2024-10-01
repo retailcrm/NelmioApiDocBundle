@@ -65,8 +65,6 @@ The following properties are available:
 * ``resource``: whether the method describes a main resource or not (default:
   ``false``);
 * ``description``: a description of the API method;
-* ``https``: whether the method described requires the https protocol (default:
-  ``false``);
 * ``deprecated``: allow to set method as deprecated (default: ``false``);
 * ``tags``: allow to tag a method (e.g. ``beta`` or ``in-development``). Either
   a single tag or an array of tags. Each tag can have an optional hex colorcode

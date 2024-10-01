@@ -128,26 +128,6 @@ class ApiDoc
     /**
      * @var bool
      */
-    private $https = false;
-
-    /**
-     * @var bool
-     */
-    private $authentication = false;
-
-    /**
-     * @var array
-     */
-    private $authenticationRoles = [];
-
-    /**
-     * @var int
-     */
-    private $cache;
-
-    /**
-     * @var bool
-     */
     private $deprecated = false;
 
     /**
@@ -272,20 +252,6 @@ class ApiDoc
             }
         }
 
-        if (isset($data['authentication'])) {
-            $this->setAuthentication((bool) $data['authentication']);
-        }
-
-        if (isset($data['authenticationRoles'])) {
-            foreach ($data['authenticationRoles'] as $key => $role) {
-                $this->authenticationRoles[] = $role;
-            }
-        }
-
-        if (isset($data['cache'])) {
-            $this->setCache($data['cache']);
-        }
-
         if (isset($data['section'])) {
             $this->section = $data['section'];
         }
@@ -306,10 +272,6 @@ class ApiDoc
             } else {
                 $this->tags[] = $data['tags'];
             }
-        }
-
-        if (isset($data['https'])) {
-            $this->https = $data['https'];
         }
 
         if (isset($data['resourceDescription'])) {
@@ -545,70 +507,6 @@ class ApiDoc
     /**
      * @return bool
      */
-    public function getHttps()
-    {
-        return $this->https;
-    }
-
-    /**
-     * @param bool $https
-     */
-    public function setHttps($https): void
-    {
-        $this->https = $https;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getAuthentication()
-    {
-        return $this->authentication;
-    }
-
-    /**
-     * @param bool $authentication
-     */
-    public function setAuthentication($authentication): void
-    {
-        $this->authentication = $authentication;
-    }
-
-    /**
-     * @return array
-     */
-    public function getAuthenticationRoles()
-    {
-        return $this->authenticationRoles;
-    }
-
-    /**
-     * @param array $authenticationRoles
-     */
-    public function setAuthenticationRoles($authenticationRoles): void
-    {
-        $this->authenticationRoles = $authenticationRoles;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCache()
-    {
-        return $this->cache;
-    }
-
-    /**
-     * @param int $cache
-     */
-    public function setCache($cache): void
-    {
-        $this->cache = (int) $cache;
-    }
-
-    /**
-     * @return bool
-     */
     public function getDeprecated()
     {
         return $this->deprecated;
@@ -738,10 +636,6 @@ class ApiDoc
             $data['section'] = $section;
         }
 
-        if ($cache = $this->cache) {
-            $data['cache'] = $cache;
-        }
-
         if ($tags = $this->tags) {
             $data['tags'] = $tags;
         }
@@ -750,9 +644,6 @@ class ApiDoc
             $data['resourceDescription'] = $resourceDescription;
         }
 
-        $data['https'] = $this->https;
-        $data['authentication'] = $this->authentication;
-        $data['authenticationRoles'] = $this->authenticationRoles;
         $data['deprecated'] = $this->deprecated;
         $data['scope'] = $this->scope;
 

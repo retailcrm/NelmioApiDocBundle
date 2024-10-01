@@ -442,10 +442,6 @@ _Action without HTTP verb_
 
 
 
-### `ANY` /authenticated ###
-
-
-
 ### `POST` /jms-input-test ###
 
 _Testing JMS_
@@ -683,10 +679,6 @@ _Route with host placeholder_
 
   - Requirement: test.dev|test.com
 **_format**
-
-
-
-### `ANY` /secure-route ###
 
 
 

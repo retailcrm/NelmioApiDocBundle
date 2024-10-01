@@ -11,13 +11,6 @@
             </span>
             {% endif %}
 
-            {% if data.https %}
-                <span class="icon lock" title="HTTPS"></span>
-            {% endif %}
-            {% if data.authentication %}
-                <span class="icon keys" title="Needs {{ data.authenticationRoles|length > 0 ? data.authenticationRoles|join(', ') : 'authentication' }}"></span>
-            {% endif %}
-
             <span class="path">
                 {% if data.host is defined -%}
                     {{ data.https ? 'https://' : 'http://' -}}
@@ -234,9 +227,9 @@
             {% if enableSandbox %}
                 <div class="pane sandbox">
                     {% if app.request is not null and data.https and app.request.secure != data.https %}
-                    Please reload the documentation using the scheme {% if data.https %}HTTPS{% else %}HTTP{% endif %} if you want to use the sandbox.
+                    Please reload the documentation using the scheme HTTP if you want to use the sandbox.
                     {% else %}
-                        <form method="" action="{% if data.host is defined %}{{ data.https ? 'https://' : 'http://' }}{{ data.host }}{% endif %}{{ data.uri }}">
+                        <form method="" action="{% if data.host is defined %}http://{{ data.host }}{% endif %}{{ data.uri }}">
                             <fieldset class="parameters">
                                 <legend>Input</legend>
                                 {% if data.requirements is defined %}

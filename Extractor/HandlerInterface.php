@@ -19,5 +19,5 @@ interface HandlerInterface
     /**
      * Parse route parameters in order to populate ApiDoc.
      */
-    public function handle(ApiDoc $annotation, array $annotations, Route $route, \ReflectionMethod $method);
+    public function handle(ApiDoc $annotation, Route $route, \ReflectionMethod $method);
 }

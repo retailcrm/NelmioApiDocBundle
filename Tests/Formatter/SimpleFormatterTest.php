@@ -58,9 +58,6 @@ class SimpleFormatterTest extends WebTestCase
             'requirements' => [
                 '_format' => ['dataType' => '', 'description' => '', 'requirement' => ''],
             ],
-            'https' => false,
-            'authentication' => false,
-            'authenticationRoles' => [],
             'deprecated' => false,
             'scope' => null,
         ];
