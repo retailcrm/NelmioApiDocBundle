@@ -11,7 +11,7 @@
 
 namespace Nelmio\ApiDocBundle\Formatter;
 
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Nelmio\ApiDocBundle\Attribute\ApiDoc;
 
 class SimpleFormatter extends AbstractFormatter
 {

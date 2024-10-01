@@ -11,7 +11,7 @@
 
 namespace Nelmio\ApiDocBundle\Formatter;
 
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Nelmio\ApiDocBundle\Attribute\ApiDoc;
 use Nelmio\ApiDocBundle\DataTypes;
 use Nelmio\ApiDocBundle\Swagger\ModelRegistry;
 use Symfony\Component\HttpFoundation\Response;

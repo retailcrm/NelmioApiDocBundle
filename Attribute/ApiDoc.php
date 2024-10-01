@@ -1,21 +1,10 @@
 <?php
 
-/*
- * This file is part of the NelmioApiDocBundle.
- *
- * (c) Nelmio <hello@nelm.io>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
-namespace Nelmio\ApiDocBundle\Annotation;
+namespace Nelmio\ApiDocBundle\Attribute;
 
 use Symfony\Component\Routing\Route;
 
-/**
- * @Annotation
- */
+#[\Attribute(\Attribute::TARGET_METHOD)]
 class ApiDoc
 {
     public const DEFAULT_VIEW = 'default';
@@ -23,158 +12,93 @@ class ApiDoc
     /**
      * Requirements are mandatory parameters in a route.
      *
-     * @var array
+     * @var array<string, array<string, string>>
      */
-    private $requirements = [];
+    private array $requirements = [];
 
     /**
      * Which views is this route used. Defaults to "Default"
      *
-     * @var array
+     * @var string[]
      */
-    private $views = [];
+    private array $views = [];
 
     /**
      * Filters are optional parameters in the query string.
      *
-     * @var array
+     * @var array<string, array<string, string>>
      */
-    private $filters = [];
+    private array $filters = [];
 
     /**
      * Parameters are data a client can send.
      *
-     * @var array
+     * @var array<string, array<string, mixed>>
      */
-    private $parameters = [];
+    private array $parameters = [];
     /**
      * Headers that client can send.
      *
-     * @var array
+     * @var array<string, array<string, mixed>>
      */
-    private $headers = [];
+    private array $headers = [];
 
-    /**
-     * @var string
-     */
-    private $input;
-
-    /**
-     * @var string
-     */
-    private $inputs;
-
-    /**
-     * @var string
-     */
-    private $output;
-
-    /**
-     * @var string
-     */
-    private $link;
-
-    /**
-     * Most of the time, a single line of text describing the action.
-     *
-     * @var string
-     */
-    private $description;
-
-    /**
-     * Section to group actions together.
-     *
-     * @var string
-     */
-    private $section;
+    private ?string $link = null;
 
     /**
      * Extended documentation.
-     *
-     * @var string
      */
-    private $documentation;
+    private ?string $documentation = null;
+
+    private Route $route;
+    private ?string $host = null;
+    private string $method;
+    private string $uri;
+
+    private array $response = [];
 
     /**
-     * @var bool
+     * @var array<int|string, string[]>
      */
-    private $resource = false;
+    private array $statusCodes = [];
 
     /**
-     * @var string
+     * @var array<int, array<mixed>>
      */
-    private $method;
+    private array $responseMap = [];
+
+    private array $parsedResponseMap = [];
 
     /**
-     * @var string
+     * @var array<string|int, string>
      */
-    private $host;
-
-    /**
-     * @var string
-     */
-    private $uri;
-
-    /**
-     * @var array
-     */
-    private $response = [];
-
-    /**
-     * @var Route
-     */
-    private $route;
-
-    /**
-     * @var bool
-     */
-    private $deprecated = false;
-
-    /**
-     * @var array
-     */
-    private $statusCodes = [];
-
-    /**
-     * @var string|null
-     */
-    private $resourceDescription;
-
-    /**
-     * @var array
-     */
-    private $responseMap = [];
-
-    /**
-     * @var array
-     */
-    private $parsedResponseMap = [];
-
-    /**
-     * @var array
-     */
-    private $tags = [];
+    private array $tags = [];
 
     private ?string $scope = null;
 
-    public function __construct(array $data)
-    {
-        $this->resource = !empty($data['resource']) ? $data['resource'] : false;
-
-        if (isset($data['description'])) {
-            $this->description = $data['description'];
-        }
-
-        if (isset($data['input'])) {
-            $this->input = $data['input'];
-        }
-
-        if (isset($data['inputs'])) {
-            $this->inputs = $data['inputs'];
-        }
-
-        if (isset($data['filters'])) {
-            foreach ($data['filters'] as $filter) {
+    /**
+     * @param string[]|string|null $description
+     */
+    public function __construct(
+        private string|bool $resource = false,
+        private array|string|null $description = null,
+        private string|array|null $input = null,
+        private ?array $inputs = null,
+        private string|array|null $output = null,
+        private ?string $section = null,
+        private bool $deprecated = false,
+        private ?string $resourceDescription = null,
+        ?array $filters = null,
+        ?array $requirements = null,
+        array|string|null $views = null,
+        ?array $parameters = null,
+        ?array $headers = null,
+        ?array $statusCodes = null,
+        array|string|int|null $tags = null,
+        ?array $responseMap = null,
+    ) {
+        if (null !== $filters) {
+            foreach ($filters as $filter) {
                 if (!isset($filter['name'])) {
                     throw new \InvalidArgumentException('A "filter" element has to contain a "name" attribute');
                 }
@@ -186,8 +110,8 @@ class ApiDoc
             }
         }
 
-        if (isset($data['requirements'])) {
-            foreach ($data['requirements'] as $requirement) {
+        if (null !== $requirements) {
+            foreach ($requirements as $requirement) {
                 if (!isset($requirement['name'])) {
                     throw new \InvalidArgumentException('A "requirement" element has to contain a "name" attribute');
                 }
@@ -199,18 +123,18 @@ class ApiDoc
             }
         }
 
-        if (isset($data['views'])) {
-            if (!is_array($data['views'])) {
-                $data['views'] = [$data['views']];
+        if (null !== $views) {
+            if (!is_array($views)) {
+                $views = [$views];
             }
 
-            foreach ($data['views'] as $view) {
+            foreach ($views as $view) {
                 $this->addView($view);
             }
         }
 
-        if (isset($data['parameters'])) {
-            foreach ($data['parameters'] as $parameter) {
+        if (null !== $parameters) {
+            foreach ($parameters as $parameter) {
                 if (!isset($parameter['name'])) {
                     throw new \InvalidArgumentException('A "parameter" element has to contain a "name" attribute');
                 }
@@ -229,8 +153,8 @@ class ApiDoc
             }
         }
 
-        if (isset($data['headers'])) {
-            foreach ($data['headers'] as $header) {
+        if (null !== $headers) {
+            foreach ($headers as $header) {
                 if (!isset($header['name'])) {
                     throw new \InvalidArgumentException('A "header" element has to contain a "name" attribute');
                 }
@@ -242,27 +166,15 @@ class ApiDoc
             }
         }
 
-        if (isset($data['output'])) {
-            $this->output = $data['output'];
-        }
-
-        if (isset($data['statusCodes'])) {
-            foreach ($data['statusCodes'] as $statusCode => $description) {
-                $this->addStatusCode($statusCode, $description);
+        if (null !== $statusCodes) {
+            foreach ($statusCodes as $statusCode => $statusDescription) {
+                $this->addStatusCode($statusCode, $statusDescription);
             }
         }
 
-        if (isset($data['section'])) {
-            $this->section = $data['section'];
-        }
-
-        if (isset($data['deprecated'])) {
-            $this->deprecated = $data['deprecated'];
-        }
-
-        if (isset($data['tags'])) {
-            if (is_array($data['tags'])) {
-                foreach ($data['tags'] as $tag => $colorCode) {
+        if (null !== $tags) {
+            if (is_array($tags)) {
+                foreach ($tags as $tag => $colorCode) {
                     if (is_numeric($tag)) {
                         $this->addTag($colorCode);
                     } else {
@@ -270,51 +182,34 @@ class ApiDoc
                     }
                 }
             } else {
-                $this->tags[] = $data['tags'];
+                $this->tags[] = $tags;
             }
         }
 
-        if (isset($data['resourceDescription'])) {
-            $this->resourceDescription = $data['resourceDescription'];
-        }
-
-        if (isset($data['responseMap'])) {
-            $this->responseMap = $data['responseMap'];
+        if (null !== $responseMap) {
+            $this->responseMap = $responseMap;
             if (isset($this->responseMap[200])) {
                 $this->output = $this->responseMap[200];
             }
         }
     }
 
-    /**
-     * @param string $name
-     */
-    public function addFilter($name, array $filter): void
+    public function addFilter(string $name, array $filter): void
     {
         $this->filters[$name] = $filter;
     }
 
-    /**
-     * @param string $statusCode
-     */
-    public function addStatusCode($statusCode, $description): void
+    public function addStatusCode(int|string $statusCode, string|array $description): void
     {
         $this->statusCodes[$statusCode] = !is_array($description) ? [$description] : $description;
     }
 
-    /**
-     * @param string $tag
-     * @param string $colorCode
-     */
-    public function addTag($tag, $colorCode = '#d9534f'): void
+    public function addTag(int|string $tag, string $colorCode = '#d9534f'): void
     {
         $this->tags[$tag] = $colorCode;
     }
 
-    /**
-     * @param string $name
-     */
-    public function addRequirement($name, array $requirement): void
+    public function addRequirement(string $name, array $requirement): void
     {
         $this->requirements[$name] = $requirement;
     }
@@ -324,119 +219,81 @@ class ApiDoc
         $this->requirements = array_merge($this->requirements, $requirements);
     }
 
-    /**
-     * @return string|null
-     */
-    public function getInput()
+    public function getInput(): string|array|null
     {
         return $this->input;
     }
 
-    /**
-     * @return array|null
-     */
-    public function getInputs()
+    public function getInputs(): ?array
     {
         return $this->inputs;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getOutput()
+    public function getOutput(): array|string|null
     {
         return $this->output;
     }
 
     /**
-     * @return string
+     * @return string[]|string|null
      */
-    public function getDescription()
+    public function getDescription(): array|string|null
     {
         return $this->description;
     }
 
     /**
-     * @param string $description
+     * @param string[]|string|null $description
      */
-    public function setDescription($description): void
+    public function setDescription(array|string|null $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * @param string $link
-     */
-    public function setLink($link): void
+    public function setLink(?string $link): void
     {
         $this->link = $link;
     }
 
-    /**
-     * @param string $section
-     */
-    public function setSection($section): void
-    {
-        $this->section = $section;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSection()
+    public function getSection(): ?string
     {
         return $this->section;
     }
 
-    /**
-     * @return array
-     */
-    public function addView($view)
+    public function addView(string $view): void
     {
         $this->views[] = $view;
     }
 
     /**
-     * @return array
+     * @return string[]
      */
-    public function getViews()
+    public function getViews(): array
     {
         return $this->views;
     }
 
-    /**
-     * @param string $documentation
-     */
-    public function setDocumentation($documentation): void
+    public function setDocumentation(?string $documentation): void
     {
         $this->documentation = $documentation;
     }
 
-    /**
-     * @return string
-     */
-    public function getDocumentation()
+    public function getDocumentation(): ?string
     {
         return $this->documentation;
     }
 
-    /**
-     * @return bool
-     */
-    public function isResource()
+    public function isResource(): bool
     {
         return (bool) $this->resource;
     }
 
-    public function getResource()
+    public function getResource(): string|bool
     {
         return $this->resource && is_string($this->resource) ? $this->resource : false;
     }
 
-    /**
-     * @param string $name
-     */
-    public function addParameter($name, array $parameter): void
+    public function addParameter(string $name, array $parameter): void
     {
         $this->parameters[$name] = $parameter;
     }
@@ -480,86 +337,50 @@ class ApiDoc
         $this->method = $route->getMethods() ? implode('|', $route->getMethods()) : 'ANY';
     }
 
-    /**
-     * @return Route
-     */
-    public function getRoute()
+    public function getRoute(): Route
     {
         return $this->route;
     }
 
-    /**
-     * @return string
-     */
-    public function getHost()
+    public function getHost(): ?string
     {
         return $this->host;
     }
 
-    /**
-     * @param string $host
-     */
-    public function setHost($host): void
-    {
-        $this->host = $host;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getDeprecated()
+    public function getDeprecated(): bool
     {
         return $this->deprecated;
     }
 
     /**
-     * @return array
+     * @return array<string, array<string, string>>
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return $this->filters;
     }
 
-    /**
-     * @return array
-     */
-    public function getRequirements()
+    public function getRequirements(): array
     {
         return $this->requirements;
     }
 
-    /**
-     * @return array
-     */
-    public function getParameters()
+    public function getParameters(): array
     {
         return $this->parameters;
     }
 
-    /**
-     * @return array
-     */
-    public function getHeaders()
+    public function getHeaders(): array
     {
         return $this->headers;
     }
 
-    /**
-     * @param bool $deprecated
-     *
-     * @return $this
-     */
-    public function setDeprecated($deprecated)
+    public function setDeprecated(bool $deprecated): void
     {
-        $this->deprecated = (bool) $deprecated;
-
-        return $this;
+        $this->deprecated = $deprecated;
     }
 
-    /**
-     * @return string
-     */
-    public function getMethod()
+    public function getMethod(): string
     {
         return $this->method;
     }
@@ -580,8 +401,8 @@ class ApiDoc
     public function toArray()
     {
         $data = [
-            'method' => $this->method,
-            'uri' => $this->uri,
+            'method' => $this->method ?? null,
+            'uri' => $this->uri ?? null,
         ];
 
         if ($host = $this->host) {
@@ -650,18 +471,12 @@ class ApiDoc
         return $data;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getResourceDescription()
+    public function getResourceDescription(): ?string
     {
         return $this->resourceDescription;
     }
 
-    /**
-     * @return array
-     */
-    public function getResponseMap()
+    public function getResponseMap(): array
     {
         if (!isset($this->responseMap[200]) && null !== $this->output) {
             $this->responseMap[200] = $this->output;
@@ -670,21 +485,15 @@ class ApiDoc
         return $this->responseMap;
     }
 
-    /**
-     * @return array
-     */
-    public function getParsedResponseMap()
+    public function getParsedResponseMap(): array
     {
         return $this->parsedResponseMap;
     }
 
-    /**
-     * @param int $statusCode
-     */
-    public function setResponseForStatusCode($model, $type, $statusCode = 200): void
+    public function setResponseForStatusCode(array $model, array $type, int $statusCode = 200): void
     {
         $this->parsedResponseMap[$statusCode] = ['type' => $type, 'model' => $model];
-        if (200 == $statusCode && $this->response !== $model) {
+        if (200 === $statusCode && $this->response !== $model) {
             $this->response = $model;
         }
     }

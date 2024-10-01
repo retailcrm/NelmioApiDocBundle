@@ -11,7 +11,7 @@
 
 namespace Nelmio\ApiDocBundle\Tests\Extractor;
 
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Nelmio\ApiDocBundle\Attribute\ApiDoc;
 use Nelmio\ApiDocBundle\Extractor\CachingApiDocExtractor;
 use Nelmio\ApiDocBundle\Tests\WebTestCase;
 

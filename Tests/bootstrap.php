@@ -14,4 +14,4 @@ if ((!$loader = includeIfExists(__DIR__ . '/../vendor/autoload.php')) && (!$load
 }
 
 // force loading the ApiDoc annotation since the composer target-dir autoloader does not run through $loader::loadClass
-class_exists('Nelmio\ApiDocBundle\Annotation\ApiDoc');
+class_exists('Nelmio\ApiDocBundle\Attribute\ApiDoc');

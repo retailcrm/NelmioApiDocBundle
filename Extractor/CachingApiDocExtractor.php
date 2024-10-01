@@ -11,8 +11,7 @@
 
 namespace Nelmio\ApiDocBundle\Extractor;
 
-use Doctrine\Common\Annotations\Reader;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Nelmio\ApiDocBundle\Attribute\ApiDoc;
 use Nelmio\ApiDocBundle\Util\DocCommentExtractor;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\Config\Resource\FileResource;
@@ -32,14 +31,13 @@ class CachingApiDocExtractor extends ApiDocExtractor
      */
     public function __construct(
         RouterInterface $router,
-        Reader $reader,
         DocCommentExtractor $commentExtractor,
         array $handlers,
         array $excludeSections,
         private string $cacheFile,
         private bool $debug = false,
     ) {
-        parent::__construct($router, $reader, $commentExtractor, $handlers, $excludeSections);
+        parent::__construct($router, $commentExtractor, $handlers, $excludeSections);
     }
 
     /**
@@ -47,15 +45,17 @@ class CachingApiDocExtractor extends ApiDocExtractor
      *
      * @return array|mixed
      */
-    public function all($view = ApiDoc::DEFAULT_VIEW)
+    public function all($view = ApiDoc::DEFAULT_VIEW): array
     {
         $cache = $this->getViewCache($view);
 
         if (!$cache->isFresh()) {
             $resources = [];
             foreach ($this->getRoutes() as $route) {
-                if (null !== ($method = $this->getReflectionMethod($route->getDefault('_controller')))
-                  && null !== ($annotation = $this->reader->getMethodAnnotation($method, self::ANNOTATION_CLASS))) {
+                if (
+                    null !== ($method = $this->getReflectionMethod($route->getDefault('_controller')))
+                    && null !== $this->getMethodApiDoc($method)
+                ) {
                     $file = $method->getDeclaringClass()->getFileName();
                     $resources[] = new FileResource($file);
                 }

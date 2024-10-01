@@ -11,7 +11,7 @@
 
 namespace Nelmio\ApiDocBundle\Extractor\Handler;
 
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Nelmio\ApiDocBundle\Attribute\ApiDoc;
 use Nelmio\ApiDocBundle\Extractor\HandlerInterface;
 use Nelmio\ApiDocBundle\Util\DocCommentExtractor;
 use Symfony\Component\Routing\Route;
@@ -74,7 +74,7 @@ class PhpDocHandler implements HandlerInterface
             $found = false;
             foreach ($paramDocs as $paramDoc) {
                 if (preg_match(sprintf($regexp, preg_quote($var)), $paramDoc, $matches)) {
-                    $annotationRequirements = $annotation->getrequirements();
+                    $annotationRequirements = $annotation->getRequirements();
 
                     if (!isset($annotationRequirements[$var]['dataType'])) {
                         $requirements[$var]['dataType'] = $matches[1] ?? '';

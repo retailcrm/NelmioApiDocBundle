@@ -11,76 +11,62 @@
 
 namespace Nelmio\ApiDocBundle\Tests\Fixtures\Controller;
 
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Nelmio\ApiDocBundle\Attribute\ApiDoc;
 
 class ResourceController
 {
-    /**
-     * @ApiDoc(
-     *      resource=true,
-     *      views={ "test", "premium", "default" },
-     *      resourceDescription="Operations on resource.",
-     *      description="List resources.",
-     *      output="array<Nelmio\ApiDocBundle\Tests\Fixtures\Model\Test> as tests",
-     *      statusCodes={200 = "Returned on success.", 404 = "Returned if resource cannot be found."}
-     * )
-     */
+    #[ApiDoc(
+        resource: true,
+        views: ['test', 'premium', 'default'],
+        resourceDescription: 'Operations on resource.',
+        description: 'List resources.',
+        output: "array<Nelmio\ApiDocBundle\Tests\Fixtures\Model\Test> as tests",
+        statusCodes: [200 => 'Returned on success.', 404 => 'Returned if resource cannot be found.']
+    )]
     public function listResourcesAction(): void
     {
     }
 
-    /**
-     * @ApiDoc(description="Retrieve a resource by ID.")
-     */
+    #[ApiDoc(description: 'Retrieve a resource by ID.')]
     public function getResourceAction(): void
     {
     }
 
-    /**
-     * @ApiDoc(description="Delete a resource by ID.")
-     */
+    #[ApiDoc(description: 'Delete a resource by ID.')]
     public function deleteResourceAction(): void
     {
     }
 
-    /**
-     * @ApiDoc(
-     *      description="Create a new resource.",
-     *      views={ "default", "premium" },
-     *      input={"class" = "Nelmio\ApiDocBundle\Tests\Fixtures\Form\SimpleType", "name" = ""},
-     *      output="Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested",
-     *      responseMap={
-     *          400 = {"class" = "Nelmio\ApiDocBundle\Tests\Fixtures\Form\SimpleType", "form_errors" = true}
-     *      }
-     * )
-     */
+    #[ApiDoc(
+        description: 'Create a new resource.',
+        views: ['default', 'premium'],
+        input: ['class' => "Nelmio\ApiDocBundle\Tests\Fixtures\Form\SimpleType", 'name' => ''],
+        output: "Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsNested",
+        responseMap: [
+            400 => ['class' => "Nelmio\ApiDocBundle\Tests\Fixtures\Form\SimpleType", 'form_errors' => true],
+        ]
+    )]
     public function createResourceAction(): void
     {
     }
 
-    /**
-     * @ApiDoc(
-     *      resource=true,
-     *      views={ "default", "premium" },
-     *      description="List another resource.",
-     *      resourceDescription="Operations on another resource.",
-     *      output="array<Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest>"
-     * )
-     */
+    #[ApiDoc(
+        resource: true,
+        views: ['default', 'premium'],
+        description: 'List another resource.',
+        resourceDescription: 'Operations on another resource.',
+        output: "array<Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest>"
+    )]
     public function listAnotherResourcesAction(): void
     {
     }
 
-    /**
-     * @ApiDoc(description="Retrieve another resource by ID.")
-     */
+    #[ApiDoc(description: 'Retrieve another resource by ID.')]
     public function getAnotherResourceAction(): void
     {
     }
 
-    /**
-     * @ApiDoc(description="Update a resource bu ID.")
-     */
+    #[ApiDoc(description: 'Update a resource bu ID.')]
     public function updateAnotherResourceAction(): void
     {
     }

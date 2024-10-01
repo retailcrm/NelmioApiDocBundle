@@ -11,7 +11,7 @@
 
 namespace Nelmio\ApiDocBundle\Formatter;
 
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Nelmio\ApiDocBundle\Attribute\ApiDoc;
 use Nelmio\ApiDocBundle\DataTypes;
 
 abstract class AbstractFormatter implements FormatterInterface
