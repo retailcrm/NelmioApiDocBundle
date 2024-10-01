@@ -46,7 +46,6 @@
         "symfony/form": "For using form definitions as input.",
         "symfony/validator": "For making use of validator information in the doc.",
         "friendsofsymfony/rest-bundle": "For making use of REST information in the doc.",
-        "dunglas/api-bundle": "For making use of resources definitions of DunglasApiBundle.",
         "jms/serializer": "For making use of serializer information in the doc."
     },
     "autoload": {
