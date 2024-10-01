@@ -94,7 +94,6 @@ setup your API documentation:
     multiple-api-doc
     other-bundle-annotations
     swagger-support
-    dunglasapibundle
     sandbox
     commands
     configuration-in-depth

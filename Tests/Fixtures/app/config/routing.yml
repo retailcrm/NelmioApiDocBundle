@@ -32,11 +32,6 @@ test_route_7:
     methods: [POST]
     defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::anotherPostAction, _format: json }
 
-test_route_8:
-    path: /z-action-with-query-param
-    methods: [GET]
-    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::zActionWithQueryParamAction }
-
 test_route_9:
     path: /jms-input-test
     methods: [POST]
@@ -46,11 +41,6 @@ test_route_10:
     path: /jms-return-test
     methods: [GET]
     defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::jmsReturnTestAction }
-
-test_route_11:
-    path: /z-action-with-request-param
-    methods: [POST]
-    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::zActionWithRequestParamAction }
 
 test_route_12:
     path: /secure-route
@@ -89,16 +79,6 @@ test_route_14:
     methods: [POST]
     defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::postTest2Action, _format: json }
 
-test_route_15:
-    path: /z-action-with-query-param-strict
-    methods: [GET]
-    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::zActionWithQueryParamStrictAction }
-
-test_route_16:
-    path: /z-action-with-query-param-no-default
-    methods: [GET]
-    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::zActionWithQueryParamNoDefaultAction }
-
 test_route_17:
     path: /z-action-with-deprecated-indicator
     methods: [GET]
@@ -135,16 +115,6 @@ test_route_private:
 test_route_exclusive:
     path: /exclusive
     defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::exclusiveAction }
-
-test_route_21:
-    path: /z-action-with-constraint-requirements
-    methods: [GET]
-    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::zActionWithConstraintAsRequirementsAction }
-
-test_route_22:
-    path: /z-action-with-nullable-request-param
-    methods: [POST]
-    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::zActionWithNullableRequestParamAction }
 
 test_route_list_resource:
     path: /api/resources.{_format}
@@ -238,21 +208,6 @@ test_route_28:
     requirements:
         domain: "%domain_dev%|%domain_prod%"
     defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::routeWithHostAction, domain: "%domain_dev%", _format: json }
-
-test_route_29:
-    path: /z-query-param-array-requirements
-    methods: [GET]
-    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::routeWithQueryParamArrayRequirementsAction }
-
-test_route_30:
-    path: /z-query-param-plain-array-requirements
-    methods: [GET]
-    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::routeWithQueryParamPlainArrayRequirementsAction }
-
-test_route_31:
-    path: /z-query-requirement-param-not-set
-    methods: [GET]
-    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::zActionWithRequirementParamNotSet }
 
 test_route_version_checking:
     path:  /zz-tests-route-version.{_format}

@@ -29,11 +29,6 @@ class AppKernel extends Kernel
             new \Nelmio\ApiDocBundle\Tests\Fixtures\NelmioApiDocTestBundle(),
         ];
 
-        if (class_exists('Dunglas\ApiBundle\DunglasApiBundle')) {
-            $bundles[] = new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle();
-            $bundles[] = new \Dunglas\ApiBundle\DunglasApiBundle();
-        }
-
         return $bundles;
     }
 
@@ -55,10 +50,6 @@ class AppKernel extends Kernel
     public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         $loader->load(__DIR__ . '/config/' . $this->environment . '.yml');
-
-        if (class_exists('Dunglas\ApiBundle\DunglasApiBundle')) {
-            $loader->load(__DIR__ . '/config/dunglas_api.yml');
-        }
 
         // If symfony/framework-bundle > 3.0
         if (!class_exists('Symfony\Bundle\FrameworkBundle\Command\RouterApacheDumperCommand')) {

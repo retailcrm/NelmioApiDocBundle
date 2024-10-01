@@ -17,20 +17,9 @@ use Nelmio\ApiDocBundle\Tests\WebTestCase;
 
 class ApiDocExtractorTest extends WebTestCase
 {
-    public const NB_ROUTES_ADDED_BY_DUNGLAS_API_BUNDLE = 5;
-
-    private static $ROUTES_QUANTITY_DEFAULT = 36; // Routes in the default view
+    private static $ROUTES_QUANTITY_DEFAULT = 28; // Routes in the default view
     private static $ROUTES_QUANTITY_PREMIUM = 5;  // Routes in the premium view
     private static $ROUTES_QUANTITY_TEST = 2;  // Routes in the test view
-
-    public static function setUpBeforeClass(): void
-    {
-        if (class_exists('Dunglas\ApiBundle\DunglasApiBundle')) {
-            self::$ROUTES_QUANTITY_DEFAULT += self::NB_ROUTES_ADDED_BY_DUNGLAS_API_BUNDLE;
-            self::$ROUTES_QUANTITY_PREMIUM += self::NB_ROUTES_ADDED_BY_DUNGLAS_API_BUNDLE;
-            self::$ROUTES_QUANTITY_TEST += self::NB_ROUTES_ADDED_BY_DUNGLAS_API_BUNDLE;
-        }
-    }
 
     public function testAll(): void
     {
@@ -39,11 +28,6 @@ class ApiDocExtractorTest extends WebTestCase
         set_error_handler([$this, 'handleDeprecation']);
         $data = $extractor->all();
         restore_error_handler();
-
-        $httpsKey = 21;
-        if (class_exists('Dunglas\ApiBundle\DunglasApiBundle')) {
-            $httpsKey += self::NB_ROUTES_ADDED_BY_DUNGLAS_API_BUNDLE;
-        }
 
         $this->assertTrue(is_array($data));
         $this->assertCount(self::$ROUTES_QUANTITY_DEFAULT, $data);
@@ -61,39 +45,6 @@ class ApiDocExtractorTest extends WebTestCase
             $this->assertInstanceOf('Symfony\Component\Routing\Route', $d['annotation']->getRoute());
             $this->assertNotNull($d['resource']);
         }
-
-        //        $a1 = $data[7]['annotation'];
-        //        $array1 = $a1->toArray();
-        //        $this->assertTrue($a1->isResource());
-        //        $this->assertEquals('index action', $a1->getDescription());
-        //        $this->assertTrue(is_array($array1['filters']));
-        //        $this->assertNull($a1->getInput());
-        //
-        //        $a2 = $data[8]['annotation'];
-        //        $array2 = $a2->toArray();
-        //        $this->assertFalse($a2->isResource());
-        //        $this->assertEquals('create test', $a2->getDescription());
-        //        $this->assertFalse(isset($array2['filters']));
-        //        $this->assertEquals('Nelmio\ApiDocBundle\Tests\Fixtures\Form\TestType', $a2->getInput());
-        //
-        //        $a2 = $data[9]['annotation'];
-        //        $array2 = $a2->toArray();
-        //        $this->assertFalse($a2->isResource());
-        //        $this->assertEquals('create test', $a2->getDescription());
-        //        $this->assertFalse(isset($array2['filters']));
-        //        $this->assertEquals('Nelmio\ApiDocBundle\Tests\Fixtures\Form\TestType', $a2->getInput());
-        //
-        //        $a3 = $data[$httpsKey]['annotation'];
-        //        $this->assertTrue($a3->getHttps());
-        //
-        //        $a4 = $data[11]['annotation'];
-        //        $this->assertTrue($a4->isResource());
-        //        $this->assertEquals('TestResource', $a4->getResource());
-        //
-        //        $a5 = $data[$httpsKey - 1]['annotation'];
-        //        $a5requirements = $a5->getRequirements();
-        //        $this->assertEquals('api.test.dev', $a5->getHost());
-        //        $this->assertEquals('test.dev|test.com', $a5requirements['domain']['requirement']);
     }
 
     public function testRouteVersionChecking(): void
@@ -298,12 +249,9 @@ class ApiDocExtractorTest extends WebTestCase
         $this->assertFalse($parameters['required_field']['required']);
     }
 
-    public static function dataProviderForViews()
+    public static function dataProviderForViews(): array
     {
         $offset = 0;
-        if (class_exists('Dunglas\ApiBundle\DunglasApiBundle')) {
-            $offset = self::NB_ROUTES_ADDED_BY_DUNGLAS_API_BUNDLE;
-        }
 
         return [
             ['default', self::$ROUTES_QUANTITY_DEFAULT + $offset],

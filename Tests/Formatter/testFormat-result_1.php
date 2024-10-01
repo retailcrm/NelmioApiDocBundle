@@ -1750,143 +1750,6 @@ With multiple lines.',
             'scope' => null,
         ],
         12 => [
-            'method' => 'POST',
-            'uri' => '/z-action-with-nullable-request-param',
-            'parameters' => [
-                'param1' => [
-                    'required' => false,
-                    'dataType' => 'string',
-                    'actualType' => 'string',
-                    'subType' => null,
-                    'description' => 'Param1 description.',
-                    'readonly' => false,
-                ],
-            ],
-            'https' => false,
-            'authentication' => false,
-            'authenticationRoles' => [
-            ],
-            'deprecated' => false,
-            'scope' => null,
-        ],
-        13 => [
-            'method' => 'GET',
-            'uri' => '/z-action-with-query-param',
-            'filters' => [
-                'page' => [
-                    'requirement' => '\\d+',
-                    'description' => 'Page of the overview.',
-                    'default' => '1',
-                ],
-            ],
-            'https' => false,
-            'authentication' => false,
-            'authenticationRoles' => [
-            ],
-            'deprecated' => false,
-            'scope' => null,
-        ],
-        14 => [
-            'method' => 'GET',
-            'uri' => '/z-action-with-query-param-no-default',
-            'filters' => [
-                'page' => [
-                    'requirement' => '\\d+',
-                    'description' => 'Page of the overview.',
-                ],
-            ],
-            'https' => false,
-            'authentication' => false,
-            'authenticationRoles' => [
-            ],
-            'deprecated' => false,
-            'scope' => null,
-        ],
-        15 => [
-            'method' => 'GET',
-            'uri' => '/z-action-with-query-param-strict',
-            'requirements' => [
-                'page' => [
-                    'requirement' => '\\d+',
-                    'dataType' => '',
-                    'description' => 'Page of the overview.',
-                ],
-            ],
-            'https' => false,
-            'authentication' => false,
-            'authenticationRoles' => [
-            ],
-            'deprecated' => false,
-            'scope' => null,
-        ],
-        16 => [
-            'method' => 'POST',
-            'uri' => '/z-action-with-request-param',
-            'parameters' => [
-                'param1' => [
-                    'required' => true,
-                    'dataType' => 'string',
-                    'actualType' => 'string',
-                    'subType' => null,
-                    'description' => 'Param1 description.',
-                    'readonly' => false,
-                ],
-            ],
-            'https' => false,
-            'authentication' => false,
-            'authenticationRoles' => [
-            ],
-            'deprecated' => false,
-            'scope' => null,
-        ],
-        17 => [
-            'method' => 'GET',
-            'uri' => '/z-query-param-array-requirements',
-            'filters' => [
-                'param1' => [
-                    'requirement' => 'regexp',
-                    'description' => 'Param1 description.',
-                ],
-            ],
-            'https' => false,
-            'authentication' => false,
-            'authenticationRoles' => [
-            ],
-            'deprecated' => false,
-            'scope' => null,
-        ],
-        18 => [
-            'method' => 'GET',
-            'uri' => '/z-query-param-plain-array-requirements',
-            'filters' => [
-                'param1' => [
-                    'requirement' => 'NotNull, NotBlank',
-                    'description' => 'Param1 description.',
-                ],
-            ],
-            'https' => false,
-            'authentication' => false,
-            'authenticationRoles' => [
-            ],
-            'deprecated' => false,
-            'scope' => null,
-        ],
-        19 => [
-            'method' => 'GET',
-            'uri' => '/z-query-requirement-param-not-set',
-            'filters' => [
-                'param1' => [
-                    'description' => 'Param1 description.',
-                ],
-            ],
-            'https' => false,
-            'authentication' => false,
-            'authenticationRoles' => [
-            ],
-            'deprecated' => false,
-            'scope' => null,
-        ],
-        20 => [
             'method' => 'ANY',
             'uri' => '/z-return-jms-and-validator-output',
             'response' => [
@@ -2006,7 +1869,7 @@ With multiple lines.',
             'deprecated' => false,
             'scope' => null,
         ],
-        21 => [
+        13 => [
             'method' => 'ANY',
             'uri' => '/z-return-selected-parsers-input',
             'parameters' => [
@@ -2054,7 +1917,7 @@ With multiple lines.',
             'deprecated' => false,
             'scope' => null,
         ],
-        22 => [
+        14 => [
             'method' => 'ANY',
             'uri' => '/z-return-selected-parsers-output',
             'response' => [
@@ -2174,7 +2037,7 @@ With multiple lines.',
             'deprecated' => false,
             'scope' => null,
         ],
-        23 => [
+        15 => [
             'method' => 'POST',
             'uri' => '/zcached',
             'https' => false,
@@ -2184,7 +2047,7 @@ With multiple lines.',
             'deprecated' => false,
             'scope' => null,
         ],
-        24 => [
+        16 => [
             'method' => 'POST',
             'uri' => '/zsecured',
             'https' => false,
@@ -2194,7 +2057,7 @@ With multiple lines.',
             'deprecated' => false,
             'scope' => null,
         ],
-        25 => [
+        17 => [
             'method' => 'GET',
             'uri' => '/zz-tests-route-version.{_format}',
             'requirements' => [

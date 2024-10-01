@@ -11,12 +11,9 @@
 
 namespace Nelmio\ApiDocBundle\Tests\Fixtures\Controller;
 
-use FOS\RestBundle\Controller\Annotations\QueryParam;
-use FOS\RestBundle\Controller\Annotations\RequestParam;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Nelmio\ApiDocBundle\Tests\Fixtures\DependencyTypePath;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\Constraints as Assert;
 
 class TestController
 {
@@ -129,42 +126,6 @@ class TestController
     }
 
     /**
-     * @ApiDoc()
-     *
-     * @QueryParam(strict=true, name="page", requirements="\d+", description="Page of the overview.")
-     */
-    public function zActionWithQueryParamStrictAction(): void
-    {
-    }
-
-    /**
-     * @ApiDoc()
-     *
-     * @QueryParam(name="page", requirements="\d+", default="1", description="Page of the overview.")
-     */
-    public function zActionWithQueryParamAction(): void
-    {
-    }
-
-    /**
-     * @ApiDoc()
-     *
-     * @QueryParam(name="page", requirements="\d+", description="Page of the overview.")
-     */
-    public function zActionWithQueryParamNoDefaultAction(): void
-    {
-    }
-
-    /**
-     * @ApiDoc()
-     *
-     * @QueryParam(name="mail", requirements=@Assert\Email, description="Email of someone.")
-     */
-    public function zActionWithConstraintAsRequirements(): void
-    {
-    }
-
-    /**
      * @ApiDoc(
      *  description="Testing JMS",
      *  input="Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest"
@@ -181,24 +142,6 @@ class TestController
      * )
      */
     public function jmsReturnTestAction(): void
-    {
-    }
-
-    /**
-     * @ApiDoc()
-     *
-     * @RequestParam(name="param1", requirements="string", description="Param1 description.")
-     */
-    public function zActionWithRequestParamAction(): void
-    {
-    }
-
-    /**
-     * @ApiDoc()
-     *
-     * @RequestParam(name="param1", requirements="string", description="Param1 description.", nullable=true)
-     */
-    public function zActionWithNullableRequestParamAction(): void
     {
     }
 
@@ -398,33 +341,6 @@ class TestController
      * )
      */
     public function routeWithHostAction(): void
-    {
-    }
-
-    /**
-     * @ApiDoc()
-     *
-     * @QueryParam(name="param1", requirements={"rule": "regexp", "error_message": "warning"}, description="Param1 description.")
-     */
-    public function routeWithQueryParamArrayRequirementsAction(): void
-    {
-    }
-
-    /**
-     * @ApiDoc()
-     *
-     * @QueryParam(name="param1", requirements={@Assert\NotNull(), @Assert\NotBlank()}, description="Param1 description.")
-     */
-    public function routeWithQueryParamPlainArrayRequirementsAction(): void
-    {
-    }
-
-    /**
-     * @ApiDoc()
-     *
-     * @QueryParam(name="param1", description="Param1 description.")
-     */
-    public function zActionWithRequirementParamNotSet(): void
     {
     }
 }
