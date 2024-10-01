@@ -153,16 +153,6 @@ class TestController
     }
 
     /**
-     * @ApiDoc(
-     *  authentication=true,
-     *  authenticationRoles={"ROLE_USER","ROLE_FOOBAR"}
-     * )
-     */
-    public function authenticatedAction(): void
-    {
-    }
-
-    /**
      * @ApiDoc()
      */
     public function zCachedAction(): void

@@ -17,7 +17,7 @@ use Nelmio\ApiDocBundle\Tests\WebTestCase;
 
 class ApiDocExtractorTest extends WebTestCase
 {
-    private static $ROUTES_QUANTITY_DEFAULT = 28; // Routes in the default view
+    private static $ROUTES_QUANTITY_DEFAULT = 27; // Routes in the default view
     private static $ROUTES_QUANTITY_PREMIUM = 5;  // Routes in the premium view
     private static $ROUTES_QUANTITY_TEST = 2;  // Routes in the test view
 
@@ -159,21 +159,6 @@ class ApiDocExtractorTest extends WebTestCase
             'The param id',
             $data['requirements']['param']['description']
         );
-    }
-
-    public function testGetWithAuthentication(): void
-    {
-        $container = $this->getContainer();
-        $extractor = $container->get('nelmio_api_doc.extractor.api_doc_extractor');
-        $annotation = $extractor->get('Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::AuthenticatedAction', 'test_route_13');
-
-        $this->assertNotNull($annotation);
-        $this->assertTrue(
-            $annotation->getAuthentication()
-        );
-        $this->assertContains('ROLE_USER', $annotation->getAuthenticationRoles());
-        $this->assertContains('ROLE_FOOBAR', $annotation->getAuthenticationRoles());
-        $this->assertCount(2, $annotation->getAuthenticationRoles());
     }
 
     public function testGetWithDeprecated(): void

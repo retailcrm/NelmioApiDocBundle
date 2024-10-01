@@ -47,10 +47,6 @@ test_route_12:
     schemes: [https]
     defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::secureRouteAction }
 
-test_route_13:
-    path: /authenticated
-    defaults: { _controller: Nelmio\ApiDocBundle\Tests\Fixtures\Controller\TestController::authenticatedAction }
-
 test_service_route_1:
     path: /tests.{_format}
     methods: [GET]
