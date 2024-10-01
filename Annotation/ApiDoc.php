@@ -175,6 +175,8 @@ class ApiDoc
      */
     private $tags = [];
 
+    private ?string $scope = null;
+
     public function __construct(array $data)
     {
         $this->resource = !empty($data['resource']) ? $data['resource'] : false;
@@ -664,6 +666,16 @@ class ApiDoc
         return $this->method;
     }
 
+    public function setScope(string $scope): void
+    {
+        $this->scope = $scope;
+    }
+
+    public function getScope(): ?string
+    {
+        return $this->scope;
+    }
+
     /**
      * @return array
      */
@@ -742,6 +754,7 @@ class ApiDoc
         $data['authentication'] = $this->authentication;
         $data['authenticationRoles'] = $this->authenticationRoles;
         $data['deprecated'] = $this->deprecated;
+        $data['scope'] = $this->scope;
 
         return $data;
     }

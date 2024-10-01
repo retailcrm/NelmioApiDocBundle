@@ -62,6 +62,7 @@ class SimpleFormatterTest extends WebTestCase
             'authentication' => false,
             'authenticationRoles' => [],
             'deprecated' => false,
+            'scope' => null,
         ];
 
         $this->assertEquals($expected, $result);
