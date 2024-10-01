@@ -20,53 +20,45 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ImprovedTestType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $choiceType = LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\ChoiceType');
         $datetimeType = LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\DateTimeType');
         $dateType = LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\DateType');
 
         $builder
-            ->add('dt1', $datetimeType, array('widget' => 'single_text', 'description' => 'A nice description'))
-            ->add('dt2', $datetimeType, array('date_format' => 'M/d/y', 'html5' => false))
-            ->add('dt3', $datetimeType, array('widget' => 'single_text', 'format' => 'M/d/y H:i:s', 'html5' => false))
-            ->add('dt4', $datetimeType, array('date_format' => \IntlDateFormatter::MEDIUM))
-            ->add('dt5', $datetimeType, array('format' => 'M/d/y H:i:s', 'html5' => false))
-            ->add('d1', $dateType, array('format' => \IntlDateFormatter::MEDIUM))
-            ->add('d2', $dateType, array('format' => 'd-M-y'))
-            ->add('c1', $choiceType, array('choices' => array('Male' => 'm', 'Female' => 'f')))
-            ->add('c2', $choiceType, array('choices' => array('Male' => 'm', 'Female' => 'f') , 'multiple' => true))
-            ->add('c3', $choiceType, array('choices' => array()))
-            ->add('c4', $choiceType, array('choices' => array('bar' => 'foo', 'bazgroup' => array('Buzz' => 'baz'))))
-            ->add('e1', LegacyFormHelper::isLegacy() ? new EntityType() : __NAMESPACE__.'\EntityType',
+            ->add('dt1', $datetimeType, ['widget' => 'single_text', 'description' => 'A nice description'])
+            ->add('dt2', $datetimeType, ['date_format' => 'M/d/y', 'html5' => false])
+            ->add('dt3', $datetimeType, ['widget' => 'single_text', 'format' => 'M/d/y H:i:s', 'html5' => false])
+            ->add('dt4', $datetimeType, ['date_format' => \IntlDateFormatter::MEDIUM])
+            ->add('dt5', $datetimeType, ['format' => 'M/d/y H:i:s', 'html5' => false])
+            ->add('d1', $dateType, ['format' => \IntlDateFormatter::MEDIUM])
+            ->add('d2', $dateType, ['format' => 'd-M-y'])
+            ->add('c1', $choiceType, ['choices' => ['Male' => 'm', 'Female' => 'f']])
+            ->add('c2', $choiceType, ['choices' => ['Male' => 'm', 'Female' => 'f'], 'multiple' => true])
+            ->add('c3', $choiceType, ['choices' => []])
+            ->add('c4', $choiceType, ['choices' => ['bar' => 'foo', 'bazgroup' => ['Buzz' => 'baz']]])
+            ->add('e1', LegacyFormHelper::isLegacy() ? new EntityType() : __NAMESPACE__ . '\EntityType',
                 LegacyFormHelper::isLegacy()
-                    ? array('choice_list' => new SimpleChoiceList(array('bar' => 'foo', 'bazgroup' => array('Buzz' => 'baz'))))
-                    : array('choices' => array('bar' => 'foo', 'bazgroup' => array('Buzz' => 'baz')))
+                    ? ['choice_list' => new SimpleChoiceList(['bar' => 'foo', 'bazgroup' => ['Buzz' => 'baz']])]
+                    : ['choices' => ['bar' => 'foo', 'bazgroup' => ['Buzz' => 'baz']]]
             )
         ;
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @deprecated Remove it when bumping requirements to Symfony 2.7+
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver): void
     {
         $this->configureOptions($resolver);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\ImprovedTest',
-        ));
+        ]);
 
         return;
     }
@@ -80,9 +72,6 @@ class ImprovedTestType extends AbstractType
         return $this->getBlockPrefix();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return '';

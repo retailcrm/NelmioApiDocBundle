@@ -11,10 +11,10 @@
 
 namespace Nelmio\ApiDocBundle\Extractor\Handler;
 
-use Nelmio\ApiDocBundle\Extractor\HandlerInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Symfony\Component\Routing\Route;
+use Nelmio\ApiDocBundle\Extractor\HandlerInterface;
 use Nelmio\ApiDocBundle\Util\DocCommentExtractor;
+use Symfony\Component\Routing\Route;
 
 class PhpDocHandler implements HandlerInterface
 {
@@ -28,7 +28,7 @@ class PhpDocHandler implements HandlerInterface
         $this->commentExtractor = $commentExtractor;
     }
 
-    public function handle(ApiDoc $annotation, array $annotations, Route $route, \ReflectionMethod $method)
+    public function handle(ApiDoc $annotation, array $annotations, Route $route, \ReflectionMethod $method): void
     {
         // description
         if (null === $annotation->getDescription()) {
@@ -48,11 +48,11 @@ class PhpDocHandler implements HandlerInterface
         $requirements = $annotation->getRequirements();
         foreach ($route->getRequirements() as $name => $value) {
             if (!isset($requirements[$name]) && '_method' !== $name && '_scheme' !== $name) {
-                $requirements[$name] = array(
+                $requirements[$name] = [
                     'requirement' => $value,
                     'dataType' => '',
                     'description' => '',
-                );
+                ];
             }
 
             if ('_scheme' === $name) {
@@ -65,7 +65,7 @@ class PhpDocHandler implements HandlerInterface
             $annotation->setHttps(in_array('https', $route->getSchemes()));
         }
 
-        $paramDocs = array();
+        $paramDocs = [];
         foreach (explode("\n", $this->commentExtractor->getDocComment($method)) as $line) {
             if (preg_match('{^@param (.+)}', trim($line), $matches)) {
                 $paramDocs[] = $matches[1];
@@ -73,8 +73,8 @@ class PhpDocHandler implements HandlerInterface
             if (preg_match('{^@deprecated}', trim($line))) {
                 $annotation->setDeprecated(true);
             }
-            if (preg_match('{^@link (.+)}', trim($line), $matches)) {
-                $annotation->setLink($matches[1]);
+            if (preg_match('{^@(link|see) (.+)}', trim($line), $matches)) {
+                $annotation->setLink($matches[2]);
             }
         }
 
@@ -86,7 +86,7 @@ class PhpDocHandler implements HandlerInterface
                     $annotationRequirements = $annotation->getrequirements();
 
                     if (!isset($annotationRequirements[$var]['dataType'])) {
-                        $requirements[$var]['dataType'] = isset($matches[1]) ? $matches[1] : '';
+                        $requirements[$var]['dataType'] = $matches[1] ?? '';
                     }
 
                     if (!isset($annotationRequirements[$var]['description'])) {
@@ -103,7 +103,7 @@ class PhpDocHandler implements HandlerInterface
             }
 
             if (!isset($requirements[$var]) && false === $found) {
-                $requirements[$var] = array('requirement' => '', 'dataType' => '', 'description' => '');
+                $requirements[$var] = ['requirement' => '', 'dataType' => '', 'description' => ''];
             }
         }
 

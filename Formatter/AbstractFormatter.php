@@ -18,14 +18,11 @@ abstract class AbstractFormatter implements FormatterInterface
 {
     protected $version;
 
-    public function setVersion($version)
+    public function setVersion($version): void
     {
         $this->version = $version;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function formatOne(ApiDoc $annotation)
     {
         return $this->renderOne(
@@ -33,9 +30,6 @@ abstract class AbstractFormatter implements FormatterInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function format(array $collection)
     {
         return $this->render(
@@ -46,7 +40,6 @@ abstract class AbstractFormatter implements FormatterInterface
     /**
      * Format a single array of data
      *
-     * @param  array        $data
      * @return string|array
      */
     abstract protected function renderOne(array $data);
@@ -54,7 +47,6 @@ abstract class AbstractFormatter implements FormatterInterface
     /**
      * Format a set of resource sections.
      *
-     * @param  array        $collection
      * @return string|array
      */
     abstract protected function render(array $collection);
@@ -62,10 +54,10 @@ abstract class AbstractFormatter implements FormatterInterface
     /**
      * Check that the versions range includes current version
      *
-     * @access protected
-     * @param  string $fromVersion (default: null)
-     * @param  string $toVersion (default: null)
-     * @return boolean
+     * @param string $fromVersion (default: null)
+     * @param string $toVersion   (default: null)
+     *
+     * @return bool
      */
     protected function rangeIncludesVersion($fromVersion = null, $toVersion = null)
     {
@@ -78,6 +70,7 @@ abstract class AbstractFormatter implements FormatterInterface
         if ($toVersion && version_compare($toVersion, $this->version, '<')) {
             return false;
         }
+
         return true;
     }
 
@@ -86,39 +79,38 @@ abstract class AbstractFormatter implements FormatterInterface
      * names to strings which contain the nested property names, for example:
      * `user[group][name]`
      *
+     * @param string $parentName
+     * @param bool   $ignoreNestedReadOnly
      *
-     * @param  array   $data
-     * @param  string  $parentName
-     * @param  boolean $ignoreNestedReadOnly
      * @return array
      */
     protected function compressNestedParameters(array $data, $parentName = null, $ignoreNestedReadOnly = false)
     {
-        $newParams = array();
+        $newParams = [];
         foreach ($data as $name => $info) {
             if ($this->version && !$this->rangeIncludesVersion(
-                    isset($info['sinceVersion']) ? $info['sinceVersion'] : null,
-                    isset($info['untilVersion']) ? $info['untilVersion'] : null
-                )) {
+                $info['sinceVersion'] ?? null,
+                $info['untilVersion'] ?? null
+            )) {
                 continue;
             }
 
             $newName = $this->getNewName($name, $info, $parentName);
 
-            $newParams[$newName] = array(
-                'dataType'     => $info['dataType'],
-                'readonly'     => array_key_exists('readonly', $info) ? $info['readonly'] : null,
-                'required'     => $info['required'],
-                'default'      => array_key_exists('default', $info) ? $info['default'] : null,
-                'description'  => array_key_exists('description', $info) ? $info['description'] : null,
-                'format'       => array_key_exists('format', $info) ? $info['format'] : null,
+            $newParams[$newName] = [
+                'dataType' => $info['dataType'],
+                'readonly' => array_key_exists('readonly', $info) ? $info['readonly'] : null,
+                'required' => $info['required'],
+                'default' => array_key_exists('default', $info) ? $info['default'] : null,
+                'description' => array_key_exists('description', $info) ? $info['description'] : null,
+                'format' => array_key_exists('format', $info) ? $info['format'] : null,
                 'sinceVersion' => array_key_exists('sinceVersion', $info) ? $info['sinceVersion'] : null,
                 'untilVersion' => array_key_exists('untilVersion', $info) ? $info['untilVersion'] : null,
-                'actualType'   => array_key_exists('actualType', $info) ? $info['actualType'] : null,
-                'subType'      => array_key_exists('subType', $info) ? $info['subType'] : null,
-                'parentClass'  => array_key_exists('parentClass', $info) ? $info['parentClass'] : null,
-                'field'        => array_key_exists('field', $info) ? $info['field'] : null,
-            );
+                'actualType' => array_key_exists('actualType', $info) ? $info['actualType'] : null,
+                'subType' => array_key_exists('subType', $info) ? $info['subType'] : null,
+                'parentClass' => array_key_exists('parentClass', $info) ? $info['parentClass'] : null,
+                'field' => array_key_exists('field', $info) ? $info['field'] : null,
+            ];
 
             if (isset($info['children']) && (!$info['readonly'] || !$ignoreNestedReadOnly)) {
                 foreach ($this->compressNestedParameters($info['children'], $newName, $ignoreNestedReadOnly) as $nestedItemName => $nestedItemData) {
@@ -134,27 +126,29 @@ abstract class AbstractFormatter implements FormatterInterface
      * Returns a new property name, taking into account whether or not the property
      * is an array of some other data type.
      *
-     * @param  string $name
-     * @param  array  $data
-     * @param  string $parentName
+     * @param string $name
+     * @param array  $data
+     * @param string $parentName
+     *
      * @return string
      */
     protected function getNewName($name, $data, $parentName = null)
     {
-        $array   = '';
-        $newName = ($parentName) ? sprintf("%s[%s]", $parentName, $name) : $name;
+        $array = '';
+        $newName = ($parentName) ? sprintf('%s[%s]', $parentName, $name) : $name;
 
-        if (isset($data['actualType']) && $data['actualType'] == DataTypes::COLLECTION
-            && isset($data['subType']) && $data['subType'] !== null
+        if (isset($data['actualType']) && DataTypes::COLLECTION == $data['actualType']
+            && isset($data['subType']) && null !== $data['subType']
         ) {
             $array = '[]';
         }
 
-        return sprintf("%s%s", $newName, $array);
+        return sprintf('%s%s', $newName, $array);
     }
 
     /**
-     * @param  array $annotation
+     * @param array $annotation
+     *
      * @return array
      */
     protected function processAnnotation($annotation)
@@ -173,23 +167,24 @@ abstract class AbstractFormatter implements FormatterInterface
             }
         }
 
-        $annotation['id'] = strtolower($annotation['method'] ?? '').'-'.str_replace('/', '-', $annotation['uri'] ?? '');
+        $annotation['id'] = strtolower($annotation['method'] ?? '') . '-' . str_replace('/', '-', $annotation['uri'] ?? '');
 
         return $annotation;
     }
 
     /**
      * @param  array[ApiDoc] $collection
+     *
      * @return array
      */
     protected function processCollection(array $collection)
     {
-        $array = array();
+        $array = [];
         foreach ($collection as $coll) {
             $array[$coll['annotation']->getSection()][$coll['resource']][] = $coll['annotation']->toArray();
         }
 
-        $processedCollection = array();
+        $processedCollection = [];
         foreach ($array as $section => $resources) {
             foreach ($resources as $path => $annotations) {
                 foreach ($annotations as $annotation) {

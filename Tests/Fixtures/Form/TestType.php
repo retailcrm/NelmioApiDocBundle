@@ -19,37 +19,29 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TestType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('a', null, array('description' => 'A nice description'))
+            ->add('a', null, ['description' => 'A nice description'])
             ->add('b')
             ->add($builder->create('c', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\CheckboxType')))
-            ->add('d', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\TextType'),array( 'data' => 'DefaultTest'))
+            ->add('d', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\TextType'), ['data' => 'DefaultTest'])
         ;
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @deprecated Remove it when bumping requirements to Symfony 2.7+
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver): void
     {
         $this->configureOptions($resolver);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\Test',
-        ));
+        ]);
 
         return;
     }
@@ -63,9 +55,6 @@ class TestType extends AbstractType
         return $this->getBlockPrefix();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return '';

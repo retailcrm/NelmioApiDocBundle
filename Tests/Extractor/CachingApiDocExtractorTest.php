@@ -33,16 +33,17 @@ class CachingApiDocExtractorTest extends WebTestCase
      * Test that every view cache is saved in its own cache file
      *
      * @dataProvider viewsWithoutDefaultProvider
+     *
      * @param string $view View name
      */
-    public function testDifferentCacheFilesAreCreatedForDifferentViews($view)
+    public function testDifferentCacheFilesAreCreatedForDifferentViews($view): void
     {
         $container = $this->getContainer();
         /* @var CachingApiDocExtractor $extractor */
         $extractor = $container->get('nelmio_api_doc.extractor.api_doc_extractor');
         $this->assertInstanceOf('\Nelmio\ApiDocBundle\Extractor\CachingApiDocExtractor', $extractor);
 
-        set_error_handler(array($this, 'handleDeprecation'));
+        set_error_handler([$this, 'handleDeprecation']);
         $defaultData = $extractor->all(ApiDoc::DEFAULT_VIEW);
         $data = $extractor->all($view);
         restore_error_handler();
@@ -51,10 +52,10 @@ class CachingApiDocExtractorTest extends WebTestCase
         $this->assertNotSameSize($defaultData, $data);
         $this->assertNotEquals($defaultData, $data);
 
-        $cacheFile = $container->getParameter('kernel.cache_dir').'/api-doc.cache';
+        $cacheFile = $container->getParameter('kernel.cache_dir') . '/api-doc.cache';
 
-        $expectedDefaultViewCacheFile = $cacheFile.'.'.ApiDoc::DEFAULT_VIEW;
-        $expectedViewCacheFile = $cacheFile.'.'.$view;
+        $expectedDefaultViewCacheFile = $cacheFile . '.' . ApiDoc::DEFAULT_VIEW;
+        $expectedViewCacheFile = $cacheFile . '.' . $view;
 
         $this->assertFileExists($expectedDefaultViewCacheFile);
         $this->assertFileExists($expectedViewCacheFile);
@@ -63,20 +64,21 @@ class CachingApiDocExtractorTest extends WebTestCase
 
     /**
      * @dataProvider \Nelmio\ApiDocBundle\Tests\Extractor\ApiDocExtractorTest::dataProviderForViews
+     *
      * @param string $view View name to test
      */
-    public function testCachedResultSameAsGenerated($view)
+    public function testCachedResultSameAsGenerated($view): void
     {
         $container = $this->getContainer();
         /* @var CachingApiDocExtractor $extractor */
         $extractor = $container->get('nelmio_api_doc.extractor.api_doc_extractor');
         $this->assertInstanceOf('\Nelmio\ApiDocBundle\Extractor\CachingApiDocExtractor', $extractor);
 
-        $cacheFile = $container->getParameter('kernel.cache_dir').'/api-doc.cache';
+        $cacheFile = $container->getParameter('kernel.cache_dir') . '/api-doc.cache';
 
-        $expectedViewCacheFile = $cacheFile.'.'.$view;
+        $expectedViewCacheFile = $cacheFile . '.' . $view;
 
-        set_error_handler(array($this, 'handleDeprecation'));
+        set_error_handler([$this, 'handleDeprecation']);
         $data = $extractor->all($view);
 
         $this->assertFileExists($expectedViewCacheFile);

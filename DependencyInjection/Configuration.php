@@ -44,7 +44,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('request_listener')
                     ->beforeNormalization()
                         ->ifTrue(function ($a) { return is_bool($a); })
-                        ->then(function ($a) { return array('enabled' => $a); })
+                        ->then(function ($a) { return ['enabled' => $a]; })
                     ->end()
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -62,15 +62,15 @@ class Configuration implements ConfigurationInterface
                             ->addDefaultsIfNotSet()
                             ->beforeNormalization()
                                 ->ifString()
-                                ->then(function ($v) { return array('default_format' => $v); })
+                                ->then(function ($v) { return ['default_format' => $v]; })
                             ->end()
                             ->children()
                                 ->arrayNode('formats')
-                                    ->defaultValue(array('form', 'json'))
+                                    ->defaultValue(['form', 'json'])
                                     ->prototype('scalar')->end()
                                 ->end()
                                 ->enumNode('default_format')
-                                    ->values(array('form', 'json'))
+                                    ->values(['form', 'json'])
                                     ->defaultValue('form')
                                 ->end()
                             ->end()
@@ -79,14 +79,14 @@ class Configuration implements ConfigurationInterface
                             ->addDefaultsIfNotSet()
                             ->children()
                                 ->arrayNode('formats')
-                                    ->defaultValue(array(
+                                    ->defaultValue([
                                         'json' => 'application/json',
-                                        'xml' => 'application/xml'
-                                    ))
+                                        'xml' => 'application/xml',
+                                    ])
                                     ->prototype('scalar')->end()
                                 ->end()
                                 ->enumNode('method')
-                                    ->values(array('format_param', 'accept_header'))
+                                    ->values(['format_param', 'accept_header'])
                                     ->defaultValue('format_param')
                                 ->end()
                                 ->scalarNode('default_format')->defaultValue('json')->end()
@@ -97,24 +97,24 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('delivery')
                                     ->isRequired()
                                     ->validate()
-                                        ->ifNotInArray(array('query', 'http', 'header'))
+                                        ->ifNotInArray(['query', 'http', 'header'])
                                         ->thenInvalid("Unknown authentication delivery type '%s'.")
                                     ->end()
                                 ->end()
                                 ->scalarNode('name')->isRequired()->end()
                                 ->enumNode('type')
                                     ->info('Required if http delivery is selected.')
-                                    ->values(array('basic', 'bearer'))
+                                    ->values(['basic', 'bearer'])
                                 ->end()
                                 ->booleanNode('custom_endpoint')->defaultFalse()->end()
                             ->end()
                             ->validate()
                                 ->ifTrue(function ($v) {
-                                    return 'http' === $v['delivery'] && !$v['type'] ;
+                                    return 'http' === $v['delivery'] && !$v['type'];
                                 })
                                 ->thenInvalid('"type" is required when using http delivery.')
                             ->end()
-                            # http_basic BC
+                            // http_basic BC
                             ->beforeNormalization()
                                 ->ifTrue(function ($v) {
                                     return 'http_basic' === $v['delivery'];
@@ -169,7 +169,8 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('file')->defaultValue('%kernel.cache_dir%/api-doc.cache')->end()
                     ->end()
                 ->end()
-            ->end();
+            ->end()
+        ;
 
         return $treeBuilder;
     }

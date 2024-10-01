@@ -7,9 +7,6 @@ namespace Nelmio\ApiDocBundle\Parser;
 
 class JsonSerializableParser implements ParserInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function supports(array $item)
     {
         if (!is_subclass_of($item['class'], 'JsonSerializable')) {
@@ -28,9 +25,6 @@ class JsonSerializableParser implements ParserInterface
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function parse(array $input)
     {
         /** @var \JsonSerializable $obj */
@@ -40,7 +34,7 @@ class JsonSerializableParser implements ParserInterface
         $parsed = $this->getItemMetaData($encoded);
 
         if (isset($input['name']) && !empty($input['name'])) {
-            $output = array();
+            $output = [];
             $output[$input['name']] = $parsed;
 
             return $output;
@@ -53,22 +47,22 @@ class JsonSerializableParser implements ParserInterface
     {
         $type = gettype($item);
 
-        $meta = array(
-            'dataType' => $type == 'NULL' ? null : $type,
+        $meta = [
+            'dataType' => 'NULL' == $type ? null : $type,
             'actualType' => $type,
             'subType' => null,
             'required' => null,
             'description' => null,
             'readonly' => null,
             'default' => is_scalar($item) ? $item : null,
-        );
+        ];
 
-        if ($type == 'object' && $item instanceof \JsonSerializable) {
+        if ('object' == $type && $item instanceof \JsonSerializable) {
             $meta = $this->getItemMetaData($item->jsonSerialize());
-            $meta['class'] = get_class($item);
-        } elseif (($type == 'object' && $item instanceof \stdClass) || ($type == 'array' && !$this->isSequential($item))) {
+            $meta['class'] = $item::class;
+        } elseif (('object' == $type && $item instanceof \stdClass) || ('array' == $type && !$this->isSequential($item))) {
             $meta['dataType'] = 'object';
-            $meta['children'] = array();
+            $meta['children'] = [];
             foreach ($item as $key => $value) {
                 $meta['children'][$key] = $this->getItemMetaData($value);
             }
@@ -81,12 +75,11 @@ class JsonSerializableParser implements ParserInterface
      * Check for numeric sequential keys, just like the json encoder does
      * Credit: http://stackoverflow.com/a/25206156/859027
      *
-     * @param  array $arr
      * @return bool
      */
     private function isSequential(array $arr)
     {
-        for ($i = count($arr) - 1; $i >= 0; $i--) {
+        for ($i = count($arr) - 1; $i >= 0; --$i) {
             if (!isset($arr[$i]) && !array_key_exists($i, $arr)) {
                 return false;
             }

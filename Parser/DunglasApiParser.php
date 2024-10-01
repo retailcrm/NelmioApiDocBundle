@@ -25,16 +25,16 @@ use PropertyInfo\Type;
  */
 class DunglasApiParser implements ParserInterface
 {
-    const IN_PREFIX = 'dunglas_api_in';
-    const OUT_PREFIX = 'dunglas_api_out';
-    const IRI = 'IRI';
+    public const IN_PREFIX = 'dunglas_api_in';
+    public const OUT_PREFIX = 'dunglas_api_out';
+    public const IRI = 'IRI';
 
-    private static $typeMap = array(
+    private static $typeMap = [
         'int' => DataTypes::INTEGER,
         'bool' => DataTypes::BOOLEAN,
         'string' => DataTypes::STRING,
         'float' => DataTypes::FLOAT,
-    );
+    ];
 
     /**
      * @var ResourceCollectionInterface
@@ -47,15 +47,12 @@ class DunglasApiParser implements ParserInterface
 
     public function __construct(
         ResourceCollectionInterface $resourceCollection,
-        ClassMetadataFactoryInterface $classMetadataFactory
+        ClassMetadataFactoryInterface $classMetadataFactory,
     ) {
         $this->resourceCollection = $resourceCollection;
         $this->classMetadataFactory = $classMetadataFactory;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supports(array $item)
     {
         $data = explode(':', $item['class'], 2);
@@ -66,12 +63,9 @@ class DunglasApiParser implements ParserInterface
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function parse(array $item)
     {
-        list($io, $entityClass) = explode(':', $item['class'], 2);
+        [$io, $entityClass] = explode(':', $item['class'], 2);
         $resource = $this->resourceCollection->getResourceForEntity($entityClass);
 
         return $this->parseClass($resource, $entityClass, $io);
@@ -80,14 +74,13 @@ class DunglasApiParser implements ParserInterface
     /**
      * Parses a class.
      *
-     * @param ResourceInterface $resource
-     * @param string            $entityClass
-     * @param string            $io
-     * @param string[]          $visited
+     * @param string   $entityClass
+     * @param string   $io
+     * @param string[] $visited
      *
      * @return array
      */
-    private function parseClass(ResourceInterface $resource, $entityClass, $io, array $visited = array())
+    private function parseClass(ResourceInterface $resource, $entityClass, $io, array $visited = [])
     {
         $visited[] = $entityClass;
 
@@ -98,11 +91,11 @@ class DunglasApiParser implements ParserInterface
             $resource->getValidationGroups()
         );
 
-        $data = array();
+        $data = [];
         foreach ($classMetadata->getAttributes() as $attributeMetadata) {
             if (
-                (!$attributeMetadata->isIdentifier() && $attributeMetadata->isReadable() && self::OUT_PREFIX === $io) ||
-                ($attributeMetadata->isWritable() && self::IN_PREFIX === $io)
+                (!$attributeMetadata->isIdentifier() && $attributeMetadata->isReadable() && self::OUT_PREFIX === $io)
+                || ($attributeMetadata->isWritable() && self::IN_PREFIX === $io)
             ) {
                 $data[$attributeMetadata->getName()] = $this->parseAttribute($resource, $attributeMetadata, $io, null, $visited);
             }
@@ -114,22 +107,19 @@ class DunglasApiParser implements ParserInterface
     /**
      * Parses an attribute.
      *
-     * @param ResourceInterface          $resource
-     * @param AttributeMetadataInterface $attributeMetadata
-     * @param string                     $io
-     * @param Type|null                  $type
-     * @param string[]                   $visited
+     * @param string   $io
+     * @param string[] $visited
      *
      * @return array
      */
-    private function parseAttribute(ResourceInterface $resource, AttributeMetadataInterface $attributeMetadata, $io, Type $type = null, array $visited = array())
+    private function parseAttribute(ResourceInterface $resource, AttributeMetadataInterface $attributeMetadata, $io, ?Type $type = null, array $visited = [])
     {
-        $data = array(
+        $data = [
             'dataType' => null,
             'required' => $attributeMetadata->isRequired(),
             'description' => $attributeMetadata->getDescription(),
             'readonly' => !$attributeMetadata->isWritable(),
-        );
+        ];
 
         if (null == $type) {
             if (!isset($attributeMetadata->getTypes()[0])) {
@@ -174,8 +164,8 @@ class DunglasApiParser implements ParserInterface
             }
 
             if (
-                (self::OUT_PREFIX === $io && $attributeMetadata->isNormalizationLink()) ||
-                (self::IN_PREFIX === $io && $attributeMetadata->isDenormalizationLink())
+                (self::OUT_PREFIX === $io && $attributeMetadata->isNormalizationLink())
+                || (self::IN_PREFIX === $io && $attributeMetadata->isDenormalizationLink())
             ) {
                 $data['dataType'] = self::IRI;
                 $data['actualType'] = DataTypes::STRING;

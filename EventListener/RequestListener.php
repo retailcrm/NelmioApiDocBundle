@@ -14,18 +14,18 @@ namespace Nelmio\ApiDocBundle\EventListener;
 use Nelmio\ApiDocBundle\Extractor\ApiDocExtractor;
 use Nelmio\ApiDocBundle\Formatter\FormatterInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class RequestListener
 {
     /**
-     * @var \Nelmio\ApiDocBundle\Extractor\ApiDocExtractor
+     * @var ApiDocExtractor
      */
     protected $extractor;
 
     /**
-     * @var \Nelmio\ApiDocBundle\Formatter\FormatterInterface
+     * @var FormatterInterface
      */
     protected $formatter;
 
@@ -41,10 +41,7 @@ class RequestListener
         $this->parameter = $parameter;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function onKernelRequest(RequestEvent $event)
+    public function onKernelRequest(RequestEvent $event): void
     {
         if (HttpKernelInterface::MAIN_REQUEST !== $event->getRequestType()) {
             return;
@@ -57,14 +54,14 @@ class RequestListener
         }
 
         $controller = $request->attributes->get('_controller');
-        $route      = $request->attributes->get('_route');
+        $route = $request->attributes->get('_route');
 
         if (null !== $annotation = $this->extractor->get($controller, $route)) {
             $result = $this->formatter->formatOne($annotation);
 
-            $event->setResponse(new Response($result, 200, array(
-                'Content-Type' => 'text/html'
-            )));
+            $event->setResponse(new Response($result, 200, [
+                'Content-Type' => 'text/html',
+            ]));
         }
     }
 }

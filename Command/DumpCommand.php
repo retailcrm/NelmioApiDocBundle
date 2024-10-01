@@ -40,7 +40,7 @@ class DumpCommand extends Command
         private readonly MarkdownFormatter $markdownFormatter,
         private readonly HtmlFormatter $htmlFormatter,
         private readonly ApiDocExtractor $apiDocExtractor,
-        private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator,
     ) {
         parent::__construct();
     }

@@ -14,13 +14,11 @@ namespace NelmioApiDocBundle\Tests\Parser;
 use Nelmio\ApiDocBundle\DataTypes;
 use Nelmio\ApiDocBundle\Form\Extension\DescriptionFormTypeExtension;
 use Nelmio\ApiDocBundle\Parser\FormTypeParser;
-use Nelmio\ApiDocBundle\Tests\Fixtures;
 use Nelmio\ApiDocBundle\Tests\Fixtures\Form\DependencyType;
 use Nelmio\ApiDocBundle\Util\LegacyFormHelper;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Extension\Core\CoreExtension;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormFactoryBuilder;
 use Symfony\Component\Form\ResolvedFormTypeFactory;
 use Symfony\Component\Translation\Translator;
@@ -30,19 +28,19 @@ class FormTypeParserTest extends TestCase
     /**
      * @dataProvider dataTestParse
      */
-    public function testParse($typeName, $expected)
+    public function testParse($typeName, $expected): void
     {
         $resolvedTypeFactory = new ResolvedFormTypeFactory();
         $formFactoryBuilder = new FormFactoryBuilder();
         $formFactoryBuilder->setResolvedTypeFactory($resolvedTypeFactory);
         $formFactoryBuilder->addExtension(new CoreExtension());
         $formFactoryBuilder->addTypeExtension(new DescriptionFormTypeExtension());
-        $formFactoryBuilder->addType(new DependencyType(array('foo')));
+        $formFactoryBuilder->addType(new DependencyType(['foo']));
         $formFactory = $formFactoryBuilder->getFormFactory();
         $formTypeParser = new FormTypeParser($formFactory, new Translator('en'), $entityToChoice = true);
 
-        set_error_handler(array('Nelmio\ApiDocBundle\Tests\WebTestCase', 'handleDeprecation'));
-        trigger_error('test', E_USER_DEPRECATED);
+        set_error_handler(['Nelmio\ApiDocBundle\Tests\WebTestCase', 'handleDeprecation']);
+        @trigger_error('test', E_USER_DEPRECATED);
 
         $output = $formTypeParser->parse($typeName);
         restore_error_handler();
@@ -52,9 +50,10 @@ class FormTypeParserTest extends TestCase
 
     /**
      * Checks that we can still use FormType with required arguments without defining them as services.
+     *
      * @dataProvider dataTestParse
      */
-    public function testLegacyParse($typeName, $expected)
+    public function testLegacyParse($typeName, $expected): void
     {
         if (LegacyFormHelper::hasBCBreaks()) {
             $this->markTestSkipped('Not supported on symfony 3.0.');
@@ -68,8 +67,8 @@ class FormTypeParserTest extends TestCase
         $formFactory = $formFactoryBuilder->getFormFactory();
         $formTypeParser = new FormTypeParser($formFactory, new Translator('en'), $entityToChoice = true);
 
-        set_error_handler(array('Nelmio\ApiDocBundle\Tests\WebTestCase', 'handleDeprecation'));
-        trigger_error('test', E_USER_DEPRECATED);
+        set_error_handler(['Nelmio\ApiDocBundle\Tests\WebTestCase', 'handleDeprecation']);
+        @trigger_error('test', E_USER_DEPRECATED);
 
         $output = $formTypeParser->parse($typeName);
         restore_error_handler();
@@ -80,19 +79,19 @@ class FormTypeParserTest extends TestCase
     /**
      * @dataProvider dataTestParseWithoutEntity
      */
-    public function testParseWithoutEntity($typeName, $expected)
+    public function testParseWithoutEntity($typeName, $expected): void
     {
         $resolvedTypeFactory = new ResolvedFormTypeFactory();
         $formFactoryBuilder = new FormFactoryBuilder();
         $formFactoryBuilder->setResolvedTypeFactory($resolvedTypeFactory);
         $formFactoryBuilder->addExtension(new CoreExtension());
         $formFactoryBuilder->addTypeExtension(new DescriptionFormTypeExtension());
-        $formFactoryBuilder->addType(new DependencyType(array('bar')));
+        $formFactoryBuilder->addType(new DependencyType(['bar']));
         $formFactory = $formFactoryBuilder->getFormFactory();
         $formTypeParser = new FormTypeParser($formFactory, new Translator('en'), $entityToChoice = false);
 
-        set_error_handler(array('Nelmio\ApiDocBundle\Tests\WebTestCase', 'handleDeprecation'));
-        trigger_error('test', E_USER_DEPRECATED);
+        set_error_handler(['Nelmio\ApiDocBundle\Tests\WebTestCase', 'handleDeprecation']);
+        @trigger_error('test', E_USER_DEPRECATED);
 
         $output = $formTypeParser->parse($typeName);
         restore_error_handler();
@@ -113,7 +112,7 @@ class FormTypeParserTest extends TestCase
     protected function expectedData($entityToChoice)
     {
         $entityData = array_merge(
-            array(
+            [
                 'dataType' => 'choice',
                 'actualType' => DataTypes::ENUM,
                 'subType' => null,
@@ -121,33 +120,33 @@ class FormTypeParserTest extends TestCase
                 'required' => true,
                 'description' => null,
                 'readonly' => false,
-            ),
-            LegacyFormHelper::isLegacy() ? array() : array('format' => '[bar|bazgroup]',)
+            ],
+            LegacyFormHelper::isLegacy() ? [] : ['format' => '[bar|bazgroup]']
         );
 
-        return array(
-            array(
-                array('class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Form\TestType', 'options' => array()),
-                array(
-                    'a' => array(
+        return [
+            [
+                ['class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Form\TestType', 'options' => []],
+                [
+                    'a' => [
                         'dataType' => 'string',
                         'actualType' => DataTypes::STRING,
                         'subType' => null,
                         'required' => true,
                         'description' => 'A nice description',
                         'readonly' => false,
-                        'default' => null
-                    ),
-                    'b' => array(
+                        'default' => null,
+                    ],
+                    'b' => [
                         'dataType' => 'string',
                         'actualType' => DataTypes::STRING,
                         'subType' => null,
                         'required' => true,
                         'description' => '',
                         'readonly' => false,
-                        'default' => null
-                    ),
-                    'c' => array(
+                        'default' => null,
+                    ],
+                    'c' => [
                         'dataType' => 'boolean',
                         'actualType' => DataTypes::BOOLEAN,
                         'subType' => null,
@@ -155,22 +154,22 @@ class FormTypeParserTest extends TestCase
                         'required' => true,
                         'description' => '',
                         'readonly' => false,
-                    ),
-                    'd' => array(
+                    ],
+                    'd' => [
                         'dataType' => 'string',
                         'actualType' => DataTypes::STRING,
                         'subType' => null,
                         'required' => true,
                         'description' => '',
                         'readonly' => false,
-                        'default' => "DefaultTest"
-                    )
-                )
-            ),
-            array(
-                array('class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Form\CollectionType', 'options' => array()),
-                array(
-                    'collection_type' => array(
+                        'default' => 'DefaultTest',
+                    ],
+                ],
+            ],
+            [
+                ['class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Form\CollectionType', 'options' => []],
+                [
+                    'collection_type' => [
                         'dataType' => 'object (CollectionType)',
                         'actualType' => DataTypes::MODEL,
                         'subType' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Form\CollectionType',
@@ -178,8 +177,8 @@ class FormTypeParserTest extends TestCase
                         'required' => true,
                         'description' => '',
                         'readonly' => false,
-                        'children' => array(
-                            'a' => array(
+                        'children' => [
+                            'a' => [
                                 'dataType' => 'array of strings',
                                 'actualType' => DataTypes::COLLECTION,
                                 'subType' => DataTypes::STRING,
@@ -187,8 +186,8 @@ class FormTypeParserTest extends TestCase
                                 'required' => true,
                                 'description' => '',
                                 'readonly' => false,
-                            ),
-                            'b' => array(
+                            ],
+                            'b' => [
                                 'dataType' => 'array of objects (TestType)',
                                 'actualType' => DataTypes::COLLECTION,
                                 'subType' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Form\TestType',
@@ -196,8 +195,8 @@ class FormTypeParserTest extends TestCase
                                 'required' => true,
                                 'description' => '',
                                 'readonly' => false,
-                                'children' => array(
-                                    'a' => array(
+                                'children' => [
+                                    'a' => [
                                         'dataType' => 'string',
                                         'actualType' => DataTypes::STRING,
                                         'default' => null,
@@ -205,8 +204,8 @@ class FormTypeParserTest extends TestCase
                                         'required' => true,
                                         'description' => 'A nice description',
                                         'readonly' => false,
-                                    ),
-                                    'b' => array(
+                                    ],
+                                    'b' => [
                                         'dataType' => 'string',
                                         'actualType' => DataTypes::STRING,
                                         'default' => null,
@@ -214,8 +213,8 @@ class FormTypeParserTest extends TestCase
                                         'required' => true,
                                         'description' => '',
                                         'readonly' => false,
-                                    ),
-                                    'c' => array(
+                                    ],
+                                    'c' => [
                                         'dataType' => 'boolean',
                                         'actualType' => DataTypes::BOOLEAN,
                                         'subType' => null,
@@ -223,30 +222,30 @@ class FormTypeParserTest extends TestCase
                                         'required' => true,
                                         'description' => '',
                                         'readonly' => false,
-                                    ),
-                                    'd' => array(
+                                    ],
+                                    'd' => [
                                         'dataType' => 'string',
                                         'actualType' => DataTypes::STRING,
                                         'subType' => null,
                                         'required' => true,
                                         'description' => '',
                                         'readonly' => false,
-                                        'default' => "DefaultTest"
-                                    ),
-                                ),
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-            array(
-                array(
+                                        'default' => 'DefaultTest',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            [
+                [
                     'class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Form\CollectionType',
                     'name' => '',
-                    'options' => array(),
-                ),
-                array(
-                    'a' => array(
+                    'options' => [],
+                ],
+                [
+                    'a' => [
                         'dataType' => 'array of strings',
                         'actualType' => DataTypes::COLLECTION,
                         'subType' => DataTypes::STRING,
@@ -254,8 +253,8 @@ class FormTypeParserTest extends TestCase
                         'required' => true,
                         'description' => '',
                         'readonly' => false,
-                    ),
-                    'b' => array(
+                    ],
+                    'b' => [
                         'dataType' => 'array of objects (TestType)',
                         'actualType' => DataTypes::COLLECTION,
                         'subType' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Form\TestType',
@@ -263,8 +262,8 @@ class FormTypeParserTest extends TestCase
                         'description' => '',
                         'default' => null,
                         'readonly' => false,
-                        'children' => array(
-                            'a' => array(
+                        'children' => [
+                            'a' => [
                                 'dataType' => 'string',
                                 'actualType' => DataTypes::STRING,
                                 'subType' => null,
@@ -272,8 +271,8 @@ class FormTypeParserTest extends TestCase
                                 'required' => true,
                                 'description' => 'A nice description',
                                 'readonly' => false,
-                            ),
-                            'b' => array(
+                            ],
+                            'b' => [
                                 'dataType' => 'string',
                                 'actualType' => DataTypes::STRING,
                                 'subType' => null,
@@ -281,8 +280,8 @@ class FormTypeParserTest extends TestCase
                                 'required' => true,
                                 'description' => '',
                                 'readonly' => false,
-                            ),
-                            'c' => array(
+                            ],
+                            'c' => [
                                 'dataType' => 'boolean',
                                 'actualType' => DataTypes::BOOLEAN,
                                 'subType' => null,
@@ -290,28 +289,28 @@ class FormTypeParserTest extends TestCase
                                 'required' => true,
                                 'description' => '',
                                 'readonly' => false,
-                            ),
-                            'd' => array(
+                            ],
+                            'd' => [
                                 'dataType' => 'string',
                                 'actualType' => DataTypes::STRING,
                                 'subType' => null,
                                 'required' => true,
                                 'description' => '',
                                 'readonly' => false,
-                                'default' => "DefaultTest"
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-            array(
-                array(
+                                'default' => 'DefaultTest',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            [
+                [
                     'class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Form\CollectionType',
                     'name' => null,
-                    'options' => array(),
-                ),
-                array(
-                    'a' => array(
+                    'options' => [],
+                ],
+                [
+                    'a' => [
                         'dataType' => 'array of strings',
                         'actualType' => DataTypes::COLLECTION,
                         'subType' => DataTypes::STRING,
@@ -319,8 +318,8 @@ class FormTypeParserTest extends TestCase
                         'required' => true,
                         'description' => '',
                         'readonly' => false,
-                    ),
-                    'b' => array(
+                    ],
+                    'b' => [
                         'dataType' => 'array of objects (TestType)',
                         'actualType' => DataTypes::COLLECTION,
                         'subType' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Form\TestType',
@@ -328,8 +327,8 @@ class FormTypeParserTest extends TestCase
                         'required' => true,
                         'description' => '',
                         'readonly' => false,
-                        'children' => array(
-                            'a' => array(
+                        'children' => [
+                            'a' => [
                                 'dataType' => 'string',
                                 'actualType' => DataTypes::STRING,
                                 'subType' => null,
@@ -337,8 +336,8 @@ class FormTypeParserTest extends TestCase
                                 'required' => true,
                                 'description' => 'A nice description',
                                 'readonly' => false,
-                            ),
-                            'b' => array(
+                            ],
+                            'b' => [
                                 'dataType' => 'string',
                                 'actualType' => DataTypes::STRING,
                                 'subType' => null,
@@ -346,8 +345,8 @@ class FormTypeParserTest extends TestCase
                                 'required' => true,
                                 'description' => '',
                                 'readonly' => false,
-                            ),
-                            'c' => array(
+                            ],
+                            'c' => [
                                 'dataType' => 'boolean',
                                 'actualType' => DataTypes::BOOLEAN,
                                 'subType' => null,
@@ -355,24 +354,24 @@ class FormTypeParserTest extends TestCase
                                 'required' => true,
                                 'description' => '',
                                 'readonly' => false,
-                            ),
-                            'd' => array(
+                            ],
+                            'd' => [
                                 'dataType' => 'string',
                                 'actualType' => DataTypes::STRING,
                                 'subType' => null,
-                                'default' => "DefaultTest",
+                                'default' => 'DefaultTest',
                                 'required' => true,
                                 'description' => '',
-                                'readonly' => false
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-            array(
-                array('class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Form\ImprovedTestType', 'options' => array()),
-                array(
-                    'dt1' => array(
+                                'readonly' => false,
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            [
+                ['class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Form\ImprovedTestType', 'options' => []],
+                [
+                    'dt1' => [
                         'dataType' => 'datetime',
                         'actualType' => DataTypes::DATETIME,
                         'subType' => null,
@@ -381,8 +380,8 @@ class FormTypeParserTest extends TestCase
                         'description' => 'A nice description',
                         'readonly' => false,
                         'format' => DateTimeType::HTML5_FORMAT,
-                    ),
-                    'dt2' => array(
+                    ],
+                    'dt2' => [
                         'dataType' => 'datetime',
                         'actualType' => DataTypes::DATETIME,
                         'subType' => null,
@@ -391,8 +390,8 @@ class FormTypeParserTest extends TestCase
                         'description' => '',
                         'readonly' => false,
                         'format' => 'M/d/y',
-                    ),
-                    'dt3' => array(
+                    ],
+                    'dt3' => [
                         'dataType' => 'datetime',
                         'actualType' => DataTypes::DATETIME,
                         'subType' => null,
@@ -401,8 +400,8 @@ class FormTypeParserTest extends TestCase
                         'description' => '',
                         'readonly' => false,
                         'format' => 'M/d/y H:i:s',
-                    ),
-                    'dt4' => array(
+                    ],
+                    'dt4' => [
                         'dataType' => 'datetime',
                         'actualType' => DataTypes::DATETIME,
                         'subType' => null,
@@ -410,8 +409,8 @@ class FormTypeParserTest extends TestCase
                         'required' => true,
                         'description' => '',
                         'readonly' => false,
-                    ),
-                    'dt5' => array(
+                    ],
+                    'dt5' => [
                         'dataType' => 'datetime',
                         'actualType' => DataTypes::DATETIME,
                         'subType' => null,
@@ -419,8 +418,8 @@ class FormTypeParserTest extends TestCase
                         'required' => true,
                         'description' => '',
                         'readonly' => false,
-                    ),
-                    'd1' => array(
+                    ],
+                    'd1' => [
                         'dataType' => 'date',
                         'actualType' => DataTypes::DATE,
                         'subType' => null,
@@ -428,8 +427,8 @@ class FormTypeParserTest extends TestCase
                         'required' => true,
                         'description' => '',
                         'readonly' => false,
-                    ),
-                    'd2' => array(
+                    ],
+                    'd2' => [
                         'dataType' => 'date',
                         'actualType' => DataTypes::DATE,
                         'subType' => null,
@@ -438,8 +437,8 @@ class FormTypeParserTest extends TestCase
                         'description' => '',
                         'readonly' => false,
                         'format' => 'd-M-y',
-                    ),
-                    'c1' => array(
+                    ],
+                    'c1' => [
                         'dataType' => 'choice',
                         'actualType' => DataTypes::ENUM,
                         'subType' => null,
@@ -448,8 +447,8 @@ class FormTypeParserTest extends TestCase
                         'description' => '',
                         'readonly' => false,
                         'format' => '[Female|Male]',
-                    ),
-                    'c2' => array(
+                    ],
+                    'c2' => [
                         'dataType' => 'array of choices',
                         'actualType' => DataTypes::COLLECTION,
                         'subType' => DataTypes::ENUM,
@@ -458,8 +457,8 @@ class FormTypeParserTest extends TestCase
                         'description' => '',
                         'readonly' => false,
                         'format' => '[Female|Male]',
-                    ),
-                    'c3' => array(
+                    ],
+                    'c3' => [
                         'dataType' => 'choice',
                         'actualType' => DataTypes::ENUM,
                         'subType' => null,
@@ -467,8 +466,8 @@ class FormTypeParserTest extends TestCase
                         'required' => true,
                         'description' => '',
                         'readonly' => false,
-                    ),
-                    'c4' => array(
+                    ],
+                    'c4' => [
                         'dataType' => 'choice',
                         'actualType' => DataTypes::ENUM,
                         'subType' => null,
@@ -477,103 +476,94 @@ class FormTypeParserTest extends TestCase
                         'description' => null,
                         'readonly' => false,
                         'format' => '[bar|bazgroup]',
-                    ),
-                    'e1' => $entityData
-                ),
-            ),
-            array(
-                array('class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Form\CompoundType', 'options' => array()),
-                array (
-                    'sub_form' =>
-                        array (
-                            'dataType' => 'object (SimpleType)',
-                            'actualType' => 'model',
-                            'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Form\\SimpleType',
-                            'default' => null,
-                            'required' => true,
-                            'description' => '',
-                            'readonly' => false,
-                            'children' =>
-                                array (
-                                    'a' =>
-                                        array (
-                                            'dataType' => 'string',
-                                            'actualType' => 'string',
-                                            'subType' => NULL,
-                                            'default' => null,
-                                            'required' => true,
-                                            'description' => 'Something that describes A.',
-                                            'readonly' => false,
-                                        ),
-                                    'b' =>
-                                        array (
-                                            'dataType' => 'float',
-                                            'actualType' => 'float',
-                                            'subType' => NULL,
-                                            'default' => null,
-                                            'required' => true,
-                                            'description' => '',
-                                            'readonly' => false,
-                                        ),
-                                    'c' =>
-                                        array (
-                                            'dataType' => 'choice',
-                                            'actualType' => 'choice',
-                                            'subType' => NULL,
-                                            'default' => null,
-                                            'required' => true,
-                                            'description' => '',
-                                            'readonly' => false,
-                                            'format' => '[X|Y|Z]',
-                                        ),
-                                    'd' =>
-                                        array (
-                                            'dataType' => 'datetime',
-                                            'actualType' => 'datetime',
-                                            'subType' => NULL,
-                                            'default' => null,
-                                            'required' => true,
-                                            'description' => '',
-                                            'readonly' => false,
-                                        ),
-                                    'e' =>
-                                        array (
-                                            'dataType' => 'date',
-                                            'actualType' => 'date',
-                                            'subType' => NULL,
-                                            'default' => null,
-                                            'required' => true,
-                                            'description' => '',
-                                            'readonly' => false,
-                                        ),
-                                    'g' =>
-                                        array (
-                                            'dataType' => 'string',
-                                            'actualType' => 'string',
-                                            'subType' => NULL,
-                                            'default' => null,
-                                            'required' => true,
-                                            'description' => '',
-                                            'readonly' => false,
-                                        ),
-                                ),
-                        ),
-                    'a' =>
-                        array (
-                            'dataType' => 'float',
-                            'actualType' => 'float',
-                            'subType' => NULL,
-                            'default' => null,
-                            'required' => true,
-                            'description' => '',
-                            'readonly' => false,
-                        ),
-                ),
-            ),
-            array(
-                array('class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Form\RequireConstructionType', 'options' => array()),
-                array(
-                    'require_construction_type' => array(
+                    ],
+                    'e1' => $entityData,
+                ],
+            ],
+            [
+                ['class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Form\CompoundType', 'options' => []],
+                [
+                    'sub_form' => [
+                        'dataType' => 'object (SimpleType)',
+                        'actualType' => 'model',
+                        'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Form\\SimpleType',
+                        'default' => null,
+                        'required' => true,
+                        'description' => '',
+                        'readonly' => false,
+                        'children' => [
+                            'a' => [
+                                'dataType' => 'string',
+                                'actualType' => 'string',
+                                'subType' => null,
+                                'default' => null,
+                                'required' => true,
+                                'description' => 'Something that describes A.',
+                                'readonly' => false,
+                            ],
+                            'b' => [
+                                'dataType' => 'float',
+                                'actualType' => 'float',
+                                'subType' => null,
+                                'default' => null,
+                                'required' => true,
+                                'description' => '',
+                                'readonly' => false,
+                            ],
+                            'c' => [
+                                'dataType' => 'choice',
+                                'actualType' => 'choice',
+                                'subType' => null,
+                                'default' => null,
+                                'required' => true,
+                                'description' => '',
+                                'readonly' => false,
+                                'format' => '[X|Y|Z]',
+                            ],
+                            'd' => [
+                                'dataType' => 'datetime',
+                                'actualType' => 'datetime',
+                                'subType' => null,
+                                'default' => null,
+                                'required' => true,
+                                'description' => '',
+                                'readonly' => false,
+                            ],
+                            'e' => [
+                                'dataType' => 'date',
+                                'actualType' => 'date',
+                                'subType' => null,
+                                'default' => null,
+                                'required' => true,
+                                'description' => '',
+                                'readonly' => false,
+                            ],
+                            'g' => [
+                                'dataType' => 'string',
+                                'actualType' => 'string',
+                                'subType' => null,
+                                'default' => null,
+                                'required' => true,
+                                'description' => '',
+                                'readonly' => false,
+                            ],
+                        ],
+                    ],
+                    'a' => [
+                        'dataType' => 'float',
+                        'actualType' => 'float',
+                        'subType' => null,
+                        'default' => null,
+                        'required' => true,
+                        'description' => '',
+                        'readonly' => false,
+                    ],
+                ],
+            ],
+            [
+                ['class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Form\RequireConstructionType', 'options' => []],
+                [
+                    'require_construction_type' => [
                         'dataType' => 'object (RequireConstructionType)',
                         'required' => true,
                         'description' => '',
@@ -581,8 +571,8 @@ class FormTypeParserTest extends TestCase
                         'default' => null,
                         'actualType' => 'model',
                         'subType' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Form\RequireConstructionType',
-                        'children' => array(
-                            'a' => array(
+                        'children' => [
+                            'a' => [
                                 'dataType' => 'string',
                                 'actualType' => 'string',
                                 'subType' => null,
@@ -590,15 +580,15 @@ class FormTypeParserTest extends TestCase
                                 'required' => true,
                                 'description' => 'A nice description',
                                 'readonly' => false,
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-            array(
-                array('class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Form\DependencyType', 'options' => array()),
-                array(
-                    'dependency_type' => array(
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            [
+                ['class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Form\DependencyType', 'options' => []],
+                [
+                    'dependency_type' => [
                         'dataType' => 'object (DependencyType)',
                         'required' => true,
                         'description' => '',
@@ -606,8 +596,8 @@ class FormTypeParserTest extends TestCase
                         'default' => null,
                         'actualType' => 'model',
                         'subType' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Form\DependencyType',
-                        'children' => array(
-                            'a' => array(
+                        'children' => [
+                            'a' => [
                                 'dataType' => 'string',
                                 'actualType' => 'string',
                                 'subType' => null,
@@ -615,13 +605,11 @@ class FormTypeParserTest extends TestCase
                                 'required' => true,
                                 'description' => 'A nice description',
                                 'readonly' => false,
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        );
-
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
     }
-
 }

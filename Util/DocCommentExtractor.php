@@ -5,7 +5,6 @@ namespace Nelmio\ApiDocBundle\Util;
 class DocCommentExtractor
 {
     /**
-     * @param  \Reflector $reflected
      * @return string
      */
     public function getDocComment(\Reflector $reflected)
@@ -19,13 +18,12 @@ class DocCommentExtractor
         $comment = str_replace("\r", '', trim($comment));
         $comment = preg_replace("#^\n[ \t]+[*]?#i", "\n", trim($comment));
         $comment = preg_replace("#[\t ]+#i", ' ', trim($comment));
-        $comment = str_replace("\"", "\\\"", $comment);
+        $comment = str_replace('"', '\\"', $comment);
 
         return $comment;
     }
 
     /**
-     * @param  \Reflector $reflected
      * @return string
      */
     public function getDocCommentText(\Reflector $reflected)
@@ -42,5 +40,4 @@ class DocCommentExtractor
 
         return trim($comment);
     }
-
 }

@@ -12,11 +12,11 @@
 namespace Nelmio\ApiDocBundle\Parser;
 
 use Nelmio\ApiDocBundle\DataTypes;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Mapping\Factory\MetadataFactoryInterface;
 use Symfony\Component\Validator\MetadataFactoryInterface as LegacyMetadataFactoryInterface;
-use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * Uses the Symfony Validation component to extract information about API objects.
@@ -24,24 +24,24 @@ use Symfony\Component\Validator\Constraints\Type;
 class ValidationParser implements ParserInterface, PostParserInterface
 {
     /**
-     * @var \Symfony\Component\Validator\MetadataFactoryInterface
+     * @var LegacyMetadataFactoryInterface
      */
     protected $factory;
 
-    protected $typeMap = array(
-        'integer'  => DataTypes::INTEGER,
-        'int'      => DataTypes::INTEGER,
-        'scalar'   => DataTypes::STRING,
-        'numeric'  => DataTypes::INTEGER,
-        'boolean'  => DataTypes::BOOLEAN,
-        'string'   => DataTypes::STRING,
-        'float'    => DataTypes::FLOAT,
-        'double'   => DataTypes::FLOAT,
-        'long'     => DataTypes::INTEGER,
-        'object'   => DataTypes::MODEL,
-        'array'    => DataTypes::COLLECTION,
+    protected $typeMap = [
+        'integer' => DataTypes::INTEGER,
+        'int' => DataTypes::INTEGER,
+        'scalar' => DataTypes::STRING,
+        'numeric' => DataTypes::INTEGER,
+        'boolean' => DataTypes::BOOLEAN,
+        'string' => DataTypes::STRING,
+        'float' => DataTypes::FLOAT,
+        'double' => DataTypes::FLOAT,
+        'long' => DataTypes::INTEGER,
+        'object' => DataTypes::MODEL,
+        'array' => DataTypes::COLLECTION,
         'DateTime' => DataTypes::DATETIME,
-    );
+    ];
 
     /**
      * Requires a validation MetadataFactory.
@@ -56,9 +56,6 @@ class ValidationParser implements ParserInterface, PostParserInterface
         $this->factory = $factory;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supports(array $input)
     {
         $className = $input['class'];
@@ -66,19 +63,16 @@ class ValidationParser implements ParserInterface, PostParserInterface
         return $this->factory->hasMetadataFor($className);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function parse(array $input)
     {
         $className = $input['class'];
 
-        $groups = array();
-        if (isset($input["groups"]) && $input["groups"]) {
-            $groups = $input["groups"];
+        $groups = [];
+        if (isset($input['groups']) && $input['groups']) {
+            $groups = $input['groups'];
         }
 
-        $parsed = $this->doParse($className, array(), $groups);
+        $parsed = $this->doParse($className, [], $groups);
 
         if (!isset($input['name']) || empty($input['name'])) {
             return $parsed;
@@ -91,8 +85,8 @@ class ValidationParser implements ParserInterface, PostParserInterface
             $dataType = sprintf('object (%s)', $className);
         }
 
-        return array(
-            $input['name'] => array(
+        return [
+            $input['name'] => [
                 'dataType' => $dataType,
                 'actualType' => DataTypes::MODEL,
                 'class' => $className,
@@ -101,21 +95,18 @@ class ValidationParser implements ParserInterface, PostParserInterface
                 'readonly' => null,
                 'children' => $parsed,
                 'default' => null,
-            ),
-        );
+            ],
+        ];
     }
 
     /**
      * Recursively parse constraints.
      *
-     * @param  $className
-     * @param  array $visited
-     * @param  array $groups
      * @return array
      */
-    protected function doParse($className, array $visited, array $groups = array())
+    protected function doParse($className, array $visited, array $groups = [])
     {
-        $params = array();
+        $params = [];
         $classdata = $this->factory->getMetadataFor($className);
         $properties = $classdata->getConstrainedProperties();
 
@@ -123,9 +114,9 @@ class ValidationParser implements ParserInterface, PostParserInterface
         $defaults = $refl->getDefaultProperties();
 
         foreach ($properties as $property) {
-            $vparams = array();
+            $vparams = [];
 
-            $vparams['default'] = isset($defaults[$property]) ? $defaults[$property] : null;
+            $vparams['default'] = $defaults[$property] ?? null;
 
             $pds = $classdata->getPropertyMetadata($property);
             foreach ($pds as $propdata) {
@@ -137,10 +128,10 @@ class ValidationParser implements ParserInterface, PostParserInterface
             }
 
             if (isset($vparams['format'])) {
-                $vparams['format'] = join(', ', array_unique($vparams['format']));
+                $vparams['format'] = implode(', ', array_unique($vparams['format']));
             }
 
-            foreach (array('dataType', 'readonly', 'required', 'subType') as $reqprop) {
+            foreach (['dataType', 'readonly', 'required', 'subType'] as $reqprop) {
                 if (!isset($vparams[$reqprop])) {
                     $vparams[$reqprop] = null;
                 }
@@ -152,7 +143,7 @@ class ValidationParser implements ParserInterface, PostParserInterface
                 $vparams['children'] = $this->doParse($vparams['class'], $visited, $groups);
             }
 
-            $vparams['actualType'] = isset($vparams['actualType']) ? $vparams['actualType'] : DataTypes::STRING;
+            $vparams['actualType'] = $vparams['actualType'] ?? DataTypes::STRING;
 
             $params[$property] = $vparams;
         }
@@ -160,19 +151,16 @@ class ValidationParser implements ParserInterface, PostParserInterface
         return $params;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function postParse(array $input, array $parameters)
     {
         $groups = [];
-        if (isset($input["groups"]) && $input["groups"]) {
-            $groups = $input["groups"];
+        if (isset($input['groups']) && $input['groups']) {
+            $groups = $input['groups'];
         }
 
         foreach ($parameters as $param => $data) {
             if (isset($data['class']) && isset($data['children'])) {
-                $input = array('class' => $data['class'], "groups" => $groups);
+                $input = ['class' => $data['class'], 'groups' => $groups];
                 $parameters[$param]['children'] = array_merge(
                     $parameters[$param]['children'], $this->postParse($input, $parameters[$param]['children'])
                 );
@@ -197,20 +185,20 @@ class ValidationParser implements ParserInterface, PostParserInterface
      *  - Choice (single and multiple, min and max)
      *  - Regex (match and non-match)
      *
-     * @param  Constraint $constraint The constraint metadata object.
-     * @param  array      $vparams    The existing validation parameters.
-     * @param  array      $groups     Validation groups.
-     * @return mixed      The parsed list of validation parameters.
+     * @param Constraint $constraint The constraint metadata object.
+     * @param array      $vparams    The existing validation parameters.
+     * @param array      $groups     Validation groups.
+     *
+     * @return mixed The parsed list of validation parameters.
      */
     protected function parseConstraint(
         Constraint $constraint,
         $vparams,
         $className,
-        &$visited = array(),
-        array $groups = array()
-    )
-    {
-        $class = substr(get_class($constraint), strlen('Symfony\\Component\\Validator\\Constraints\\'));
+        &$visited = [],
+        array $groups = [],
+    ) {
+        $class = substr($constraint::class, strlen('Symfony\\Component\\Validator\\Constraints\\'));
 
         $vparams['actualType'] = DataTypes::STRING;
         $vparams['subType'] = null;
@@ -231,6 +219,7 @@ class ValidationParser implements ParserInterface, PostParserInterface
         switch ($class) {
             case 'NotBlank':
                 $vparams['format'][] = '{not blank}';
+                // no break
             case 'NotNull':
                 $vparams['required'] = true;
                 break;
@@ -262,40 +251,40 @@ class ValidationParser implements ParserInterface, PostParserInterface
                 $vparams['actualType'] = DataTypes::TIME;
                 break;
             case 'Range':
-                $messages = array();
+                $messages = [];
                 if (isset($constraint->min)) {
                     $messages[] = ">={$constraint->min}";
                 }
                 if (isset($constraint->max)) {
                     $messages[] = "<={$constraint->max}";
                 }
-                $vparams['format'][] = '{range: {' . join(', ', $messages) . '}}';
+                $vparams['format'][] = '{range: {' . implode(', ', $messages) . '}}';
                 break;
             case 'Length':
-                $messages = array();
+                $messages = [];
                 if (isset($constraint->min)) {
                     $messages[] = "min: {$constraint->min}";
                 }
                 if (isset($constraint->max)) {
                     $messages[] = "max: {$constraint->max}";
                 }
-                $vparams['format'][] = '{length: {' . join(', ', $messages) . '}}';
+                $vparams['format'][] = '{length: {' . implode(', ', $messages) . '}}';
                 break;
             case 'Choice':
                 $choices = $this->getChoices($constraint, $className);
                 sort($choices);
-                $format = '[' . join('|', $choices) . ']';
+                $format = '[' . implode('|', $choices) . ']';
                 if ($constraint->multiple) {
                     $vparams['actualType'] = DataTypes::COLLECTION;
                     $vparams['subType'] = DataTypes::ENUM;
-                    $messages = array();
+                    $messages = [];
                     if (isset($constraint->min)) {
                         $messages[] = "min: {$constraint->min} ";
                     }
                     if (isset($constraint->max)) {
                         $messages[] = "max: {$constraint->max} ";
                     }
-                    $vparams['format'][] = '{' . join ('', $messages) . 'choice of ' . $format . '}';
+                    $vparams['format'][] = '{' . implode('', $messages) . 'choice of ' . $format . '}';
                 } else {
                     $vparams['actualType'] = DataTypes::ENUM;
                     $vparams['format'][] = $format;
@@ -312,19 +301,19 @@ class ValidationParser implements ParserInterface, PostParserInterface
                 foreach ($constraint->constraints as $childConstraint) {
                     if ($childConstraint instanceof Type) {
                         $nestedType = $childConstraint->type;
-                        $exp = explode("\\", $nestedType);
+                        $exp = explode('\\', $nestedType);
                         if (!$nestedType || !class_exists($nestedType)) {
-                            $nestedType = substr($className, 0, strrpos($className, '\\') + 1).$nestedType;
+                            $nestedType = substr($className, 0, strrpos($className, '\\') + 1) . $nestedType;
 
                             if (!class_exists($nestedType)) {
                                 continue;
                             }
                         }
 
-                        $vparams['dataType']   = sprintf("array of objects (%s)", end($exp));
+                        $vparams['dataType'] = sprintf('array of objects (%s)', end($exp));
                         $vparams['actualType'] = DataTypes::COLLECTION;
-                        $vparams['subType']    = $nestedType;
-                        $vparams['class']      = $nestedType;
+                        $vparams['subType'] = $nestedType;
+                        $vparams['class'] = $nestedType;
 
                         if (!in_array($nestedType, $visited)) {
                             $visited[] = $nestedType;
@@ -341,16 +330,15 @@ class ValidationParser implements ParserInterface, PostParserInterface
     /**
      * Return Choice constraint choices.
      *
-     * @param  Constraint                                                           $constraint
-     * @param $className
      * @return array
-     * @throws \Symfony\Component\Validator\Exception\ConstraintDefinitionException
+     *
+     * @throws ConstraintDefinitionException
      */
     protected function getChoices(Constraint $constraint, $className)
     {
         if ($constraint->callback) {
-            if (is_callable(array($className, $constraint->callback))) {
-                $choices = call_user_func(array($className, $constraint->callback));
+            if (is_callable([$className, $constraint->callback])) {
+                $choices = call_user_func([$className, $constraint->callback]);
             } elseif (is_callable($constraint->callback)) {
                 $choices = call_user_func($constraint->callback);
             } else {

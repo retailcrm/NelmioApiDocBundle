@@ -13,7 +13,6 @@ namespace Nelmio\ApiDocBundle\Tests;
 
 use PHPUnit\Util\ErrorHandler;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -41,18 +40,18 @@ abstract class WebTestCase extends BaseWebTestCase
 
     protected static function getKernelClass(): string
     {
-        require_once __DIR__.'/Fixtures/app/AppKernel.php';
+        require_once __DIR__ . '/Fixtures/app/AppKernel.php';
 
         return 'Nelmio\ApiDocBundle\Tests\Functional\AppKernel';
     }
 
-    protected static function createKernel(array $options = array()): KernelInterface
+    protected static function createKernel(array $options = []): KernelInterface
     {
         $class = self::getKernelClass();
 
         return new $class(
             'default',
-            isset($options['debug']) ? $options['debug'] : true
+            $options['debug'] ?? true
         );
     }
 }

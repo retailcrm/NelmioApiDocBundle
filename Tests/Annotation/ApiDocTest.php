@@ -17,9 +17,9 @@ use Symfony\Component\Routing\Route;
 
 class ApiDocTest extends TestCase
 {
-    public function testConstructWithoutData()
+    public function testConstructWithoutData(): void
     {
-        $data = array();
+        $data = [];
 
         $annot = new ApiDoc($data);
         $array = $annot->toArray();
@@ -38,12 +38,12 @@ class ApiDocTest extends TestCase
         $this->assertTrue(is_array($array['authenticationRoles']));
     }
 
-    public function testConstructWithInvalidData()
+    public function testConstructWithInvalidData(): void
     {
-        $data = array(
-            'unknown'   => 'foo',
-            'array'     => array('bar' => 'bar'),
-        );
+        $data = [
+            'unknown' => 'foo',
+            'array' => ['bar' => 'bar'],
+        ];
 
         $annot = new ApiDoc($data);
         $array = $annot->toArray();
@@ -58,11 +58,11 @@ class ApiDocTest extends TestCase
         $this->assertNull($annot->getInput());
     }
 
-    public function testConstruct()
+    public function testConstruct(): void
     {
-        $data = array(
+        $data = [
             'description' => 'Heya',
-        );
+        ];
 
         $annot = new ApiDoc($data);
         $array = $annot->toArray();
@@ -77,12 +77,12 @@ class ApiDocTest extends TestCase
         $this->assertNull($annot->getInput());
     }
 
-    public function testConstructDefinesAFormType()
+    public function testConstructDefinesAFormType(): void
     {
-        $data = array(
-            'description'   => 'Heya',
-            'input'         => 'My\Form\Type',
-        );
+        $data = [
+            'description' => 'Heya',
+            'input' => 'My\Form\Type',
+        ];
 
         $annot = new ApiDoc($data);
         $array = $annot->toArray();
@@ -97,14 +97,14 @@ class ApiDocTest extends TestCase
         $this->assertEquals($data['input'], $annot->getInput());
     }
 
-    public function testConstructMethodIsResource()
+    public function testConstructMethodIsResource(): void
     {
-        $data = array(
-            'resource'      => true,
-            'description'   => 'Heya',
-            'deprecated'    => true,
-            'input'         => 'My\Form\Type',
-        );
+        $data = [
+            'resource' => true,
+            'description' => 'Heya',
+            'deprecated' => true,
+            'input' => 'My\Form\Type',
+        ];
 
         $annot = new ApiDoc($data);
         $array = $annot->toArray();
@@ -119,14 +119,14 @@ class ApiDocTest extends TestCase
         $this->assertEquals($data['input'], $annot->getInput());
     }
 
-    public function testConstructMethodResourceIsFalse()
+    public function testConstructMethodResourceIsFalse(): void
     {
-        $data = array(
-            'resource'      => false,
-            'description'   => 'Heya',
-            'deprecated'    => false,
-            'input'         => 'My\Form\Type',
-        );
+        $data = [
+            'resource' => false,
+            'description' => 'Heya',
+            'deprecated' => false,
+            'input' => 'My\Form\Type',
+        ];
 
         $annot = new ApiDoc($data);
         $array = $annot->toArray();
@@ -141,16 +141,16 @@ class ApiDocTest extends TestCase
         $this->assertEquals($data['input'], $annot->getInput());
     }
 
-    public function testConstructMethodHasFilters()
+    public function testConstructMethodHasFilters(): void
     {
-        $data = array(
-            'resource'      => true,
-            'deprecated'    => false,
-            'description'   => 'Heya',
-            'filters'       => array(
-                array('name' => 'a-filter'),
-            ),
-        );
+        $data = [
+            'resource' => true,
+            'deprecated' => false,
+            'description' => 'Heya',
+            'filters' => [
+                ['name' => 'a-filter'],
+            ],
+        ];
 
         $annot = new ApiDoc($data);
         $array = $annot->toArray();
@@ -158,7 +158,7 @@ class ApiDocTest extends TestCase
         $this->assertTrue(is_array($array));
         $this->assertTrue(is_array($array['filters']));
         $this->assertCount(1, $array['filters']);
-        $this->assertEquals(array('a-filter' => array()), $array['filters']);
+        $this->assertEquals(['a-filter' => []], $array['filters']);
         $this->assertTrue($annot->isResource());
         $this->assertEquals($data['description'], $array['description']);
         $this->assertFalse(isset($array['requirements']));
@@ -167,33 +167,33 @@ class ApiDocTest extends TestCase
         $this->assertNull($annot->getInput());
     }
 
-    public function testConstructMethodHasFiltersWithoutName()
+    public function testConstructMethodHasFiltersWithoutName(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $data = array(
-            'description'   => 'Heya',
-            'filters'       => array(
-                array('parameter' => 'foo'),
-            ),
-        );
+        $data = [
+            'description' => 'Heya',
+            'filters' => [
+                ['parameter' => 'foo'],
+            ],
+        ];
 
         $annot = new ApiDoc($data);
     }
 
-    public function testConstructWithStatusCodes()
+    public function testConstructWithStatusCodes(): void
     {
-        $data = array(
+        $data = [
             'description' => 'Heya',
-            'statusCodes' => array(
-                200 => "Returned when successful",
-                403 => "Returned when the user is not authorized",
-                404 => array(
-                    "Returned when the user is not found",
-                    "Returned when when something else is not found"
-                )
-            )
-        );
+            'statusCodes' => [
+                200 => 'Returned when successful',
+                403 => 'Returned when the user is not authorized',
+                404 => [
+                    'Returned when the user is not found',
+                    'Returned when when something else is not found',
+                ],
+            ],
+        ];
 
         $annot = new ApiDoc($data);
         $array = $annot->toArray();
@@ -201,15 +201,15 @@ class ApiDocTest extends TestCase
         $this->assertTrue(is_array($array));
         $this->assertTrue(is_array($array['statusCodes']));
         foreach ($data['statusCodes'] as $code => $message) {
-            $this->assertEquals($array['statusCodes'][$code], !is_array($message) ? array($message) : $message);
+            $this->assertEquals($array['statusCodes'][$code], !is_array($message) ? [$message] : $message);
         }
     }
 
-    public function testConstructWithAuthentication()
+    public function testConstructWithAuthentication(): void
     {
-        $data = array(
-            'authentication' => true
-        );
+        $data = [
+            'authentication' => true,
+        ];
 
         $annot = new ApiDoc($data);
         $array = $annot->toArray();
@@ -217,11 +217,11 @@ class ApiDocTest extends TestCase
         $this->assertTrue($array['authentication']);
     }
 
-    public function testConstructWithCache()
+    public function testConstructWithCache(): void
     {
-        $data = array(
-            'cache' => '60'
-        );
+        $data = [
+            'cache' => '60',
+        ];
 
         $annot = new ApiDoc($data);
         $array = $annot->toArray();
@@ -229,18 +229,18 @@ class ApiDocTest extends TestCase
         $this->assertEquals($data['cache'], $array['cache']);
     }
 
-    public function testConstructWithRequirements()
+    public function testConstructWithRequirements(): void
     {
-        $data = array(
-            'requirements' => array(
-                array(
+        $data = [
+            'requirements' => [
+                [
                     'name' => 'fooId',
                     'requirement' => '\d+',
                     'dataType' => 'integer',
-                    'description' => 'This requirement might be used withing action method directly from Request object'
-                )
-            )
-        );
+                    'description' => 'This requirement might be used withing action method directly from Request object',
+                ],
+            ],
+        ];
 
         $annot = new ApiDoc($data);
         $array = $annot->toArray();
@@ -250,17 +250,17 @@ class ApiDocTest extends TestCase
         $this->assertTrue(isset($array['requirements']['fooId']['dataType']));
     }
 
-    public function testConstructWithParameters()
+    public function testConstructWithParameters(): void
     {
-        $data = array(
-            'parameters' => array(
-                array(
+        $data = [
+            'parameters' => [
+                [
                     'name' => 'fooId',
                     'dataType' => 'integer',
-                    'description' => 'Some description'
-                )
-            )
-        );
+                    'description' => 'Some description',
+                ],
+            ],
+        ];
 
         $annot = new ApiDoc($data);
         $array = $annot->toArray();
@@ -270,16 +270,16 @@ class ApiDocTest extends TestCase
         $this->assertTrue(isset($array['parameters']['fooId']['dataType']));
     }
 
-    public function testConstructWithHeaders()
+    public function testConstructWithHeaders(): void
     {
-        $data = array(
-            'headers' => array(
-                array(
+        $data = [
+            'headers' => [
+                [
                     'name' => 'headerName',
-                    'description' => 'Some description'
-                )
-            )
-        );
+                    'description' => 'Some description',
+                ],
+            ],
+        ];
 
         $annot = new ApiDoc($data);
         $array = $annot->toArray();
@@ -292,44 +292,44 @@ class ApiDocTest extends TestCase
         $this->assertEquals($data['headers'][0]['description'], $array['headers']['headerName']['description']);
     }
 
-    public function testConstructWithOneTag()
+    public function testConstructWithOneTag(): void
     {
-        $data = array(
-            'tags' => 'beta'
-        );
+        $data = [
+            'tags' => 'beta',
+        ];
 
         $annot = new ApiDoc($data);
         $array = $annot->toArray();
 
         $this->assertTrue(is_array($array));
         $this->assertTrue(is_array($array['tags']), 'Single tag should be put in array');
-        $this->assertEquals(array('beta'), $array['tags']);
+        $this->assertEquals(['beta'], $array['tags']);
     }
 
-    public function testConstructWithOneTagAndColorCode()
+    public function testConstructWithOneTagAndColorCode(): void
     {
-        $data = array(
-            'tags' => array(
-                'beta' => '#ff0000'
-            )
-        );
+        $data = [
+            'tags' => [
+                'beta' => '#ff0000',
+            ],
+        ];
 
         $annot = new ApiDoc($data);
         $array = $annot->toArray();
 
         $this->assertTrue(is_array($array));
         $this->assertTrue(is_array($array['tags']), 'Single tag should be put in array');
-        $this->assertEquals(array('beta' => '#ff0000'), $array['tags']);
+        $this->assertEquals(['beta' => '#ff0000'], $array['tags']);
     }
 
-    public function testConstructWithMultipleTags()
+    public function testConstructWithMultipleTags(): void
     {
-        $data = array(
-            'tags' => array(
+        $data = [
+            'tags' => [
                 'experimental' => '#0000ff',
                 'beta' => '#0000ff',
-            )
-        );
+            ],
+        ];
 
         $annot = new ApiDoc($data);
         $array = $annot->toArray();
@@ -339,14 +339,14 @@ class ApiDocTest extends TestCase
         $this->assertEquals($data['tags'], $array['tags']);
     }
 
-    public function testAlignmentOfOutputAndResponseModels()
+    public function testAlignmentOfOutputAndResponseModels(): void
     {
-        $data = array(
+        $data = [
             'output' => 'FooBar',
-            'responseMap' => array(
+            'responseMap' => [
                 400 => 'Foo\\ValidationErrorCollection',
-            ),
-        );
+            ],
+        ];
 
         $apiDoc = new ApiDoc($data);
 
@@ -358,14 +358,14 @@ class ApiDocTest extends TestCase
         $this->assertEquals($data['output'], $map[200]);
     }
 
-    public function testAlignmentOfOutputAndResponseModels2()
+    public function testAlignmentOfOutputAndResponseModels2(): void
     {
-        $data = array(
-            'responseMap' => array(
+        $data = [
+            'responseMap' => [
                 200 => 'FooBar',
                 400 => 'Foo\\ValidationErrorCollection',
-            ),
-        );
+            ],
+        ];
 
         $apiDoc = new ApiDoc($data);
         $map = $apiDoc->getResponseMap();
@@ -376,7 +376,7 @@ class ApiDocTest extends TestCase
         $this->assertEquals($apiDoc->getOutput(), $map[200]);
     }
 
-    public function testSetRoute()
+    public function testSetRoute(): void
     {
         $route = new Route(
             '/path/{foo}',
@@ -385,7 +385,7 @@ class ApiDocTest extends TestCase
                 'nested' => [
                     'key1' => 'value1',
                     'key2' => 'value2',
-                ]
+                ],
             ],
             [],
             [],

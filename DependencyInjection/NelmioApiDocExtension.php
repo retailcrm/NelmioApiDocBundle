@@ -12,20 +12,17 @@
 namespace Nelmio\ApiDocBundle\DependencyInjection;
 
 use Nelmio\ApiDocBundle\Parser\FormInfoParser;
+use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Config\Definition\Processor;
 
 class NelmioApiDocExtension extends Extension
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $processor = new Processor();
         $configuration = new Configuration();
@@ -35,7 +32,7 @@ class NelmioApiDocExtension extends Extension
         $container->setParameter('nelmio_api_doc.exclude_sections', $config['exclude_sections']);
         $container->setParameter('nelmio_api_doc.default_sections_opened', $config['default_sections_opened']);
         $container->setParameter('nelmio_api_doc.api_name', $config['name']);
-        $container->setParameter('nelmio_api_doc.sandbox.enabled',  $config['sandbox']['enabled']);
+        $container->setParameter('nelmio_api_doc.sandbox.enabled', $config['sandbox']['enabled']);
         $container->setParameter('nelmio_api_doc.sandbox.endpoint', $config['sandbox']['endpoint']);
         $container->setParameter('nelmio_api_doc.sandbox.accept_type', $config['sandbox']['accept_type']);
         $container->setParameter('nelmio_api_doc.sandbox.body_format.formats', $config['sandbox']['body_format']['formats']);
@@ -47,10 +44,11 @@ class NelmioApiDocExtension extends Extension
 
         if (method_exists($container, 'registerForAutoconfiguration')) {
             $container->registerForAutoconfiguration(FormInfoParser::class)
-                ->addTag(FormInfoParserCompilerPass::TAG_NAME);
+                ->addTag(FormInfoParserCompilerPass::TAG_NAME)
+            ;
         }
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('formatters.xml');
         $loader->load('services.xml');
 
@@ -74,7 +72,7 @@ class NelmioApiDocExtension extends Extension
         $container->setParameter('nelmio_api_doc.swagger.info', $config['swagger']['info']);
         $container->setParameter('nelmio_api_doc.swagger.model_naming_strategy', $config['swagger']['model_naming_strategy']);
 
-        if ($config['cache']['enabled'] === true) {
+        if (true === $config['cache']['enabled']) {
             $arguments = $container->getDefinition('nelmio_api_doc.extractor.api_doc_extractor')->getArguments();
             $caching = new Definition('Nelmio\ApiDocBundle\Extractor\CachingApiDocExtractor');
             $arguments[] = $config['cache']['file'];
@@ -84,9 +82,8 @@ class NelmioApiDocExtension extends Extension
             $container->setDefinition('nelmio_api_doc.extractor.api_doc_extractor', $caching);
         }
 
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('autowired.yaml');
-
     }
 
     /**

@@ -15,9 +15,9 @@ use JMS\Serializer\Annotation as JMS;
 
 class JmsNested
 {
-
     /**
      * @JMS\Type("DateTime");
+     *
      * @JMS\ReadOnlyProperty
      */
     public $foo;
@@ -48,19 +48,23 @@ class JmsNested
 
     /**
      * @Jms\Type("string")
+     *
      * @Jms\Since("0.2")
      */
     public $since;
 
     /**
      * @Jms\Type("string")
+     *
      * @Jms\Until("0.3")
      */
     public $until;
 
     /**
      * @Jms\Type("string")
+     *
      * @Jms\Since("0.4")
+     *
      * @Jms\Until("0.5")
      */
     public $sinceAndUntil;

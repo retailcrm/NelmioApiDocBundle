@@ -13,9 +13,9 @@ namespace Nelmio\ApiDocBundle\Parser;
 
 use Nelmio\ApiDocBundle\DataTypes;
 use Nelmio\ApiDocBundle\Util\LegacyFormHelper;
+use Symfony\Component\Form\ChoiceList\ChoiceListInterface;
 use Symfony\Component\Form\Exception\FormException;
 use Symfony\Component\Form\Exception\InvalidArgumentException;
-use Symfony\Component\Form\ChoiceList\ChoiceListInterface;
 use Symfony\Component\Form\Extension\Core\View\ChoiceView;
 use Symfony\Component\Form\FormConfigInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -28,12 +28,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class FormTypeParser implements ParserInterface
 {
     /**
-     * @var \Symfony\Component\Form\FormFactoryInterface
+     * @var FormFactoryInterface
      */
     protected $formFactory;
 
     /**
-     * @var \Symfony\Component\Form\FormRegistry
+     * @var \Symfony\Component\Form\FormRegistry
      */
     protected $formRegistry;
 
@@ -43,7 +43,7 @@ class FormTypeParser implements ParserInterface
     protected $translator;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $entityToChoice;
 
@@ -57,80 +57,77 @@ class FormTypeParser implements ParserInterface
      *
      * @deprecated since 2.12, to be removed in 3.0. Use $extendedMapTypes instead.
      */
-    protected $mapTypes = array(
-        'text'      => DataTypes::STRING,
-        'date'      => DataTypes::DATE,
-        'datetime'  => DataTypes::DATETIME,
-        'checkbox'  => DataTypes::BOOLEAN,
-        'time'      => DataTypes::TIME,
-        'number'    => DataTypes::FLOAT,
-        'integer'   => DataTypes::INTEGER,
-        'textarea'  => DataTypes::STRING,
-        'country'   => DataTypes::STRING,
-        'choice'    => DataTypes::ENUM,
-        'file'      => DataTypes::FILE,
-    );
+    protected $mapTypes = [
+        'text' => DataTypes::STRING,
+        'date' => DataTypes::DATE,
+        'datetime' => DataTypes::DATETIME,
+        'checkbox' => DataTypes::BOOLEAN,
+        'time' => DataTypes::TIME,
+        'number' => DataTypes::FLOAT,
+        'integer' => DataTypes::INTEGER,
+        'textarea' => DataTypes::STRING,
+        'country' => DataTypes::STRING,
+        'choice' => DataTypes::ENUM,
+        'file' => DataTypes::FILE,
+    ];
 
     /**
      * @var array
      */
-    protected $extendedMapTypes = array(
-        DataTypes::STRING => array(
+    protected $extendedMapTypes = [
+        DataTypes::STRING => [
             'text',
             'Symfony\Component\Form\Extension\Core\Type\TextType',
             'textarea',
             'Symfony\Component\Form\Extension\Core\Type\TextareaType',
             'country',
             'Symfony\Component\Form\Extension\Core\Type\CountryType',
-        ),
-        DataTypes::DATE => array(
+        ],
+        DataTypes::DATE => [
             'date',
             'Symfony\Component\Form\Extension\Core\Type\DateType',
-        ),
-        DataTypes::DATETIME => array(
+        ],
+        DataTypes::DATETIME => [
             'datetime',
             'Symfony\Component\Form\Extension\Core\Type\DatetimeType',
-        ),
-        DataTypes::BOOLEAN => array(
+        ],
+        DataTypes::BOOLEAN => [
             'checkbox',
             'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
-        ),
-        DataTypes::TIME => array(
+        ],
+        DataTypes::TIME => [
             'time',
             'Symfony\Component\Form\Extension\Core\Type\TimeType',
-        ),
-        DataTypes::FLOAT => array(
+        ],
+        DataTypes::FLOAT => [
             'number',
             'Symfony\Component\Form\Extension\Core\Type\NumberType',
-        ),
-        DataTypes::INTEGER => array(
+        ],
+        DataTypes::INTEGER => [
             'integer',
             'Symfony\Component\Form\Extension\Core\Type\IntegerType',
-        ),
-        DataTypes::ENUM => array(
+        ],
+        DataTypes::ENUM => [
             'choice',
             'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
-        ),
-        DataTypes::FILE => array(
+        ],
+        DataTypes::FILE => [
             'file',
             'Symfony\Component\Form\Extension\Core\Type\FileType',
-        ),
-    );
+        ],
+    ];
 
-    public function __construct(FormFactoryInterface $formFactory, TranslatorInterface $translator,  $entityToChoice)
+    public function __construct(FormFactoryInterface $formFactory, TranslatorInterface $translator, $entityToChoice)
     {
-        $this->formFactory    = $formFactory;
-        $this->translator   = $translator;
-        $this->entityToChoice = (boolean) $entityToChoice;
+        $this->formFactory = $formFactory;
+        $this->translator = $translator;
+        $this->entityToChoice = (bool) $entityToChoice;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supports(array $item)
     {
         $className = $item['class'];
-        $options   = $item['options'];
+        $options = $item['options'];
 
         try {
             if ($this->createForm($className, null, $options)) {
@@ -145,12 +142,9 @@ class FormTypeParser implements ParserInterface
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function parse(array $item)
     {
-        $type    = $item['class'];
+        $type = $item['class'];
         $options = $item['options'];
 
         try {
@@ -180,7 +174,7 @@ class FormTypeParser implements ParserInterface
             return $this->parseForm($form);
         }
 
-        $subType = is_object($type) ? get_class($type) : $type;
+        $subType = is_object($type) ? $type::class : $type;
 
         if ($subType && class_exists($subType)) {
             $parts = explode('\\', $subType);
@@ -189,23 +183,23 @@ class FormTypeParser implements ParserInterface
             $dataType = sprintf('object (%s)', $subType);
         }
 
-        return array(
-            $name => array(
-                'required'    => true,
-                'readonly'    => false,
+        return [
+            $name => [
+                'required' => true,
+                'readonly' => false,
                 'description' => '',
-                'default'     => null,
-                'dataType'    => $dataType,
-                'actualType'  => DataTypes::MODEL,
-                'subType'     => $subType,
-                'children'    => $this->parseForm($form),
-            ),
-        );
+                'default' => null,
+                'dataType' => $dataType,
+                'actualType' => DataTypes::MODEL,
+                'subType' => $subType,
+                'children' => $this->parseForm($form),
+            ],
+        ];
     }
 
-    public function addFormInfoParser(FormInfoParser $formInfoParser)
+    public function addFormInfoParser(FormInfoParser $formInfoParser): void
     {
-        $class = get_class($formInfoParser);
+        $class = $formInfoParser::class;
         if (isset($this->formInfoParsers[$class])) {
             throw new \InvalidArgumentException($class . ' already added');
         }
@@ -236,34 +230,34 @@ class FormTypeParser implements ParserInterface
 
     private function parseForm($form)
     {
-        $parameters = array();
+        $parameters = [];
         $domain = $form->getConfig()->getOption('translation_domain');
 
         foreach ($form as $name => $child) {
-            $config     = $child->getConfig();
-            $options    = $config->getOptions();
-            $bestType   = '';
+            $config = $child->getConfig();
+            $options = $config->getOptions();
+            $bestType = '';
             $actualType = null;
-            $subType    = null;
-            $children   = null;
+            $subType = null;
+            $children = null;
 
             for ($type = $config->getType();
-                 $type instanceof FormInterface || $type instanceof ResolvedFormTypeInterface;
-                 $type = $type->getParent()
+                $type instanceof FormInterface || $type instanceof ResolvedFormTypeInterface;
+                $type = $type->getParent()
             ) {
                 $customInfo = $this->parseFormType($type->getInnerType(), $config);
                 if ($customInfo) {
                     $parameters[$name] = array_merge([
-                        'dataType'    => 'string',
-                        'actualType'  => 'string',
-                        'default'     => $config->getData(),
-                        'required'    => $config->getRequired(),
+                        'dataType' => 'string',
+                        'actualType' => 'string',
+                        'default' => $config->getData(),
+                        'required' => $config->getRequired(),
                         'description' => $this->getFormDescription($config, $domain),
-                        'readonly'    => $config->getDisabled(),
+                        'readonly' => $config->getDisabled(),
                     ], $customInfo);
 
                     continue 2;
-                 }
+                }
 
                 $typeName = method_exists($type, 'getBlockPrefix') ?
                     $type->getBlockPrefix() : $type->getName();
@@ -282,17 +276,17 @@ class FormTypeParser implements ParserInterface
 
                     $dataType = $this->getDataType($typeOption);
                     if (null !== $dataType) {
-                        $subType    = $dataType;
+                        $subType = $dataType;
                         $actualType = DataTypes::COLLECTION;
-                        $bestType   = sprintf('array of %ss', $subType);
+                        $bestType = sprintf('array of %ss', $subType);
                     } else {
                         // Embedded form collection
                         // BC sf < 2.8
                         $embbededType = $config->hasOption('entry_type') ? $config->getOption('entry_type') : $config->getOption('type');
-                        $subForm      = $this->formFactory->create($embbededType, null, $config->getOption('entry_options', array()));
-                        $children     = $this->parseForm($subForm);
-                        $actualType   = DataTypes::COLLECTION;
-                        $subType      = is_object($embbededType) ? get_class($embbededType) : $embbededType;
+                        $subForm = $this->formFactory->create($embbededType, null, $config->getOption('entry_options', []));
+                        $children = $this->parseForm($subForm);
+                        $actualType = DataTypes::COLLECTION;
+                        $subType = is_object($embbededType) ? $embbededType::class : $embbededType;
 
                         if ($subType && class_exists($subType)) {
                             $parts = explode('\\', $subType);
@@ -314,14 +308,13 @@ class FormTypeParser implements ParserInterface
                          */
                         $addDefault = false;
                         try {
-
                             if (isset($subForm)) {
                                 unset($subForm);
                             }
 
                             if (LegacyFormHelper::hasBCBreaks()) {
                                 try {
-                                    $subForm = $this->formFactory->create(get_class($type), null, $options);
+                                    $subForm = $this->formFactory->create($type::class, null, $options);
                                 } catch (\Exception $e) {
                                 }
                             }
@@ -333,22 +326,21 @@ class FormTypeParser implements ParserInterface
 
                             if (!empty($subParameters)) {
                                 $children = $subParameters;
-                                $config   = $subForm->getConfig();
-                                $subType  = get_class($type);
-                                $parts    = explode('\\', $subType);
+                                $config = $subForm->getConfig();
+                                $subType = $type::class;
+                                $parts = explode('\\', $subType);
                                 $bestType = sprintf('object (%s)', end($parts));
 
-                                $parameters[$name] = array(
-                                    'dataType'    => $bestType,
-                                    'actualType'  => DataTypes::MODEL,
-                                    'default'     => null,
-                                    'subType'     => $subType,
-                                    'required'    => $config->getRequired(),
+                                $parameters[$name] = [
+                                    'dataType' => $bestType,
+                                    'actualType' => DataTypes::MODEL,
+                                    'default' => null,
+                                    'subType' => $subType,
+                                    'required' => $config->getRequired(),
                                     'description' => $this->getFormDescription($config, $domain),
-                                    'readonly'    => $config->getDisabled(),
-                                    'children'    => $children,
-                                );
-
+                                    'readonly' => $config->getDisabled(),
+                                    'children' => $children,
+                                ];
                             } else {
                                 $addDefault = true;
                             }
@@ -357,14 +349,14 @@ class FormTypeParser implements ParserInterface
                         }
 
                         if ($addDefault) {
-                            $parameters[$name] = array(
-                                'dataType'    => 'string',
-                                'actualType'  => 'string',
-                                'default'     => $config->getData(),
-                                'required'    => $config->getRequired(),
+                            $parameters[$name] = [
+                                'dataType' => 'string',
+                                'actualType' => 'string',
+                                'default' => $config->getData(),
+                                'required' => $config->getRequired(),
                                 'description' => $this->getFormDescription($config, $domain),
-                                'readonly'    => $config->getDisabled(),
-                            );
+                                'readonly' => $config->getDisabled(),
+                            ];
                         }
 
                         continue;
@@ -372,15 +364,15 @@ class FormTypeParser implements ParserInterface
                 }
             }
 
-            $parameters[$name] = array(
-                'dataType'    => $bestType,
-                'actualType'  => $actualType,
-                'subType'     => $subType,
-                'default'     => $config->getData(),
-                'required'    => $config->getRequired(),
+            $parameters[$name] = [
+                'dataType' => $bestType,
+                'actualType' => $actualType,
+                'subType' => $subType,
+                'default' => $config->getData(),
+                'required' => $config->getRequired(),
                 'description' => $this->getFormDescription($config, $domain),
-                'readonly'    => $config->getDisabled(),
-            );
+                'readonly' => $config->getDisabled(),
+            ];
 
             if (null !== $children) {
                 $parameters[$name]['children'] = $children;
@@ -413,19 +405,18 @@ class FormTypeParser implements ParserInterface
                             array_values($choices) :
                             array_keys($choices);
                         sort($choices);
-                        $parameters[$name]['format'] = '[' . join('|', $choices) . ']';
+                        $parameters[$name]['format'] = '[' . implode('|', $choices) . ']';
                     } elseif ($choiceList = $config->getOption('choice_list')) {
                         $choiceListType = $config->getType();
                         $choiceListName = method_exists($choiceListType, 'getBlockPrefix') ?
                             $choiceListType->getBlockPrefix() : $choiceListType->getName();
 
-
-                        if (('entity' === $choiceListName && false === $this->entityToChoice)) {
-                            $choices = array();
+                        if ('entity' === $choiceListName && false === $this->entityToChoice) {
+                            $choices = [];
                         } else {
                             // TODO: fixme
                             // does not work since: https://github.com/symfony/symfony/commit/03efce1b568379eac21d880e427090e43035f505
-                            $choices = array();
+                            $choices = [];
                         }
 
                         if (is_array($choices) && count($choices)) {
@@ -463,7 +454,7 @@ class FormTypeParser implements ParserInterface
         return $refl->newInstance();
     }
 
-    private function createForm($type, $data = null, array $options = array())
+    private function createForm($type, $data = null, array $options = [])
     {
         try {
             return $this->formFactory->create($type, null, $options);
@@ -479,8 +470,8 @@ class FormTypeParser implements ParserInterface
 
     private function handleChoiceListValues(ChoiceListInterface $choiceList)
     {
-        $choices = array();
-        foreach (array($choiceList->getPreferredViews(), $choiceList->getRemainingViews()) as $viewList) {
+        $choices = [];
+        foreach ([$choiceList->getPreferredViews(), $choiceList->getRemainingViews()] as $viewList) {
             $choices = array_merge($choices, $this->handleChoiceViewsHierarchy($viewList));
         }
 
@@ -489,7 +480,7 @@ class FormTypeParser implements ParserInterface
 
     private function handleChoiceViewsHierarchy(array $choiceViews)
     {
-        $choices = array();
+        $choices = [];
         foreach ($choiceViews as $item) {
             if ($item instanceof ChoiceView) {
                 $choices[$item->value] = $item->label;
@@ -504,10 +495,9 @@ class FormTypeParser implements ParserInterface
     private function getFormDescription($config, $domain = null)
     {
         $description = ($config->getOption('description'))
-            ? $config->getOption('description')
-            : $config->getOption('label');
+            ?: $config->getOption('label');
 
-        if ($description != null) {
+        if (null != $description) {
             return $this->translator->trans($description, [], $domain);
         }
 

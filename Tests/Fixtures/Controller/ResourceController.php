@@ -25,25 +25,22 @@ class ResourceController
      *      statusCodes={200 = "Returned on success.", 404 = "Returned if resource cannot be found."}
      * )
      */
-    public function listResourcesAction()
+    public function listResourcesAction(): void
     {
-
     }
 
     /**
      * @ApiDoc(description="Retrieve a resource by ID.")
      */
-    public function getResourceAction()
+    public function getResourceAction(): void
     {
-
     }
 
     /**
      * @ApiDoc(description="Delete a resource by ID.")
      */
-    public function deleteResourceAction()
+    public function deleteResourceAction(): void
     {
-
     }
 
     /**
@@ -57,9 +54,8 @@ class ResourceController
      *      }
      * )
      */
-    public function createResourceAction()
+    public function createResourceAction(): void
     {
-
     }
 
     /**
@@ -71,24 +67,21 @@ class ResourceController
      *      output="array<Nelmio\ApiDocBundle\Tests\Fixtures\Model\JmsTest>"
      * )
      */
-    public function listAnotherResourcesAction()
+    public function listAnotherResourcesAction(): void
     {
-
     }
 
     /**
      * @ApiDoc(description="Retrieve another resource by ID.")
      */
-    public function getAnotherResourceAction()
+    public function getAnotherResourceAction(): void
     {
-
     }
 
     /**
      * @ApiDoc(description="Update a resource bu ID.")
      */
-    public function updateAnotherResourceAction()
+    public function updateAnotherResourceAction(): void
     {
-
     }
 }

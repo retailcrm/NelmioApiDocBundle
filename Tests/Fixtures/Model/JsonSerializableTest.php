@@ -13,18 +13,15 @@ namespace Nelmio\ApiDocBundle\Tests\Fixtures\Model;
 
 class JsonSerializableTest implements \JsonSerializable
 {
-    /**
-     * {@inheritdoc}
-     */
     public function jsonSerialize(): mixed
     {
-        return array(
+        return [
             'id' => 123,
             'name' => 'My name',
-            'child' => array(
-                'value' => array(1, 2, 3)
-            ),
-            'another' => new JsonSerializableOptionalConstructorTest()
-        );
+            'child' => [
+                'value' => [1, 2, 3],
+            ],
+            'another' => new JsonSerializableOptionalConstructorTest(),
+        ];
     }
 }

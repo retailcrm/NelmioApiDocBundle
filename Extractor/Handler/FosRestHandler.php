@@ -11,60 +11,56 @@
 
 namespace Nelmio\ApiDocBundle\Extractor\Handler;
 
+use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Controller\Annotations\RequestParam;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Nelmio\ApiDocBundle\DataTypes;
 use Nelmio\ApiDocBundle\Extractor\HandlerInterface;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Regex;
-use FOS\RestBundle\Controller\Annotations\RequestParam;
-use FOS\RestBundle\Controller\Annotations\QueryParam;
 
 class FosRestHandler implements HandlerInterface
 {
-    /**
-     * @inheritdoc
-     */
-    public function handle(ApiDoc $annotation, array $annotations, Route $route, \ReflectionMethod $method)
+    public function handle(ApiDoc $annotation, array $annotations, Route $route, \ReflectionMethod $method): void
     {
         foreach ($annotations as $annot) {
             if ($annot instanceof RequestParam) {
-
                 $requirements = $this->handleRequirements($annot->requirements);
-                $data = array(
-                    'required'    => $annot->strict && $annot->nullable === false && $annot->default === null,
-                    'dataType'    => $requirements.((property_exists($annot, 'map') ? $annot->map : $annot->array) ? '[]' : ''),
-                    'actualType'  => $this->inferType($requirements),
-                    'subType'     => null,
+                $data = [
+                    'required' => $annot->strict && false === $annot->nullable && null === $annot->default,
+                    'dataType' => $requirements . ((property_exists($annot, 'map') ? $annot->map : $annot->array) ? '[]' : ''),
+                    'actualType' => $this->inferType($requirements),
+                    'subType' => null,
                     'description' => $annot->description,
-                    'readonly'    => false
-                );
-                if ($annot->strict === false) {
+                    'readonly' => false,
+                ];
+                if (false === $annot->strict) {
                     $data['default'] = $annot->default;
                 }
                 $annotation->addParameter($annot->name, $data);
             } elseif ($annot instanceof QueryParam) {
-                if ($annot->strict && $annot->nullable === false && $annot->default === null) {
-                    $annotation->addRequirement($annot->name, array(
-                        'requirement'   => $this->handleRequirements($annot->requirements).((property_exists($annot, 'map') ? $annot->map : $annot->array) ? '[]' : ''),
-                        'dataType'      => '',
-                        'description'   => $annot->description,
-                    ));
-                } elseif ($annot->default !== null) {
-                    $annotation->addFilter($annot->name, array(
-                        'requirement'   => $this->handleRequirements($annot->requirements).((property_exists($annot, 'map') ? $annot->map : $annot->array) ? '[]' : ''),
-                        'description'   => $annot->description,
-                        'default'   => $annot->default,
-                    ));
-                } elseif ($annot->requirements !== null) {
-                    $annotation->addFilter($annot->name, array(
-                        'requirement'   => $this->handleRequirements($annot->requirements).((property_exists($annot, 'map') ? $annot->map : $annot->array) ? '[]' : ''),
-                        'description'   => $annot->description,
-                    ));
+                if ($annot->strict && false === $annot->nullable && null === $annot->default) {
+                    $annotation->addRequirement($annot->name, [
+                        'requirement' => $this->handleRequirements($annot->requirements) . ((property_exists($annot, 'map') ? $annot->map : $annot->array) ? '[]' : ''),
+                        'dataType' => '',
+                        'description' => $annot->description,
+                    ]);
+                } elseif (null !== $annot->default) {
+                    $annotation->addFilter($annot->name, [
+                        'requirement' => $this->handleRequirements($annot->requirements) . ((property_exists($annot, 'map') ? $annot->map : $annot->array) ? '[]' : ''),
+                        'description' => $annot->description,
+                        'default' => $annot->default,
+                    ]);
+                } elseif (null !== $annot->requirements) {
+                    $annotation->addFilter($annot->name, [
+                        'requirement' => $this->handleRequirements($annot->requirements) . ((property_exists($annot, 'map') ? $annot->map : $annot->array) ? '[]' : ''),
+                        'description' => $annot->description,
+                    ]);
                 } else {
-                    $annotation->addFilter($annot->name, array(
-                        'description'   => $annot->description,
-                    ));
+                    $annotation->addFilter($annot->name, [
+                        'description' => $annot->description,
+                    ]);
                 }
             }
         }
@@ -73,7 +69,6 @@ class FosRestHandler implements HandlerInterface
     /**
      * Handle FOSRestBundle requirements in order to return a string.
      *
-     * @param  mixed  $requirements
      * @return string
      */
     private function handleRequirements($requirements)
@@ -82,9 +77,9 @@ class FosRestHandler implements HandlerInterface
             if ($requirements instanceof Regex) {
                 return $requirements->getHtmlPattern();
             }
-            $class = get_class($requirements);
+            $class = $requirements::class;
 
-            return substr($class, strrpos($class, '\\')+1);
+            return substr($class, strrpos($class, '\\') + 1);
         }
 
         if (is_array($requirements) && isset($requirements['rule'])) {
@@ -92,25 +87,22 @@ class FosRestHandler implements HandlerInterface
         }
 
         if (is_array($requirements) && array_key_exists(0, $requirements)) {
-
-            $output = array();
+            $output = [];
 
             foreach ($requirements as $req) {
-
                 if (is_object($req) && $req instanceof Constraint) {
                     if ($req instanceof Regex) {
                         $output[] = $req->getHtmlPattern();
                     } else {
-                        $class = get_class($req);
-                        $output[] = substr($class, strrpos($class, '\\')+1);
+                        $class = $req::class;
+                        $output[] = substr($class, strrpos($class, '\\') + 1);
                     }
-
                 }
 
                 if (is_array($req)) {
                     if (array_key_exists('_format', $req)) {
-                        $output[] = 'Format: '.$req['_format'];
-                    } else if (isset($req['rule'])) {
+                        $output[] = 'Format: ' . $req['_format'];
+                    } elseif (isset($req['rule'])) {
                         $output[] = $req['rule'];
                     }
                 }

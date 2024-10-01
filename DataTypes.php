@@ -18,37 +18,38 @@ namespace Nelmio\ApiDocBundle;
  */
 class DataTypes
 {
-    const INTEGER    = 'integer';
+    public const INTEGER = 'integer';
 
-    const FLOAT      = 'float';
+    public const FLOAT = 'float';
 
-    const STRING     = 'string';
+    public const STRING = 'string';
 
-    const BOOLEAN    = 'boolean';
+    public const BOOLEAN = 'boolean';
 
-    const FILE       = 'file';
+    public const FILE = 'file';
 
-    const ENUM       = 'choice';
+    public const ENUM = 'choice';
 
-    const COLLECTION = 'collection';
+    public const COLLECTION = 'collection';
 
-    const MODEL      = 'model';
+    public const MODEL = 'model';
 
-    const DATE       = 'date';
+    public const DATE = 'date';
 
-    const DATETIME   = 'datetime';
+    public const DATETIME = 'datetime';
 
-    const TIME       = 'time';
+    public const TIME = 'time';
 
     /**
      * Returns true if the supplied `actualType` value is considered a primitive type. Returns false, otherwise.
      *
-     * @param  string $type
+     * @param string $type
+     *
      * @return bool
      */
     public static function isPrimitive($type)
     {
-        return in_array(strtolower($type), array(
+        return in_array(strtolower($type), [
             static::INTEGER,
             static::FLOAT,
             static::STRING,
@@ -58,6 +59,6 @@ class DataTypes
             static::DATETIME,
             static::TIME,
             static::ENUM,
-        ));
+        ]);
     }
 }

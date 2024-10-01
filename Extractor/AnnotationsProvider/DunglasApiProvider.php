@@ -44,28 +44,25 @@ class DunglasApiProvider implements AnnotationsProviderInterface
     public function __construct(
         ResourceCollectionInterface $resourceCollection,
         ApiDocumentationBuilderInterface $apiDocumentationBuilder,
-        ClassMetadataFactoryInterface $classMetadataFactory
+        ClassMetadataFactoryInterface $classMetadataFactory,
     ) {
         $this->resourceCollection = $resourceCollection;
         $this->apiDocumentationBuilder = $apiDocumentationBuilder;
         $this->classMetadataFactory = $classMetadataFactory;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAnnotations()
     {
         $annotations = [];
         $hydraDoc = $this->apiDocumentationBuilder->getApiDocumentation();
         $entrypointHydraDoc = $this->getResourceHydraDoc($hydraDoc, '#Entrypoint');
 
-        /**
+        /*
          * @var ResourceInterface
          */
         foreach ($this->resourceCollection as $resource) {
             $classMetadata = $this->classMetadataFactory->getMetadataFor($resource->getEntityClass());
-            $prefixedShortName = ($iri = $classMetadata->getIri()) ? $iri : '#'.$resource->getShortName();
+            $prefixedShortName = ($iri = $classMetadata->getIri()) ? $iri : '#' . $resource->getShortName();
             $resourceHydraDoc = $this->getResourceHydraDoc($hydraDoc, $prefixedShortName);
 
             if ($hydraDoc) {
@@ -85,11 +82,7 @@ class DunglasApiProvider implements AnnotationsProviderInterface
     /**
      * Builds ApiDoc annotation from DunglasApiBundle data.
      *
-     * @param bool               $collection
-     * @param ResourceInterface  $resource
-     * @param OperationInterface $operation
-     * @param array              $resourceHydraDoc
-     * @param array              $entrypointHydraDoc
+     * @param bool $collection
      *
      * @return ApiDoc
      */
@@ -98,7 +91,7 @@ class DunglasApiProvider implements AnnotationsProviderInterface
         ResourceInterface $resource,
         OperationInterface $operation,
         array $resourceHydraDoc,
-        array $entrypointHydraDoc = []
+        array $entrypointHydraDoc = [],
     ) {
         $method = $operation->getRoute()->getMethods()[0];
 
@@ -145,7 +138,6 @@ class DunglasApiProvider implements AnnotationsProviderInterface
     /**
      * Gets Hydra documentation for the given resource.
      *
-     * @param array  $hydraApiDoc
      * @param string $prefixedShortName
      *
      * @return array|null
@@ -163,7 +155,6 @@ class DunglasApiProvider implements AnnotationsProviderInterface
      * Gets the Hydra documentation of a given operation.
      *
      * @param string $method
-     * @param array  $hydraDoc
      *
      * @return array|null
      */
@@ -181,13 +172,12 @@ class DunglasApiProvider implements AnnotationsProviderInterface
      *
      * @param string $shortName
      * @param string $method
-     * @param array  $hydraEntrypointDoc
      *
      * @return array|null
      */
     private function getCollectionOperationHydraDoc($shortName, $method, array $hydraEntrypointDoc)
     {
-        $propertyName = '#Entrypoint/'.lcfirst($shortName);
+        $propertyName = '#Entrypoint/' . lcfirst($shortName);
 
         foreach ($hydraEntrypointDoc['hydra:supportedProperty'] as $supportedProperty) {
             $hydraProperty = $supportedProperty['hydra:property'];

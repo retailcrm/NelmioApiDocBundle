@@ -12,9 +12,9 @@
 namespace NelmioApiDocBundle\Tests\Parser;
 
 use Nelmio\ApiDocBundle\DataTypes;
-use Nelmio\ApiDocBundle\Tests\WebTestCase;
 use Nelmio\ApiDocBundle\Parser\ValidationParser;
 use Nelmio\ApiDocBundle\Parser\ValidationParserLegacy;
+use Nelmio\ApiDocBundle\Tests\WebTestCase;
 use Symfony\Component\HttpKernel\Kernel;
 
 class ValidationParserTest extends WebTestCase
@@ -22,9 +22,9 @@ class ValidationParserTest extends WebTestCase
     protected $handler;
     private ValidationParser $parser;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
-        $container  = $this->getContainer();
+        $container = $this->getContainer();
 
         if ($container->has('validator.mapping.class_metadata_factory')) {
             $factory = $container->get('validator.mapping.class_metadata_factory');
@@ -35,16 +35,16 @@ class ValidationParserTest extends WebTestCase
         if (version_compare(Kernel::VERSION, '2.2.0', '<')) {
             $this->parser = new ValidationParserLegacy($factory);
         } else {
-             $this->parser = new ValidationParser($factory);
+            $this->parser = new ValidationParser($factory);
         }
     }
 
     /**
      * @dataProvider dataTestParser
      */
-    public function testParser($property, $expected)
+    public function testParser($property, $expected): void
     {
-        $result = $this->parser->parse(array('class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\ValidatorTest'));
+        $result = $this->parser->parse(['class' => 'Nelmio\ApiDocBundle\Tests\Fixtures\Model\ValidatorTest']);
         foreach ($expected as $name => $value) {
             $this->assertArrayHasKey($property, $result);
             $this->assertArrayHasKey($name, $result[$property]);
@@ -54,144 +54,144 @@ class ValidationParserTest extends WebTestCase
 
     public function dataTestParser()
     {
-        return array(
-            array(
+        return [
+            [
                 'property' => 'length10',
-                'expected' => array(
+                'expected' => [
                     'format' => '{length: {min: 10}}',
                     'default' => 'validate this',
-                )
-            ),
-            array(
+                ],
+            ],
+            [
                 'property' => 'length1to10',
-                'expected' => array(
+                'expected' => [
                     'format' => '{length: {min: 1, max: 10}}',
                     'default' => null,
-                )
-            ),
-            array(
+                ],
+            ],
+            [
                 'property' => 'notblank',
-                'expected' => array(
+                'expected' => [
                     'required' => true,
                     'default' => null,
-                )
-            ),
-            array(
+                ],
+            ],
+            [
                 'property' => 'notnull',
-                'expected' => array(
+                'expected' => [
                     'required' => true,
                     'default' => null,
-                )
-            ),
-            array(
+                ],
+            ],
+            [
                 'property' => 'type',
-                'expected' => array(
+                'expected' => [
                     'dataType' => 'DateTime',
                     'actualType' => DataTypes::DATETIME,
                     'default' => null,
-                )
-            ),
-            array(
+                ],
+            ],
+            [
                 'property' => 'date',
-                'expected' => array(
+                'expected' => [
                     'format' => '{Date YYYY-MM-DD}',
                     'actualType' => DataTypes::DATE,
                     'default' => null,
-                )
-            ),
-            array(
+                ],
+            ],
+            [
                 'property' => 'dateTime',
-                'expected' => array(
+                'expected' => [
                     'format' => '{DateTime YYYY-MM-DD HH:MM:SS}',
                     'actualType' => DataTypes::DATETIME,
                     'default' => null,
-                )
-            ),
-            array(
+                ],
+            ],
+            [
                 'property' => 'time',
-                'expected' => array(
+                'expected' => [
                     'format' => '{Time HH:MM:SS}',
                     'actualType' => DataTypes::TIME,
                     'default' => null,
-                )
-            ),
-            array(
+                ],
+            ],
+            [
                 'property' => 'email',
-                'expected' => array(
+                'expected' => [
                     'format' => '{email address}',
                     'default' => null,
-                )
-            ),
-            array(
+                ],
+            ],
+            [
                 'property' => 'url',
-                'expected' => array(
+                'expected' => [
                     'format' => '{url}',
                     'default' => 'https://github.com',
-                )
-            ),
-            array(
+                ],
+            ],
+            [
                 'property' => 'ip',
-                'expected' => array(
+                'expected' => [
                     'format' => '{ip address}',
                     'default' => null,
-                )
-            ),
-            array(
+                ],
+            ],
+            [
                 'property' => 'singlechoice',
-                'expected' => array(
+                'expected' => [
                     'format' => '[a|b]',
                     'actualType' => DataTypes::ENUM,
                     'default' => null,
-                )
-            ),
-            array(
+                ],
+            ],
+            [
                 'property' => 'multiplechoice',
-                'expected' => array(
+                'expected' => [
                     'format' => '{choice of [x|y|z]}',
                     'actualType' => DataTypes::COLLECTION,
                     'subType' => DataTypes::ENUM,
                     'default' => null,
-                )
-            ),
-            array(
+                ],
+            ],
+            [
                 'property' => 'multiplerangechoice',
-                'expected' => array(
+                'expected' => [
                     'format' => '{min: 2 max: 3 choice of [bar|baz|foo|qux]}',
                     'actualType' => DataTypes::COLLECTION,
                     'subType' => DataTypes::ENUM,
                     'default' => null,
-                )
-            ),
-            array(
+                ],
+            ],
+            [
                 'property' => 'regexmatch',
-                'expected' => array(
+                'expected' => [
                     'format' => '{match: /^\d{1,4}\w{1,4}$/}',
                     'default' => null,
-                )
-            ),
-            array(
+                ],
+            ],
+            [
                 'property' => 'regexnomatch',
-                'expected' => array(
+                'expected' => [
                     'format' => '{not match: /\d/}',
                     'default' => null,
-                )
-            ),
-            array(
+                ],
+            ],
+            [
                 'property' => 'multipleassertions',
-                'expected' => array(
+                'expected' => [
                     'required' => true,
                     'dataType' => 'string',
                     'format' => '{email address}',
                     'default' => null,
-                )
-            ),
-            array(
+                ],
+            ],
+            [
                 'property' => 'multipleformats',
-                'expected' => array(
+                'expected' => [
                     'format' => '{url}, {length: {min: 10}}',
                     'default' => null,
-                )
-            )
-        );
+                ],
+            ],
+        ];
     }
 }

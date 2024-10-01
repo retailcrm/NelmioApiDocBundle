@@ -17,7 +17,6 @@ class TestExtractor extends ApiDocExtractor
 {
     public function __construct()
     {
-
     }
 
     public function getNormalization($input)

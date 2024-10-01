@@ -12,8 +12,8 @@
 namespace Nelmio\ApiDocBundle\Extractor;
 
 use Doctrine\Common\Annotations\Reader;
-use Nelmio\ApiDocBundle\Util\DocCommentExtractor;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Nelmio\ApiDocBundle\Util\DocCommentExtractor;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\Routing\RouterInterface;
@@ -29,7 +29,6 @@ class CachingApiDocExtractor extends ApiDocExtractor
      * @param HandlerInterface[]             $handlers
      * @param AnnotationsProviderInterface[] $annotationsProviders
      * @param string[]                       $excludeSections
-     * @param string                         $cacheFile
      * @param bool|false                     $debug
      */
     public function __construct(
@@ -40,13 +39,14 @@ class CachingApiDocExtractor extends ApiDocExtractor
         array $annotationsProviders,
         array $excludeSections,
         private string $cacheFile,
-        private bool $debug = false
+        private bool $debug = false,
     ) {
         parent::__construct($router, $reader, $commentExtractor, $handlers, $annotationsProviders, $excludeSections);
     }
 
     /**
-     * @param  string      $view View name
+     * @param string $view View name
+     *
      * @return array|mixed
      */
     public function all($view = ApiDoc::DEFAULT_VIEW)
@@ -54,11 +54,11 @@ class CachingApiDocExtractor extends ApiDocExtractor
         $cache = $this->getViewCache($view);
 
         if (!$cache->isFresh()) {
-            $resources = array();
+            $resources = [];
             foreach ($this->getRoutes() as $route) {
-                if ( null !== ($method = $this->getReflectionMethod($route->getDefault('_controller')))
+                if (null !== ($method = $this->getReflectionMethod($route->getDefault('_controller')))
                   && null !== ($annotation = $this->reader->getMethodAnnotation($method, self::ANNOTATION_CLASS))) {
-                    $file        = $method->getDeclaringClass()->getFileName();
+                    $file = $method->getDeclaringClass()->getFileName();
                     $resources[] = new FileResource($file);
                 }
             }
@@ -83,12 +83,12 @@ class CachingApiDocExtractor extends ApiDocExtractor
     }
 
     /**
-     * @param  string      $view
+     * @param string $view
+     *
      * @return ConfigCache
      */
     private function getViewCache($view)
     {
-        return new ConfigCache($this->cacheFile.'.'.$view, $this->debug);
+        return new ConfigCache($this->cacheFile . '.' . $view, $this->debug);
     }
-
 }

@@ -1,2490 +1,2179 @@
-<?php return array (
-  '/api/other-resources' => 
-  array (
-    0 => 
-    array (
-      'method' => 'GET',
-      'uri' => '/api/other-resources.{_format}',
-      'description' => 'List another resource.',
-      'requirements' => 
-      array (
-        '_format' => 
-        array (
-          'requirement' => 'json|xml|html',
-          'dataType' => '',
-          'description' => '',
-        ),
-      ),
-      'views' => 
-      array (
-        0 => 'default',
-        1 => 'premium',
-      ),
-      'response' => 
-      array (
-        '' => 
-        array (
-          'dataType' => 'array of objects (JmsTest)',
-          'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-          'actualType' => 'collection',
-          'readonly' => true,
-          'required' => true,
-          'default' => true,
-          'description' => '',
-          'children' => 
-          array (
-            'foo' => 
-            array (
-              'dataType' => 'string',
-              'actualType' => 'string',
-              'subType' => NULL,
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-            ),
-            'bar' => 
-            array (
-              'dataType' => 'DateTime',
-              'actualType' => 'datetime',
-              'subType' => NULL,
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => true,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-            ),
-            'number' => 
-            array (
-              'dataType' => 'double',
-              'actualType' => 'float',
-              'subType' => NULL,
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-            ),
-            'arr' => 
-            array (
-              'dataType' => 'array',
-              'actualType' => 'collection',
-              'subType' => NULL,
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-            ),
-            'nested' => 
-            array (
-              'dataType' => 'object (JmsNested)',
-              'actualType' => 'model',
-              'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-              'children' => 
-              array (
-                'foo' => 
-                array (
-                  'dataType' => 'DateTime',
-                  'actualType' => 'datetime',
-                  'subType' => NULL,
-                  'required' => false,
-                  'default' => NULL,
-                  'description' => '',
-                  'readonly' => true,
-                  'sinceVersion' => NULL,
-                  'untilVersion' => NULL,
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-                  'field' => 'foo',
-                ),
-                'bar' => 
-                array (
-                  'dataType' => 'string',
-                  'actualType' => 'string',
-                  'subType' => NULL,
-                  'required' => false,
-                  'default' => 'baz',
-                  'description' => '',
-                  'readonly' => false,
-                  'sinceVersion' => NULL,
-                  'untilVersion' => NULL,
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-                  'field' => 'bar',
-                ),
-                'baz' => 
-                array (
-                  'dataType' => 'array of integers',
-                  'actualType' => 'collection',
-                  'subType' => 'integer',
-                  'required' => false,
-                  'default' => NULL,
-                  'description' => 'Epic description.
+<?php
+
+return [
+    '/api/other-resources' => [
+        0 => [
+            'method' => 'GET',
+            'uri' => '/api/other-resources.{_format}',
+            'description' => 'List another resource.',
+            'requirements' => [
+                '_format' => [
+                    'requirement' => 'json|xml|html',
+                    'dataType' => '',
+                    'description' => '',
+                ],
+            ],
+            'views' => [
+                0 => 'default',
+                1 => 'premium',
+            ],
+            'response' => [
+                '' => [
+                    'dataType' => 'array of objects (JmsTest)',
+                    'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                    'actualType' => 'collection',
+                    'readonly' => true,
+                    'required' => true,
+                    'default' => true,
+                    'description' => '',
+                    'children' => [
+                        'foo' => [
+                            'dataType' => 'string',
+                            'actualType' => 'string',
+                            'subType' => null,
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                        ],
+                        'bar' => [
+                            'dataType' => 'DateTime',
+                            'actualType' => 'datetime',
+                            'subType' => null,
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => true,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                        ],
+                        'number' => [
+                            'dataType' => 'double',
+                            'actualType' => 'float',
+                            'subType' => null,
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                        ],
+                        'arr' => [
+                            'dataType' => 'array',
+                            'actualType' => 'collection',
+                            'subType' => null,
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                        ],
+                        'nested' => [
+                            'dataType' => 'object (JmsNested)',
+                            'actualType' => 'model',
+                            'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                            'children' => [
+                                'foo' => [
+                                    'dataType' => 'DateTime',
+                                    'actualType' => 'datetime',
+                                    'subType' => null,
+                                    'required' => false,
+                                    'default' => null,
+                                    'description' => '',
+                                    'readonly' => true,
+                                    'sinceVersion' => null,
+                                    'untilVersion' => null,
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                                    'field' => 'foo',
+                                ],
+                                'bar' => [
+                                    'dataType' => 'string',
+                                    'actualType' => 'string',
+                                    'subType' => null,
+                                    'required' => false,
+                                    'default' => 'baz',
+                                    'description' => '',
+                                    'readonly' => false,
+                                    'sinceVersion' => null,
+                                    'untilVersion' => null,
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                                    'field' => 'bar',
+                                ],
+                                'baz' => [
+                                    'dataType' => 'array of integers',
+                                    'actualType' => 'collection',
+                                    'subType' => 'integer',
+                                    'required' => false,
+                                    'default' => null,
+                                    'description' => 'Epic description.
 
 With multiple lines.',
-                  'readonly' => false,
-                  'sinceVersion' => NULL,
-                  'untilVersion' => NULL,
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-                  'field' => 'baz',
-                ),
-                'circular' => 
-                array (
-                  'dataType' => 'object (JmsNested)',
-                  'actualType' => 'model',
-                  'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-                  'required' => false,
-                  'default' => NULL,
-                  'description' => '',
-                  'readonly' => false,
-                  'sinceVersion' => NULL,
-                  'untilVersion' => NULL,
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-                  'field' => 'circular',
-                ),
-                'parent' => 
-                array (
-                  'dataType' => 'object (JmsTest)',
-                  'actualType' => 'model',
-                  'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-                  'required' => false,
-                  'default' => NULL,
-                  'description' => '',
-                  'readonly' => false,
-                  'sinceVersion' => NULL,
-                  'untilVersion' => NULL,
-                  'children' => 
-                  array (
-                    'foo' => 
-                    array (
-                      'dataType' => 'string',
-                      'actualType' => 'string',
-                      'subType' => NULL,
-                      'required' => false,
-                      'default' => NULL,
-                      'description' => '',
-                      'readonly' => false,
-                      'sinceVersion' => NULL,
-                      'untilVersion' => NULL,
-                      'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-                      'field' => 'foo',
-                    ),
-                    'bar' => 
-                    array (
-                      'dataType' => 'DateTime',
-                      'actualType' => 'datetime',
-                      'subType' => NULL,
-                      'required' => false,
-                      'default' => NULL,
-                      'description' => '',
-                      'readonly' => true,
-                      'sinceVersion' => NULL,
-                      'untilVersion' => NULL,
-                      'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-                      'field' => 'bar',
-                    ),
-                    'number' => 
-                    array (
-                      'dataType' => 'double',
-                      'actualType' => 'float',
-                      'subType' => NULL,
-                      'required' => false,
-                      'default' => NULL,
-                      'description' => '',
-                      'readonly' => false,
-                      'sinceVersion' => NULL,
-                      'untilVersion' => NULL,
-                      'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-                      'field' => 'number',
-                    ),
-                    'arr' => 
-                    array (
-                      'dataType' => 'array',
-                      'actualType' => 'collection',
-                      'subType' => NULL,
-                      'required' => false,
-                      'default' => NULL,
-                      'description' => '',
-                      'readonly' => false,
-                      'sinceVersion' => NULL,
-                      'untilVersion' => NULL,
-                      'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-                      'field' => 'arr',
-                    ),
-                    'nested' => 
-                    array (
-                      'dataType' => 'object (JmsNested)',
-                      'actualType' => 'model',
-                      'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-                      'required' => false,
-                      'default' => NULL,
-                      'description' => '',
-                      'readonly' => false,
-                      'sinceVersion' => NULL,
-                      'untilVersion' => NULL,
-                      'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-                      'field' => 'nested',
-                    ),
-                    'nested_array' => 
-                    array (
-                      'dataType' => 'array of objects (JmsNested)',
-                      'actualType' => 'collection',
-                      'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-                      'required' => false,
-                      'default' => NULL,
-                      'description' => '',
-                      'readonly' => false,
-                      'sinceVersion' => NULL,
-                      'untilVersion' => NULL,
-                      'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-                      'field' => 'nested_array',
-                    ),
-                  ),
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-                  'field' => 'parent',
-                ),
-                'since' => 
-                array (
-                  'dataType' => 'string',
-                  'actualType' => 'string',
-                  'subType' => NULL,
-                  'required' => false,
-                  'default' => NULL,
-                  'description' => '',
-                  'readonly' => false,
-                  'sinceVersion' => '0.2',
-                  'untilVersion' => NULL,
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-                  'field' => 'since',
-                ),
-                'until' => 
-                array (
-                  'dataType' => 'string',
-                  'actualType' => 'string',
-                  'subType' => NULL,
-                  'required' => false,
-                  'default' => NULL,
-                  'description' => '',
-                  'readonly' => false,
-                  'sinceVersion' => NULL,
-                  'untilVersion' => '0.3',
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-                  'field' => 'until',
-                ),
-                'since_and_until' => 
-                array (
-                  'dataType' => 'string',
-                  'actualType' => 'string',
-                  'subType' => NULL,
-                  'required' => false,
-                  'default' => NULL,
-                  'description' => '',
-                  'readonly' => false,
-                  'sinceVersion' => '0.4',
-                  'untilVersion' => '0.5',
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-                  'field' => 'since_and_until',
-                ),
-              ),
-            ),
-            'nested_array' => 
-            array (
-              'dataType' => 'array of objects (JmsNested)',
-              'actualType' => 'collection',
-              'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-            ),
-          ),
-        ),
-      ),
-      'resourceDescription' => 'Operations on another resource.',
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    1 => 
-    array (
-      'method' => 'PUT|PATCH',
-      'uri' => '/api/other-resources/{id}.{_format}',
-      'description' => 'Update a resource bu ID.',
-      'requirements' => 
-      array (
-        '_format' => 
-        array (
-          'requirement' => 'json|xml|html',
-          'dataType' => '',
-          'description' => '',
-        ),
-        'id' => 
-        array (
-          'requirement' => '',
-          'dataType' => '',
-          'description' => '',
-        ),
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-  ),
-  '/api/resources' => 
-  array (
-    0 => 
-    array (
-      'method' => 'GET',
-      'uri' => '/api/resources.{_format}',
-      'description' => 'List resources.',
-      'requirements' => 
-      array (
-        '_format' => 
-        array (
-          'requirement' => 'json|xml|html',
-          'dataType' => '',
-          'description' => '',
-        ),
-      ),
-      'views' => 
-      array (
-        0 => 'test',
-        1 => 'premium',
-        2 => 'default',
-      ),
-      'response' => 
-      array (
-        'tests' => 
-        array (
-          'dataType' => 'array of objects (Test)',
-          'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
-          'actualType' => 'collection',
-          'readonly' => true,
-          'required' => true,
-          'default' => true,
-          'description' => '',
-          'children' => 
-          array (
-            'a' => 
-            array (
-              'default' => 'nelmio',
-              'actualType' => 'string',
-              'subType' => NULL,
-              'groups' => 
-              array (
-                0 => 'Default',
-                1 => 'Test',
-              ),
-              'format' => '{length: {min: foo}}, {not blank}',
-              'required' => true,
-              'dataType' => 'string',
-              'readonly' => NULL,
-            ),
-            'b' => 
-            array (
-              'default' => NULL,
-              'actualType' => 'datetime',
-              'subType' => NULL,
-              'groups' => 
-              array (
-                0 => 'Default',
-                1 => 'Test',
-              ),
-              'dataType' => 'DateTime',
-              'readonly' => NULL,
-              'required' => NULL,
-            ),
-          ),
-        ),
-      ),
-      'statusCodes' => 
-      array (
-        200 => 
-        array (
-          0 => 'Returned on success.',
-        ),
-        404 => 
-        array (
-          0 => 'Returned if resource cannot be found.',
-        ),
-      ),
-      'resourceDescription' => 'Operations on resource.',
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    1 => 
-    array (
-      'method' => 'POST',
-      'uri' => '/api/resources.{_format}',
-      'description' => 'Create a new resource.',
-      'parameters' => 
-      array (
-        'a' => 
-        array (
-          'dataType' => 'string',
-          'actualType' => 'string',
-          'subType' => NULL,
-          'default' => NULL,
-          'required' => true,
-          'description' => 'Something that describes A.',
-          'readonly' => false,
-        ),
-        'b' => 
-        array (
-          'dataType' => 'float',
-          'actualType' => 'float',
-          'subType' => NULL,
-          'default' => NULL,
-          'required' => true,
-          'description' => NULL,
-          'readonly' => false,
-        ),
-        'c' => 
-        array (
-          'dataType' => 'choice',
-          'actualType' => 'choice',
-          'subType' => NULL,
-          'default' => NULL,
-          'required' => true,
-          'description' => NULL,
-          'readonly' => false,
-          'format' => '[X|Y|Z]',
-        ),
-        'd' => 
-        array (
-          'dataType' => 'datetime',
-          'actualType' => 'datetime',
-          'subType' => NULL,
-          'default' => NULL,
-          'required' => true,
-          'description' => NULL,
-          'readonly' => false,
-        ),
-        'e' => 
-        array (
-          'dataType' => 'date',
-          'actualType' => 'date',
-          'subType' => NULL,
-          'default' => NULL,
-          'required' => true,
-          'description' => NULL,
-          'readonly' => false,
-        ),
-        'g' => 
-        array (
-          'dataType' => 'string',
-          'actualType' => 'string',
-          'subType' => NULL,
-          'default' => NULL,
-          'required' => true,
-          'description' => NULL,
-          'readonly' => false,
-        ),
-      ),
-      'requirements' => 
-      array (
-        '_format' => 
-        array (
-          'requirement' => 'json|xml|html',
-          'dataType' => '',
-          'description' => '',
-        ),
-      ),
-      'views' => 
-      array (
-        0 => 'default',
-        1 => 'premium',
-      ),
-      'response' => 
-      array (
-        'foo' => 
-        array (
-          'dataType' => 'DateTime',
-          'actualType' => 'datetime',
-          'subType' => NULL,
-          'required' => false,
-          'default' => NULL,
-          'description' => '',
-          'readonly' => true,
-          'sinceVersion' => NULL,
-          'untilVersion' => NULL,
-        ),
-        'bar' => 
-        array (
-          'dataType' => 'string',
-          'actualType' => 'string',
-          'subType' => NULL,
-          'required' => false,
-          'default' => 'baz',
-          'description' => '',
-          'readonly' => false,
-          'sinceVersion' => NULL,
-          'untilVersion' => NULL,
-        ),
-        'baz' => 
-        array (
-          'dataType' => 'array of integers',
-          'actualType' => 'collection',
-          'subType' => 'integer',
-          'required' => false,
-          'default' => NULL,
-          'description' => 'Epic description.
+                                    'readonly' => false,
+                                    'sinceVersion' => null,
+                                    'untilVersion' => null,
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                                    'field' => 'baz',
+                                ],
+                                'circular' => [
+                                    'dataType' => 'object (JmsNested)',
+                                    'actualType' => 'model',
+                                    'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                                    'required' => false,
+                                    'default' => null,
+                                    'description' => '',
+                                    'readonly' => false,
+                                    'sinceVersion' => null,
+                                    'untilVersion' => null,
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                                    'field' => 'circular',
+                                ],
+                                'parent' => [
+                                    'dataType' => 'object (JmsTest)',
+                                    'actualType' => 'model',
+                                    'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                                    'required' => false,
+                                    'default' => null,
+                                    'description' => '',
+                                    'readonly' => false,
+                                    'sinceVersion' => null,
+                                    'untilVersion' => null,
+                                    'children' => [
+                                        'foo' => [
+                                            'dataType' => 'string',
+                                            'actualType' => 'string',
+                                            'subType' => null,
+                                            'required' => false,
+                                            'default' => null,
+                                            'description' => '',
+                                            'readonly' => false,
+                                            'sinceVersion' => null,
+                                            'untilVersion' => null,
+                                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                                            'field' => 'foo',
+                                        ],
+                                        'bar' => [
+                                            'dataType' => 'DateTime',
+                                            'actualType' => 'datetime',
+                                            'subType' => null,
+                                            'required' => false,
+                                            'default' => null,
+                                            'description' => '',
+                                            'readonly' => true,
+                                            'sinceVersion' => null,
+                                            'untilVersion' => null,
+                                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                                            'field' => 'bar',
+                                        ],
+                                        'number' => [
+                                            'dataType' => 'double',
+                                            'actualType' => 'float',
+                                            'subType' => null,
+                                            'required' => false,
+                                            'default' => null,
+                                            'description' => '',
+                                            'readonly' => false,
+                                            'sinceVersion' => null,
+                                            'untilVersion' => null,
+                                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                                            'field' => 'number',
+                                        ],
+                                        'arr' => [
+                                            'dataType' => 'array',
+                                            'actualType' => 'collection',
+                                            'subType' => null,
+                                            'required' => false,
+                                            'default' => null,
+                                            'description' => '',
+                                            'readonly' => false,
+                                            'sinceVersion' => null,
+                                            'untilVersion' => null,
+                                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                                            'field' => 'arr',
+                                        ],
+                                        'nested' => [
+                                            'dataType' => 'object (JmsNested)',
+                                            'actualType' => 'model',
+                                            'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                                            'required' => false,
+                                            'default' => null,
+                                            'description' => '',
+                                            'readonly' => false,
+                                            'sinceVersion' => null,
+                                            'untilVersion' => null,
+                                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                                            'field' => 'nested',
+                                        ],
+                                        'nested_array' => [
+                                            'dataType' => 'array of objects (JmsNested)',
+                                            'actualType' => 'collection',
+                                            'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                                            'required' => false,
+                                            'default' => null,
+                                            'description' => '',
+                                            'readonly' => false,
+                                            'sinceVersion' => null,
+                                            'untilVersion' => null,
+                                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                                            'field' => 'nested_array',
+                                        ],
+                                    ],
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                                    'field' => 'parent',
+                                ],
+                                'since' => [
+                                    'dataType' => 'string',
+                                    'actualType' => 'string',
+                                    'subType' => null,
+                                    'required' => false,
+                                    'default' => null,
+                                    'description' => '',
+                                    'readonly' => false,
+                                    'sinceVersion' => '0.2',
+                                    'untilVersion' => null,
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                                    'field' => 'since',
+                                ],
+                                'until' => [
+                                    'dataType' => 'string',
+                                    'actualType' => 'string',
+                                    'subType' => null,
+                                    'required' => false,
+                                    'default' => null,
+                                    'description' => '',
+                                    'readonly' => false,
+                                    'sinceVersion' => null,
+                                    'untilVersion' => '0.3',
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                                    'field' => 'until',
+                                ],
+                                'since_and_until' => [
+                                    'dataType' => 'string',
+                                    'actualType' => 'string',
+                                    'subType' => null,
+                                    'required' => false,
+                                    'default' => null,
+                                    'description' => '',
+                                    'readonly' => false,
+                                    'sinceVersion' => '0.4',
+                                    'untilVersion' => '0.5',
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                                    'field' => 'since_and_until',
+                                ],
+                            ],
+                        ],
+                        'nested_array' => [
+                            'dataType' => 'array of objects (JmsNested)',
+                            'actualType' => 'collection',
+                            'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                        ],
+                    ],
+                ],
+            ],
+            'resourceDescription' => 'Operations on another resource.',
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        1 => [
+            'method' => 'PUT|PATCH',
+            'uri' => '/api/other-resources/{id}.{_format}',
+            'description' => 'Update a resource bu ID.',
+            'requirements' => [
+                '_format' => [
+                    'requirement' => 'json|xml|html',
+                    'dataType' => '',
+                    'description' => '',
+                ],
+                'id' => [
+                    'requirement' => '',
+                    'dataType' => '',
+                    'description' => '',
+                ],
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+    ],
+    '/api/resources' => [
+        0 => [
+            'method' => 'GET',
+            'uri' => '/api/resources.{_format}',
+            'description' => 'List resources.',
+            'requirements' => [
+                '_format' => [
+                    'requirement' => 'json|xml|html',
+                    'dataType' => '',
+                    'description' => '',
+                ],
+            ],
+            'views' => [
+                0 => 'test',
+                1 => 'premium',
+                2 => 'default',
+            ],
+            'response' => [
+                'tests' => [
+                    'dataType' => 'array of objects (Test)',
+                    'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
+                    'actualType' => 'collection',
+                    'readonly' => true,
+                    'required' => true,
+                    'default' => true,
+                    'description' => '',
+                    'children' => [
+                        'a' => [
+                            'default' => 'nelmio',
+                            'actualType' => 'string',
+                            'subType' => null,
+                            'groups' => [
+                                0 => 'Default',
+                                1 => 'Test',
+                            ],
+                            'format' => '{length: {min: foo}}, {not blank}',
+                            'required' => true,
+                            'dataType' => 'string',
+                            'readonly' => null,
+                        ],
+                        'b' => [
+                            'default' => null,
+                            'actualType' => 'datetime',
+                            'subType' => null,
+                            'groups' => [
+                                0 => 'Default',
+                                1 => 'Test',
+                            ],
+                            'dataType' => 'DateTime',
+                            'readonly' => null,
+                            'required' => null,
+                        ],
+                    ],
+                ],
+            ],
+            'statusCodes' => [
+                200 => [
+                    0 => 'Returned on success.',
+                ],
+                404 => [
+                    0 => 'Returned if resource cannot be found.',
+                ],
+            ],
+            'resourceDescription' => 'Operations on resource.',
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        1 => [
+            'method' => 'POST',
+            'uri' => '/api/resources.{_format}',
+            'description' => 'Create a new resource.',
+            'parameters' => [
+                'a' => [
+                    'dataType' => 'string',
+                    'actualType' => 'string',
+                    'subType' => null,
+                    'default' => null,
+                    'required' => true,
+                    'description' => 'Something that describes A.',
+                    'readonly' => false,
+                ],
+                'b' => [
+                    'dataType' => 'float',
+                    'actualType' => 'float',
+                    'subType' => null,
+                    'default' => null,
+                    'required' => true,
+                    'description' => null,
+                    'readonly' => false,
+                ],
+                'c' => [
+                    'dataType' => 'choice',
+                    'actualType' => 'choice',
+                    'subType' => null,
+                    'default' => null,
+                    'required' => true,
+                    'description' => null,
+                    'readonly' => false,
+                    'format' => '[X|Y|Z]',
+                ],
+                'd' => [
+                    'dataType' => 'datetime',
+                    'actualType' => 'datetime',
+                    'subType' => null,
+                    'default' => null,
+                    'required' => true,
+                    'description' => null,
+                    'readonly' => false,
+                ],
+                'e' => [
+                    'dataType' => 'date',
+                    'actualType' => 'date',
+                    'subType' => null,
+                    'default' => null,
+                    'required' => true,
+                    'description' => null,
+                    'readonly' => false,
+                ],
+                'g' => [
+                    'dataType' => 'string',
+                    'actualType' => 'string',
+                    'subType' => null,
+                    'default' => null,
+                    'required' => true,
+                    'description' => null,
+                    'readonly' => false,
+                ],
+            ],
+            'requirements' => [
+                '_format' => [
+                    'requirement' => 'json|xml|html',
+                    'dataType' => '',
+                    'description' => '',
+                ],
+            ],
+            'views' => [
+                0 => 'default',
+                1 => 'premium',
+            ],
+            'response' => [
+                'foo' => [
+                    'dataType' => 'DateTime',
+                    'actualType' => 'datetime',
+                    'subType' => null,
+                    'required' => false,
+                    'default' => null,
+                    'description' => '',
+                    'readonly' => true,
+                    'sinceVersion' => null,
+                    'untilVersion' => null,
+                ],
+                'bar' => [
+                    'dataType' => 'string',
+                    'actualType' => 'string',
+                    'subType' => null,
+                    'required' => false,
+                    'default' => 'baz',
+                    'description' => '',
+                    'readonly' => false,
+                    'sinceVersion' => null,
+                    'untilVersion' => null,
+                ],
+                'baz' => [
+                    'dataType' => 'array of integers',
+                    'actualType' => 'collection',
+                    'subType' => 'integer',
+                    'required' => false,
+                    'default' => null,
+                    'description' => 'Epic description.
 
 With multiple lines.',
-          'readonly' => false,
-          'sinceVersion' => NULL,
-          'untilVersion' => NULL,
-        ),
-        'circular' => 
-        array (
-          'dataType' => 'object (JmsNested)',
-          'actualType' => 'model',
-          'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-          'required' => false,
-          'default' => NULL,
-          'description' => '',
-          'readonly' => false,
-          'sinceVersion' => NULL,
-          'untilVersion' => NULL,
-          'children' => 
-          array (
-            'foo' => 
-            array (
-              'dataType' => 'DateTime',
-              'actualType' => 'datetime',
-              'subType' => NULL,
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => true,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'field' => 'foo',
-            ),
-            'bar' => 
-            array (
-              'dataType' => 'string',
-              'actualType' => 'string',
-              'subType' => NULL,
-              'required' => false,
-              'default' => 'baz',
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'field' => 'bar',
-            ),
-            'baz' => 
-            array (
-              'dataType' => 'array of integers',
-              'actualType' => 'collection',
-              'subType' => 'integer',
-              'required' => false,
-              'default' => NULL,
-              'description' => 'Epic description.
+                    'readonly' => false,
+                    'sinceVersion' => null,
+                    'untilVersion' => null,
+                ],
+                'circular' => [
+                    'dataType' => 'object (JmsNested)',
+                    'actualType' => 'model',
+                    'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                    'required' => false,
+                    'default' => null,
+                    'description' => '',
+                    'readonly' => false,
+                    'sinceVersion' => null,
+                    'untilVersion' => null,
+                    'children' => [
+                        'foo' => [
+                            'dataType' => 'DateTime',
+                            'actualType' => 'datetime',
+                            'subType' => null,
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => true,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'field' => 'foo',
+                        ],
+                        'bar' => [
+                            'dataType' => 'string',
+                            'actualType' => 'string',
+                            'subType' => null,
+                            'required' => false,
+                            'default' => 'baz',
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'field' => 'bar',
+                        ],
+                        'baz' => [
+                            'dataType' => 'array of integers',
+                            'actualType' => 'collection',
+                            'subType' => 'integer',
+                            'required' => false,
+                            'default' => null,
+                            'description' => 'Epic description.
 
 With multiple lines.',
-              'readonly' => false,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'field' => 'baz',
-            ),
-            'circular' => 
-            array (
-              'dataType' => 'object (JmsNested)',
-              'actualType' => 'model',
-              'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'field' => 'circular',
-            ),
-            'parent' => 
-            array (
-              'dataType' => 'object (JmsTest)',
-              'actualType' => 'model',
-              'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-              'children' => 
-              array (
-                'foo' => 
-                array (
-                  'dataType' => 'string',
-                  'actualType' => 'string',
-                  'subType' => NULL,
-                  'required' => false,
-                  'default' => NULL,
-                  'description' => '',
-                  'readonly' => false,
-                  'sinceVersion' => NULL,
-                  'untilVersion' => NULL,
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-                  'field' => 'foo',
-                ),
-                'bar' => 
-                array (
-                  'dataType' => 'DateTime',
-                  'actualType' => 'datetime',
-                  'subType' => NULL,
-                  'required' => false,
-                  'default' => NULL,
-                  'description' => '',
-                  'readonly' => true,
-                  'sinceVersion' => NULL,
-                  'untilVersion' => NULL,
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-                  'field' => 'bar',
-                ),
-                'number' => 
-                array (
-                  'dataType' => 'double',
-                  'actualType' => 'float',
-                  'subType' => NULL,
-                  'required' => false,
-                  'default' => NULL,
-                  'description' => '',
-                  'readonly' => false,
-                  'sinceVersion' => NULL,
-                  'untilVersion' => NULL,
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-                  'field' => 'number',
-                ),
-                'arr' => 
-                array (
-                  'dataType' => 'array',
-                  'actualType' => 'collection',
-                  'subType' => NULL,
-                  'required' => false,
-                  'default' => NULL,
-                  'description' => '',
-                  'readonly' => false,
-                  'sinceVersion' => NULL,
-                  'untilVersion' => NULL,
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-                  'field' => 'arr',
-                ),
-                'nested' => 
-                array (
-                  'dataType' => 'object (JmsNested)',
-                  'actualType' => 'model',
-                  'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-                  'required' => false,
-                  'default' => NULL,
-                  'description' => '',
-                  'readonly' => false,
-                  'sinceVersion' => NULL,
-                  'untilVersion' => NULL,
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-                  'field' => 'nested',
-                ),
-                'nested_array' => 
-                array (
-                  'dataType' => 'array of objects (JmsNested)',
-                  'actualType' => 'collection',
-                  'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-                  'required' => false,
-                  'default' => NULL,
-                  'description' => '',
-                  'readonly' => false,
-                  'sinceVersion' => NULL,
-                  'untilVersion' => NULL,
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-                  'field' => 'nested_array',
-                ),
-              ),
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'field' => 'parent',
-            ),
-            'since' => 
-            array (
-              'dataType' => 'string',
-              'actualType' => 'string',
-              'subType' => NULL,
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => '0.2',
-              'untilVersion' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'field' => 'since',
-            ),
-            'until' => 
-            array (
-              'dataType' => 'string',
-              'actualType' => 'string',
-              'subType' => NULL,
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => NULL,
-              'untilVersion' => '0.3',
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'field' => 'until',
-            ),
-            'since_and_until' => 
-            array (
-              'dataType' => 'string',
-              'actualType' => 'string',
-              'subType' => NULL,
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => '0.4',
-              'untilVersion' => '0.5',
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'field' => 'since_and_until',
-            ),
-          ),
-        ),
-        'parent' => 
-        array (
-          'dataType' => 'object (JmsTest)',
-          'actualType' => 'model',
-          'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-          'required' => false,
-          'default' => NULL,
-          'description' => '',
-          'readonly' => false,
-          'sinceVersion' => NULL,
-          'untilVersion' => NULL,
-          'children' => 
-          array (
-            'foo' => 
-            array (
-              'dataType' => 'string',
-              'actualType' => 'string',
-              'subType' => NULL,
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-              'field' => 'foo',
-            ),
-            'bar' => 
-            array (
-              'dataType' => 'DateTime',
-              'actualType' => 'datetime',
-              'subType' => NULL,
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => true,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-              'field' => 'bar',
-            ),
-            'number' => 
-            array (
-              'dataType' => 'double',
-              'actualType' => 'float',
-              'subType' => NULL,
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-              'field' => 'number',
-            ),
-            'arr' => 
-            array (
-              'dataType' => 'array',
-              'actualType' => 'collection',
-              'subType' => NULL,
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-              'field' => 'arr',
-            ),
-            'nested' => 
-            array (
-              'dataType' => 'object (JmsNested)',
-              'actualType' => 'model',
-              'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-              'field' => 'nested',
-            ),
-            'nested_array' => 
-            array (
-              'dataType' => 'array of objects (JmsNested)',
-              'actualType' => 'collection',
-              'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-              'field' => 'nested_array',
-            ),
-          ),
-        ),
-        'since' => 
-        array (
-          'dataType' => 'string',
-          'actualType' => 'string',
-          'subType' => NULL,
-          'required' => false,
-          'default' => NULL,
-          'description' => '',
-          'readonly' => false,
-          'sinceVersion' => '0.2',
-          'untilVersion' => NULL,
-        ),
-        'until' => 
-        array (
-          'dataType' => 'string',
-          'actualType' => 'string',
-          'subType' => NULL,
-          'required' => false,
-          'default' => NULL,
-          'description' => '',
-          'readonly' => false,
-          'sinceVersion' => NULL,
-          'untilVersion' => '0.3',
-        ),
-        'since_and_until' => 
-        array (
-          'dataType' => 'string',
-          'actualType' => 'string',
-          'subType' => NULL,
-          'required' => false,
-          'default' => NULL,
-          'description' => '',
-          'readonly' => false,
-          'sinceVersion' => '0.4',
-          'untilVersion' => '0.5',
-        ),
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    2 => 
-    array (
-      'method' => 'DELETE',
-      'uri' => '/api/resources/{id}.{_format}',
-      'description' => 'Delete a resource by ID.',
-      'requirements' => 
-      array (
-        '_format' => 
-        array (
-          'requirement' => 'json|xml|html',
-          'dataType' => '',
-          'description' => '',
-        ),
-        'id' => 
-        array (
-          'requirement' => '',
-          'dataType' => '',
-          'description' => '',
-        ),
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    3 => 
-    array (
-      'method' => 'GET',
-      'uri' => '/api/resources/{id}.{_format}',
-      'description' => 'Retrieve a resource by ID.',
-      'requirements' => 
-      array (
-        '_format' => 
-        array (
-          'requirement' => 'json|xml|html',
-          'dataType' => '',
-          'description' => '',
-        ),
-        'id' => 
-        array (
-          'requirement' => '',
-          'dataType' => '',
-          'description' => '',
-        ),
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-  ),
-  '/tests' => 
-  array (
-    0 => 
-    array (
-      'method' => 'GET',
-      'uri' => '/tests.{_format}',
-      'description' => 'index action',
-      'filters' => 
-      array (
-        'a' => 
-        array (
-          'dataType' => 'integer',
-        ),
-        'b' => 
-        array (
-          'dataType' => 'string',
-          'arbitrary' => 
-          array (
-            0 => 'arg1',
-            1 => 'arg2',
-          ),
-        ),
-      ),
-      'requirements' => 
-      array (
-        '_format' => 
-        array (
-          'requirement' => '',
-          'dataType' => '',
-          'description' => '',
-        ),
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    1 => 
-    array (
-      'method' => 'POST',
-      'uri' => '/tests.{_format}',
-      'host' => 'api.test.dev',
-      'description' => 'create test',
-      'parameters' => 
-      array (
-        'a' => 
-        array (
-          'dataType' => 'string',
-          'actualType' => 'string',
-          'subType' => NULL,
-          'default' => NULL,
-          'required' => true,
-          'description' => 'A nice description',
-          'readonly' => false,
-        ),
-        'b' => 
-        array (
-          'dataType' => 'string',
-          'actualType' => 'string',
-          'subType' => NULL,
-          'default' => NULL,
-          'required' => true,
-          'description' => NULL,
-          'readonly' => false,
-        ),
-        'c' => 
-        array (
-          'dataType' => 'boolean',
-          'actualType' => 'boolean',
-          'subType' => NULL,
-          'default' => false,
-          'required' => true,
-          'description' => NULL,
-          'readonly' => false,
-        ),
-        'd' => 
-        array (
-          'dataType' => 'string',
-          'actualType' => 'string',
-          'subType' => NULL,
-          'default' => 'DefaultTest',
-          'required' => true,
-          'description' => NULL,
-          'readonly' => false,
-        ),
-      ),
-      'requirements' => 
-      array (
-        '_format' => 
-        array (
-          'requirement' => '',
-          'dataType' => '',
-          'description' => '',
-        ),
-      ),
-      'views' => 
-      array (
-        0 => 'default',
-        1 => 'premium',
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-  ),
-  '/tests2' => 
-  array (
-    0 => 
-    array (
-      'method' => 'POST',
-      'uri' => '/tests2.{_format}',
-      'description' => 'post test 2',
-      'requirements' => 
-      array (
-        '_format' => 
-        array (
-          'requirement' => '',
-          'dataType' => '',
-          'description' => '',
-        ),
-      ),
-      'views' => 
-      array (
-        0 => 'default',
-        1 => 'premium',
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-  ),
-  'TestResource' => 
-  array (
-    0 => 
-    array (
-      'method' => 'ANY',
-      'uri' => '/named-resource',
-      'views' => 
-      array (
-        0 => 'default',
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-  ),
-  'others' => 
-  array (
-    0 => 
-    array (
-      'method' => 'POST',
-      'uri' => '/another-post',
-      'description' => 'create another test',
-      'parameters' => 
-      array (
-        'dependency_type' => 
-        array (
-          'required' => true,
-          'readonly' => false,
-          'description' => '',
-          'default' => NULL,
-          'dataType' => 'object (DependencyType)',
-          'actualType' => 'model',
-          'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Form\\DependencyType',
-          'children' => 
-          array (
-            'a' => 
-            array (
-              'dataType' => 'string',
-              'actualType' => 'string',
-              'subType' => NULL,
-              'default' => NULL,
-              'required' => true,
-              'description' => 'A nice description',
-              'readonly' => false,
-            ),
-          ),
-        ),
-      ),
-      'views' => 
-      array (
-        0 => 'default',
-        1 => 'test',
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    1 => 
-    array (
-      'method' => 'ANY',
-      'uri' => '/any/{foo}',
-      'description' => 'Action without HTTP verb',
-      'requirements' => 
-      array (
-        'foo' => 
-        array (
-          'requirement' => '',
-          'dataType' => '',
-          'description' => '',
-        ),
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    2 => 
-    array (
-      'method' => 'ANY',
-      'uri' => '/authenticated',
-      'https' => false,
-      'authentication' => true,
-      'authenticationRoles' => 
-      array (
-        0 => 'ROLE_USER',
-        1 => 'ROLE_FOOBAR',
-      ),
-      'deprecated' => false,
-    ),
-    3 => 
-    array (
-      'method' => 'POST',
-      'uri' => '/jms-input-test',
-      'description' => 'Testing JMS',
-      'parameters' => 
-      array (
-        'foo' => 
-        array (
-          'dataType' => 'string',
-          'actualType' => 'string',
-          'subType' => NULL,
-          'required' => false,
-          'default' => NULL,
-          'description' => '',
-          'readonly' => false,
-          'sinceVersion' => NULL,
-          'untilVersion' => NULL,
-        ),
-        'bar' => 
-        array (
-          'dataType' => 'DateTime',
-          'actualType' => 'datetime',
-          'subType' => NULL,
-          'required' => false,
-          'default' => NULL,
-          'description' => '',
-          'readonly' => true,
-          'sinceVersion' => NULL,
-          'untilVersion' => NULL,
-        ),
-        'number' => 
-        array (
-          'dataType' => 'double',
-          'actualType' => 'float',
-          'subType' => NULL,
-          'required' => false,
-          'default' => NULL,
-          'description' => '',
-          'readonly' => false,
-          'sinceVersion' => NULL,
-          'untilVersion' => NULL,
-        ),
-        'arr' => 
-        array (
-          'dataType' => 'array',
-          'actualType' => 'collection',
-          'subType' => NULL,
-          'required' => false,
-          'default' => NULL,
-          'description' => '',
-          'readonly' => false,
-          'sinceVersion' => NULL,
-          'untilVersion' => NULL,
-        ),
-        'nested' => 
-        array (
-          'dataType' => 'object (JmsNested)',
-          'actualType' => 'model',
-          'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-          'required' => false,
-          'default' => NULL,
-          'description' => '',
-          'readonly' => false,
-          'sinceVersion' => NULL,
-          'untilVersion' => NULL,
-          'children' => 
-          array (
-            'foo' => 
-            array (
-              'dataType' => 'DateTime',
-              'actualType' => 'datetime',
-              'subType' => NULL,
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => true,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'field' => 'foo',
-            ),
-            'bar' => 
-            array (
-              'dataType' => 'string',
-              'actualType' => 'string',
-              'subType' => NULL,
-              'required' => false,
-              'default' => 'baz',
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'field' => 'bar',
-            ),
-            'baz' => 
-            array (
-              'dataType' => 'array of integers',
-              'actualType' => 'collection',
-              'subType' => 'integer',
-              'required' => false,
-              'default' => NULL,
-              'description' => 'Epic description.
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'field' => 'baz',
+                        ],
+                        'circular' => [
+                            'dataType' => 'object (JmsNested)',
+                            'actualType' => 'model',
+                            'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'field' => 'circular',
+                        ],
+                        'parent' => [
+                            'dataType' => 'object (JmsTest)',
+                            'actualType' => 'model',
+                            'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                            'children' => [
+                                'foo' => [
+                                    'dataType' => 'string',
+                                    'actualType' => 'string',
+                                    'subType' => null,
+                                    'required' => false,
+                                    'default' => null,
+                                    'description' => '',
+                                    'readonly' => false,
+                                    'sinceVersion' => null,
+                                    'untilVersion' => null,
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                                    'field' => 'foo',
+                                ],
+                                'bar' => [
+                                    'dataType' => 'DateTime',
+                                    'actualType' => 'datetime',
+                                    'subType' => null,
+                                    'required' => false,
+                                    'default' => null,
+                                    'description' => '',
+                                    'readonly' => true,
+                                    'sinceVersion' => null,
+                                    'untilVersion' => null,
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                                    'field' => 'bar',
+                                ],
+                                'number' => [
+                                    'dataType' => 'double',
+                                    'actualType' => 'float',
+                                    'subType' => null,
+                                    'required' => false,
+                                    'default' => null,
+                                    'description' => '',
+                                    'readonly' => false,
+                                    'sinceVersion' => null,
+                                    'untilVersion' => null,
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                                    'field' => 'number',
+                                ],
+                                'arr' => [
+                                    'dataType' => 'array',
+                                    'actualType' => 'collection',
+                                    'subType' => null,
+                                    'required' => false,
+                                    'default' => null,
+                                    'description' => '',
+                                    'readonly' => false,
+                                    'sinceVersion' => null,
+                                    'untilVersion' => null,
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                                    'field' => 'arr',
+                                ],
+                                'nested' => [
+                                    'dataType' => 'object (JmsNested)',
+                                    'actualType' => 'model',
+                                    'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                                    'required' => false,
+                                    'default' => null,
+                                    'description' => '',
+                                    'readonly' => false,
+                                    'sinceVersion' => null,
+                                    'untilVersion' => null,
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                                    'field' => 'nested',
+                                ],
+                                'nested_array' => [
+                                    'dataType' => 'array of objects (JmsNested)',
+                                    'actualType' => 'collection',
+                                    'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                                    'required' => false,
+                                    'default' => null,
+                                    'description' => '',
+                                    'readonly' => false,
+                                    'sinceVersion' => null,
+                                    'untilVersion' => null,
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                                    'field' => 'nested_array',
+                                ],
+                            ],
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'field' => 'parent',
+                        ],
+                        'since' => [
+                            'dataType' => 'string',
+                            'actualType' => 'string',
+                            'subType' => null,
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => '0.2',
+                            'untilVersion' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'field' => 'since',
+                        ],
+                        'until' => [
+                            'dataType' => 'string',
+                            'actualType' => 'string',
+                            'subType' => null,
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => '0.3',
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'field' => 'until',
+                        ],
+                        'since_and_until' => [
+                            'dataType' => 'string',
+                            'actualType' => 'string',
+                            'subType' => null,
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => '0.4',
+                            'untilVersion' => '0.5',
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'field' => 'since_and_until',
+                        ],
+                    ],
+                ],
+                'parent' => [
+                    'dataType' => 'object (JmsTest)',
+                    'actualType' => 'model',
+                    'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                    'required' => false,
+                    'default' => null,
+                    'description' => '',
+                    'readonly' => false,
+                    'sinceVersion' => null,
+                    'untilVersion' => null,
+                    'children' => [
+                        'foo' => [
+                            'dataType' => 'string',
+                            'actualType' => 'string',
+                            'subType' => null,
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                            'field' => 'foo',
+                        ],
+                        'bar' => [
+                            'dataType' => 'DateTime',
+                            'actualType' => 'datetime',
+                            'subType' => null,
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => true,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                            'field' => 'bar',
+                        ],
+                        'number' => [
+                            'dataType' => 'double',
+                            'actualType' => 'float',
+                            'subType' => null,
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                            'field' => 'number',
+                        ],
+                        'arr' => [
+                            'dataType' => 'array',
+                            'actualType' => 'collection',
+                            'subType' => null,
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                            'field' => 'arr',
+                        ],
+                        'nested' => [
+                            'dataType' => 'object (JmsNested)',
+                            'actualType' => 'model',
+                            'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                            'field' => 'nested',
+                        ],
+                        'nested_array' => [
+                            'dataType' => 'array of objects (JmsNested)',
+                            'actualType' => 'collection',
+                            'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                            'field' => 'nested_array',
+                        ],
+                    ],
+                ],
+                'since' => [
+                    'dataType' => 'string',
+                    'actualType' => 'string',
+                    'subType' => null,
+                    'required' => false,
+                    'default' => null,
+                    'description' => '',
+                    'readonly' => false,
+                    'sinceVersion' => '0.2',
+                    'untilVersion' => null,
+                ],
+                'until' => [
+                    'dataType' => 'string',
+                    'actualType' => 'string',
+                    'subType' => null,
+                    'required' => false,
+                    'default' => null,
+                    'description' => '',
+                    'readonly' => false,
+                    'sinceVersion' => null,
+                    'untilVersion' => '0.3',
+                ],
+                'since_and_until' => [
+                    'dataType' => 'string',
+                    'actualType' => 'string',
+                    'subType' => null,
+                    'required' => false,
+                    'default' => null,
+                    'description' => '',
+                    'readonly' => false,
+                    'sinceVersion' => '0.4',
+                    'untilVersion' => '0.5',
+                ],
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        2 => [
+            'method' => 'DELETE',
+            'uri' => '/api/resources/{id}.{_format}',
+            'description' => 'Delete a resource by ID.',
+            'requirements' => [
+                '_format' => [
+                    'requirement' => 'json|xml|html',
+                    'dataType' => '',
+                    'description' => '',
+                ],
+                'id' => [
+                    'requirement' => '',
+                    'dataType' => '',
+                    'description' => '',
+                ],
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        3 => [
+            'method' => 'GET',
+            'uri' => '/api/resources/{id}.{_format}',
+            'description' => 'Retrieve a resource by ID.',
+            'requirements' => [
+                '_format' => [
+                    'requirement' => 'json|xml|html',
+                    'dataType' => '',
+                    'description' => '',
+                ],
+                'id' => [
+                    'requirement' => '',
+                    'dataType' => '',
+                    'description' => '',
+                ],
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+    ],
+    '/tests' => [
+        0 => [
+            'method' => 'GET',
+            'uri' => '/tests.{_format}',
+            'description' => 'index action',
+            'filters' => [
+                'a' => [
+                    'dataType' => 'integer',
+                ],
+                'b' => [
+                    'dataType' => 'string',
+                    'arbitrary' => [
+                        0 => 'arg1',
+                        1 => 'arg2',
+                    ],
+                ],
+            ],
+            'requirements' => [
+                '_format' => [
+                    'requirement' => '',
+                    'dataType' => '',
+                    'description' => '',
+                ],
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        1 => [
+            'method' => 'POST',
+            'uri' => '/tests.{_format}',
+            'host' => 'api.test.dev',
+            'description' => 'create test',
+            'parameters' => [
+                'a' => [
+                    'dataType' => 'string',
+                    'actualType' => 'string',
+                    'subType' => null,
+                    'default' => null,
+                    'required' => true,
+                    'description' => 'A nice description',
+                    'readonly' => false,
+                ],
+                'b' => [
+                    'dataType' => 'string',
+                    'actualType' => 'string',
+                    'subType' => null,
+                    'default' => null,
+                    'required' => true,
+                    'description' => null,
+                    'readonly' => false,
+                ],
+                'c' => [
+                    'dataType' => 'boolean',
+                    'actualType' => 'boolean',
+                    'subType' => null,
+                    'default' => false,
+                    'required' => true,
+                    'description' => null,
+                    'readonly' => false,
+                ],
+                'd' => [
+                    'dataType' => 'string',
+                    'actualType' => 'string',
+                    'subType' => null,
+                    'default' => 'DefaultTest',
+                    'required' => true,
+                    'description' => null,
+                    'readonly' => false,
+                ],
+            ],
+            'requirements' => [
+                '_format' => [
+                    'requirement' => '',
+                    'dataType' => '',
+                    'description' => '',
+                ],
+            ],
+            'views' => [
+                0 => 'default',
+                1 => 'premium',
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+    ],
+    '/tests2' => [
+        0 => [
+            'method' => 'POST',
+            'uri' => '/tests2.{_format}',
+            'description' => 'post test 2',
+            'requirements' => [
+                '_format' => [
+                    'requirement' => '',
+                    'dataType' => '',
+                    'description' => '',
+                ],
+            ],
+            'views' => [
+                0 => 'default',
+                1 => 'premium',
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+    ],
+    'TestResource' => [
+        0 => [
+            'method' => 'ANY',
+            'uri' => '/named-resource',
+            'views' => [
+                0 => 'default',
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+    ],
+    'others' => [
+        0 => [
+            'method' => 'POST',
+            'uri' => '/another-post',
+            'description' => 'create another test',
+            'parameters' => [
+                'dependency_type' => [
+                    'required' => true,
+                    'readonly' => false,
+                    'description' => '',
+                    'default' => null,
+                    'dataType' => 'object (DependencyType)',
+                    'actualType' => 'model',
+                    'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Form\\DependencyType',
+                    'children' => [
+                        'a' => [
+                            'dataType' => 'string',
+                            'actualType' => 'string',
+                            'subType' => null,
+                            'default' => null,
+                            'required' => true,
+                            'description' => 'A nice description',
+                            'readonly' => false,
+                        ],
+                    ],
+                ],
+            ],
+            'views' => [
+                0 => 'default',
+                1 => 'test',
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        1 => [
+            'method' => 'ANY',
+            'uri' => '/any/{foo}',
+            'description' => 'Action without HTTP verb',
+            'requirements' => [
+                'foo' => [
+                    'requirement' => '',
+                    'dataType' => '',
+                    'description' => '',
+                ],
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        2 => [
+            'method' => 'ANY',
+            'uri' => '/authenticated',
+            'https' => false,
+            'authentication' => true,
+            'authenticationRoles' => [
+                0 => 'ROLE_USER',
+                1 => 'ROLE_FOOBAR',
+            ],
+            'deprecated' => false,
+        ],
+        3 => [
+            'method' => 'POST',
+            'uri' => '/jms-input-test',
+            'description' => 'Testing JMS',
+            'parameters' => [
+                'foo' => [
+                    'dataType' => 'string',
+                    'actualType' => 'string',
+                    'subType' => null,
+                    'required' => false,
+                    'default' => null,
+                    'description' => '',
+                    'readonly' => false,
+                    'sinceVersion' => null,
+                    'untilVersion' => null,
+                ],
+                'bar' => [
+                    'dataType' => 'DateTime',
+                    'actualType' => 'datetime',
+                    'subType' => null,
+                    'required' => false,
+                    'default' => null,
+                    'description' => '',
+                    'readonly' => true,
+                    'sinceVersion' => null,
+                    'untilVersion' => null,
+                ],
+                'number' => [
+                    'dataType' => 'double',
+                    'actualType' => 'float',
+                    'subType' => null,
+                    'required' => false,
+                    'default' => null,
+                    'description' => '',
+                    'readonly' => false,
+                    'sinceVersion' => null,
+                    'untilVersion' => null,
+                ],
+                'arr' => [
+                    'dataType' => 'array',
+                    'actualType' => 'collection',
+                    'subType' => null,
+                    'required' => false,
+                    'default' => null,
+                    'description' => '',
+                    'readonly' => false,
+                    'sinceVersion' => null,
+                    'untilVersion' => null,
+                ],
+                'nested' => [
+                    'dataType' => 'object (JmsNested)',
+                    'actualType' => 'model',
+                    'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                    'required' => false,
+                    'default' => null,
+                    'description' => '',
+                    'readonly' => false,
+                    'sinceVersion' => null,
+                    'untilVersion' => null,
+                    'children' => [
+                        'foo' => [
+                            'dataType' => 'DateTime',
+                            'actualType' => 'datetime',
+                            'subType' => null,
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => true,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'field' => 'foo',
+                        ],
+                        'bar' => [
+                            'dataType' => 'string',
+                            'actualType' => 'string',
+                            'subType' => null,
+                            'required' => false,
+                            'default' => 'baz',
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'field' => 'bar',
+                        ],
+                        'baz' => [
+                            'dataType' => 'array of integers',
+                            'actualType' => 'collection',
+                            'subType' => 'integer',
+                            'required' => false,
+                            'default' => null,
+                            'description' => 'Epic description.
 
 With multiple lines.',
-              'readonly' => false,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'field' => 'baz',
-            ),
-            'circular' => 
-            array (
-              'dataType' => 'object (JmsNested)',
-              'actualType' => 'model',
-              'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'field' => 'circular',
-            ),
-            'parent' => 
-            array (
-              'dataType' => 'object (JmsTest)',
-              'actualType' => 'model',
-              'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-              'children' => 
-              array (
-                'foo' => 
-                array (
-                  'dataType' => 'string',
-                  'actualType' => 'string',
-                  'subType' => NULL,
-                  'required' => false,
-                  'default' => NULL,
-                  'description' => '',
-                  'readonly' => false,
-                  'sinceVersion' => NULL,
-                  'untilVersion' => NULL,
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-                  'field' => 'foo',
-                ),
-                'bar' => 
-                array (
-                  'dataType' => 'DateTime',
-                  'actualType' => 'datetime',
-                  'subType' => NULL,
-                  'required' => false,
-                  'default' => NULL,
-                  'description' => '',
-                  'readonly' => true,
-                  'sinceVersion' => NULL,
-                  'untilVersion' => NULL,
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-                  'field' => 'bar',
-                ),
-                'number' => 
-                array (
-                  'dataType' => 'double',
-                  'actualType' => 'float',
-                  'subType' => NULL,
-                  'required' => false,
-                  'default' => NULL,
-                  'description' => '',
-                  'readonly' => false,
-                  'sinceVersion' => NULL,
-                  'untilVersion' => NULL,
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-                  'field' => 'number',
-                ),
-                'arr' => 
-                array (
-                  'dataType' => 'array',
-                  'actualType' => 'collection',
-                  'subType' => NULL,
-                  'required' => false,
-                  'default' => NULL,
-                  'description' => '',
-                  'readonly' => false,
-                  'sinceVersion' => NULL,
-                  'untilVersion' => NULL,
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-                  'field' => 'arr',
-                ),
-                'nested' => 
-                array (
-                  'dataType' => 'object (JmsNested)',
-                  'actualType' => 'model',
-                  'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-                  'required' => false,
-                  'default' => NULL,
-                  'description' => '',
-                  'readonly' => false,
-                  'sinceVersion' => NULL,
-                  'untilVersion' => NULL,
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-                  'field' => 'nested',
-                ),
-                'nested_array' => 
-                array (
-                  'dataType' => 'array of objects (JmsNested)',
-                  'actualType' => 'collection',
-                  'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-                  'required' => false,
-                  'default' => NULL,
-                  'description' => '',
-                  'readonly' => false,
-                  'sinceVersion' => NULL,
-                  'untilVersion' => NULL,
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-                  'field' => 'nested_array',
-                ),
-              ),
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'field' => 'parent',
-            ),
-            'since' => 
-            array (
-              'dataType' => 'string',
-              'actualType' => 'string',
-              'subType' => NULL,
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => '0.2',
-              'untilVersion' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'field' => 'since',
-            ),
-            'until' => 
-            array (
-              'dataType' => 'string',
-              'actualType' => 'string',
-              'subType' => NULL,
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => NULL,
-              'untilVersion' => '0.3',
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'field' => 'until',
-            ),
-            'since_and_until' => 
-            array (
-              'dataType' => 'string',
-              'actualType' => 'string',
-              'subType' => NULL,
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => '0.4',
-              'untilVersion' => '0.5',
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'field' => 'since_and_until',
-            ),
-          ),
-        ),
-        'nested_array' => 
-        array (
-          'dataType' => 'array of objects (JmsNested)',
-          'actualType' => 'collection',
-          'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-          'required' => false,
-          'default' => NULL,
-          'description' => '',
-          'readonly' => false,
-          'sinceVersion' => NULL,
-          'untilVersion' => NULL,
-        ),
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    4 => 
-    array (
-      'method' => 'GET',
-      'uri' => '/jms-return-test',
-      'description' => 'Testing return',
-      'response' => 
-      array (
-        'dependency_type' => 
-        array (
-          'required' => true,
-          'readonly' => false,
-          'description' => '',
-          'default' => NULL,
-          'dataType' => 'object (DependencyType)',
-          'actualType' => 'model',
-          'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Form\\DependencyType',
-          'children' => 
-          array (
-            'a' => 
-            array (
-              'dataType' => 'string',
-              'actualType' => 'string',
-              'subType' => NULL,
-              'default' => NULL,
-              'required' => true,
-              'description' => 'A nice description',
-              'readonly' => false,
-            ),
-          ),
-        ),
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    5 => 
-    array (
-      'method' => 'ANY',
-      'uri' => '/my-commented/{id}/{page}/{paramType}/{param}',
-      'description' => 'This method is useful to test if the getDocComment works.',
-      'documentation' => 'This method is useful to test if the getDocComment works.
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'field' => 'baz',
+                        ],
+                        'circular' => [
+                            'dataType' => 'object (JmsNested)',
+                            'actualType' => 'model',
+                            'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'field' => 'circular',
+                        ],
+                        'parent' => [
+                            'dataType' => 'object (JmsTest)',
+                            'actualType' => 'model',
+                            'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                            'children' => [
+                                'foo' => [
+                                    'dataType' => 'string',
+                                    'actualType' => 'string',
+                                    'subType' => null,
+                                    'required' => false,
+                                    'default' => null,
+                                    'description' => '',
+                                    'readonly' => false,
+                                    'sinceVersion' => null,
+                                    'untilVersion' => null,
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                                    'field' => 'foo',
+                                ],
+                                'bar' => [
+                                    'dataType' => 'DateTime',
+                                    'actualType' => 'datetime',
+                                    'subType' => null,
+                                    'required' => false,
+                                    'default' => null,
+                                    'description' => '',
+                                    'readonly' => true,
+                                    'sinceVersion' => null,
+                                    'untilVersion' => null,
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                                    'field' => 'bar',
+                                ],
+                                'number' => [
+                                    'dataType' => 'double',
+                                    'actualType' => 'float',
+                                    'subType' => null,
+                                    'required' => false,
+                                    'default' => null,
+                                    'description' => '',
+                                    'readonly' => false,
+                                    'sinceVersion' => null,
+                                    'untilVersion' => null,
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                                    'field' => 'number',
+                                ],
+                                'arr' => [
+                                    'dataType' => 'array',
+                                    'actualType' => 'collection',
+                                    'subType' => null,
+                                    'required' => false,
+                                    'default' => null,
+                                    'description' => '',
+                                    'readonly' => false,
+                                    'sinceVersion' => null,
+                                    'untilVersion' => null,
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                                    'field' => 'arr',
+                                ],
+                                'nested' => [
+                                    'dataType' => 'object (JmsNested)',
+                                    'actualType' => 'model',
+                                    'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                                    'required' => false,
+                                    'default' => null,
+                                    'description' => '',
+                                    'readonly' => false,
+                                    'sinceVersion' => null,
+                                    'untilVersion' => null,
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                                    'field' => 'nested',
+                                ],
+                                'nested_array' => [
+                                    'dataType' => 'array of objects (JmsNested)',
+                                    'actualType' => 'collection',
+                                    'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                                    'required' => false,
+                                    'default' => null,
+                                    'description' => '',
+                                    'readonly' => false,
+                                    'sinceVersion' => null,
+                                    'untilVersion' => null,
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                                    'field' => 'nested_array',
+                                ],
+                            ],
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'field' => 'parent',
+                        ],
+                        'since' => [
+                            'dataType' => 'string',
+                            'actualType' => 'string',
+                            'subType' => null,
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => '0.2',
+                            'untilVersion' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'field' => 'since',
+                        ],
+                        'until' => [
+                            'dataType' => 'string',
+                            'actualType' => 'string',
+                            'subType' => null,
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => '0.3',
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'field' => 'until',
+                        ],
+                        'since_and_until' => [
+                            'dataType' => 'string',
+                            'actualType' => 'string',
+                            'subType' => null,
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => '0.4',
+                            'untilVersion' => '0.5',
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'field' => 'since_and_until',
+                        ],
+                    ],
+                ],
+                'nested_array' => [
+                    'dataType' => 'array of objects (JmsNested)',
+                    'actualType' => 'collection',
+                    'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                    'required' => false,
+                    'default' => null,
+                    'description' => '',
+                    'readonly' => false,
+                    'sinceVersion' => null,
+                    'untilVersion' => null,
+                ],
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        4 => [
+            'method' => 'GET',
+            'uri' => '/jms-return-test',
+            'description' => 'Testing return',
+            'response' => [
+                'dependency_type' => [
+                    'required' => true,
+                    'readonly' => false,
+                    'description' => '',
+                    'default' => null,
+                    'dataType' => 'object (DependencyType)',
+                    'actualType' => 'model',
+                    'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Form\\DependencyType',
+                    'children' => [
+                        'a' => [
+                            'dataType' => 'string',
+                            'actualType' => 'string',
+                            'subType' => null,
+                            'default' => null,
+                            'required' => true,
+                            'description' => 'A nice description',
+                            'readonly' => false,
+                        ],
+                    ],
+                ],
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        5 => [
+            'method' => 'ANY',
+            'uri' => '/my-commented/{id}/{page}/{paramType}/{param}',
+            'description' => 'This method is useful to test if the getDocComment works.',
+            'documentation' => 'This method is useful to test if the getDocComment works.
 And, it supports multilines until the first \'@\' char.',
-      'requirements' => 
-      array (
-        'id' => 
-        array (
-          'dataType' => 'int',
-          'description' => 'A nice comment',
-          'requirement' => '',
-        ),
-        'page' => 
-        array (
-          'dataType' => 'int',
-          'description' => '',
-          'requirement' => '',
-        ),
-        'paramType' => 
-        array (
-          'dataType' => 'int',
-          'description' => 'The param type',
-          'requirement' => '',
-        ),
-        'param' => 
-        array (
-          'dataType' => 'int',
-          'description' => 'The param id',
-          'requirement' => '',
-        ),
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    6 => 
-    array (
-      'method' => 'ANY',
-      'uri' => '/return-nested-output',
-      'response' => 
-      array (
-        'foo' => 
-        array (
-          'dataType' => 'string',
-          'actualType' => 'string',
-          'subType' => NULL,
-          'required' => false,
-          'default' => NULL,
-          'description' => '',
-          'readonly' => false,
-          'sinceVersion' => NULL,
-          'untilVersion' => NULL,
-        ),
-        'bar' => 
-        array (
-          'dataType' => 'DateTime',
-          'actualType' => 'datetime',
-          'subType' => NULL,
-          'required' => false,
-          'default' => NULL,
-          'description' => '',
-          'readonly' => true,
-          'sinceVersion' => NULL,
-          'untilVersion' => NULL,
-        ),
-        'number' => 
-        array (
-          'dataType' => 'double',
-          'actualType' => 'float',
-          'subType' => NULL,
-          'required' => false,
-          'default' => NULL,
-          'description' => '',
-          'readonly' => false,
-          'sinceVersion' => NULL,
-          'untilVersion' => NULL,
-        ),
-        'arr' => 
-        array (
-          'dataType' => 'array',
-          'actualType' => 'collection',
-          'subType' => NULL,
-          'required' => false,
-          'default' => NULL,
-          'description' => '',
-          'readonly' => false,
-          'sinceVersion' => NULL,
-          'untilVersion' => NULL,
-        ),
-        'nested' => 
-        array (
-          'dataType' => 'object (JmsNested)',
-          'actualType' => 'model',
-          'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-          'required' => false,
-          'default' => NULL,
-          'description' => '',
-          'readonly' => false,
-          'sinceVersion' => NULL,
-          'untilVersion' => NULL,
-          'children' => 
-          array (
-            'foo' => 
-            array (
-              'dataType' => 'DateTime',
-              'actualType' => 'datetime',
-              'subType' => NULL,
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => true,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'field' => 'foo',
-            ),
-            'bar' => 
-            array (
-              'dataType' => 'string',
-              'actualType' => 'string',
-              'subType' => NULL,
-              'required' => false,
-              'default' => 'baz',
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'field' => 'bar',
-            ),
-            'baz' => 
-            array (
-              'dataType' => 'array of integers',
-              'actualType' => 'collection',
-              'subType' => 'integer',
-              'required' => false,
-              'default' => NULL,
-              'description' => 'Epic description.
+            'requirements' => [
+                'id' => [
+                    'dataType' => 'int',
+                    'description' => 'A nice comment',
+                    'requirement' => '',
+                ],
+                'page' => [
+                    'dataType' => 'int',
+                    'description' => '',
+                    'requirement' => '',
+                ],
+                'paramType' => [
+                    'dataType' => 'int',
+                    'description' => 'The param type',
+                    'requirement' => '',
+                ],
+                'param' => [
+                    'dataType' => 'int',
+                    'description' => 'The param id',
+                    'requirement' => '',
+                ],
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        6 => [
+            'method' => 'ANY',
+            'uri' => '/return-nested-output',
+            'response' => [
+                'foo' => [
+                    'dataType' => 'string',
+                    'actualType' => 'string',
+                    'subType' => null,
+                    'required' => false,
+                    'default' => null,
+                    'description' => '',
+                    'readonly' => false,
+                    'sinceVersion' => null,
+                    'untilVersion' => null,
+                ],
+                'bar' => [
+                    'dataType' => 'DateTime',
+                    'actualType' => 'datetime',
+                    'subType' => null,
+                    'required' => false,
+                    'default' => null,
+                    'description' => '',
+                    'readonly' => true,
+                    'sinceVersion' => null,
+                    'untilVersion' => null,
+                ],
+                'number' => [
+                    'dataType' => 'double',
+                    'actualType' => 'float',
+                    'subType' => null,
+                    'required' => false,
+                    'default' => null,
+                    'description' => '',
+                    'readonly' => false,
+                    'sinceVersion' => null,
+                    'untilVersion' => null,
+                ],
+                'arr' => [
+                    'dataType' => 'array',
+                    'actualType' => 'collection',
+                    'subType' => null,
+                    'required' => false,
+                    'default' => null,
+                    'description' => '',
+                    'readonly' => false,
+                    'sinceVersion' => null,
+                    'untilVersion' => null,
+                ],
+                'nested' => [
+                    'dataType' => 'object (JmsNested)',
+                    'actualType' => 'model',
+                    'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                    'required' => false,
+                    'default' => null,
+                    'description' => '',
+                    'readonly' => false,
+                    'sinceVersion' => null,
+                    'untilVersion' => null,
+                    'children' => [
+                        'foo' => [
+                            'dataType' => 'DateTime',
+                            'actualType' => 'datetime',
+                            'subType' => null,
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => true,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'field' => 'foo',
+                        ],
+                        'bar' => [
+                            'dataType' => 'string',
+                            'actualType' => 'string',
+                            'subType' => null,
+                            'required' => false,
+                            'default' => 'baz',
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'field' => 'bar',
+                        ],
+                        'baz' => [
+                            'dataType' => 'array of integers',
+                            'actualType' => 'collection',
+                            'subType' => 'integer',
+                            'required' => false,
+                            'default' => null,
+                            'description' => 'Epic description.
 
 With multiple lines.',
-              'readonly' => false,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'field' => 'baz',
-            ),
-            'circular' => 
-            array (
-              'dataType' => 'object (JmsNested)',
-              'actualType' => 'model',
-              'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'field' => 'circular',
-            ),
-            'parent' => 
-            array (
-              'dataType' => 'object (JmsTest)',
-              'actualType' => 'model',
-              'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => NULL,
-              'untilVersion' => NULL,
-              'children' => 
-              array (
-                'foo' => 
-                array (
-                  'dataType' => 'string',
-                  'actualType' => 'string',
-                  'subType' => NULL,
-                  'required' => false,
-                  'default' => NULL,
-                  'description' => '',
-                  'readonly' => false,
-                  'sinceVersion' => NULL,
-                  'untilVersion' => NULL,
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-                  'field' => 'foo',
-                ),
-                'bar' => 
-                array (
-                  'dataType' => 'DateTime',
-                  'actualType' => 'datetime',
-                  'subType' => NULL,
-                  'required' => false,
-                  'default' => NULL,
-                  'description' => '',
-                  'readonly' => true,
-                  'sinceVersion' => NULL,
-                  'untilVersion' => NULL,
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-                  'field' => 'bar',
-                ),
-                'number' => 
-                array (
-                  'dataType' => 'double',
-                  'actualType' => 'float',
-                  'subType' => NULL,
-                  'required' => false,
-                  'default' => NULL,
-                  'description' => '',
-                  'readonly' => false,
-                  'sinceVersion' => NULL,
-                  'untilVersion' => NULL,
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-                  'field' => 'number',
-                ),
-                'arr' => 
-                array (
-                  'dataType' => 'array',
-                  'actualType' => 'collection',
-                  'subType' => NULL,
-                  'required' => false,
-                  'default' => NULL,
-                  'description' => '',
-                  'readonly' => false,
-                  'sinceVersion' => NULL,
-                  'untilVersion' => NULL,
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-                  'field' => 'arr',
-                ),
-                'nested' => 
-                array (
-                  'dataType' => 'object (JmsNested)',
-                  'actualType' => 'model',
-                  'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-                  'required' => false,
-                  'default' => NULL,
-                  'description' => '',
-                  'readonly' => false,
-                  'sinceVersion' => NULL,
-                  'untilVersion' => NULL,
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-                  'field' => 'nested',
-                ),
-                'nested_array' => 
-                array (
-                  'dataType' => 'array of objects (JmsNested)',
-                  'actualType' => 'collection',
-                  'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-                  'required' => false,
-                  'default' => NULL,
-                  'description' => '',
-                  'readonly' => false,
-                  'sinceVersion' => NULL,
-                  'untilVersion' => NULL,
-                  'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
-                  'field' => 'nested_array',
-                ),
-              ),
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'field' => 'parent',
-            ),
-            'since' => 
-            array (
-              'dataType' => 'string',
-              'actualType' => 'string',
-              'subType' => NULL,
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => '0.2',
-              'untilVersion' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'field' => 'since',
-            ),
-            'until' => 
-            array (
-              'dataType' => 'string',
-              'actualType' => 'string',
-              'subType' => NULL,
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => NULL,
-              'untilVersion' => '0.3',
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'field' => 'until',
-            ),
-            'since_and_until' => 
-            array (
-              'dataType' => 'string',
-              'actualType' => 'string',
-              'subType' => NULL,
-              'required' => false,
-              'default' => NULL,
-              'description' => '',
-              'readonly' => false,
-              'sinceVersion' => '0.4',
-              'untilVersion' => '0.5',
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-              'field' => 'since_and_until',
-            ),
-          ),
-        ),
-        'nested_array' => 
-        array (
-          'dataType' => 'array of objects (JmsNested)',
-          'actualType' => 'collection',
-          'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
-          'required' => false,
-          'default' => NULL,
-          'description' => '',
-          'readonly' => false,
-          'sinceVersion' => NULL,
-          'untilVersion' => NULL,
-        ),
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    7 => 
-    array (
-      'method' => 'GET',
-      'uri' => '/route_with_host.{_format}',
-      'host' => 'api.test.dev',
-      'description' => 'Route with host placeholder',
-      'requirements' => 
-      array (
-        'domain' => 
-        array (
-          'requirement' => 'test.dev|test.com',
-          'dataType' => '',
-          'description' => '',
-        ),
-        '_format' => 
-        array (
-          'requirement' => '',
-          'dataType' => '',
-          'description' => '',
-        ),
-      ),
-      'views' => 
-      array (
-        0 => 'default',
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    8 => 
-    array (
-      'method' => 'ANY',
-      'uri' => '/secure-route',
-      'https' => true,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    9 => 
-    array (
-      'method' => 'GET',
-      'uri' => '/with-link',
-      'link' => 'http://symfony.com',
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    10 => 
-    array (
-      'method' => 'ANY',
-      'uri' => '/yet-another/{id}',
-      'requirements' => 
-      array (
-        'id' => 
-        array (
-          'requirement' => '\\d+',
-          'dataType' => '',
-          'description' => '',
-        ),
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    11 =>
-    array (
-      'method' => 'GET',
-      'uri' => '/z-action-with-deprecated-indicator',
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => true,
-    ),
-    12 =>
-    array (
-      'method' => 'POST',
-      'uri' => '/z-action-with-nullable-request-param',
-      'parameters' => 
-      array (
-        'param1' => 
-        array (
-          'required' => false,
-          'dataType' => 'string',
-          'actualType' => 'string',
-          'subType' => NULL,
-          'description' => 'Param1 description.',
-          'readonly' => false,
-        ),
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    13 =>
-    array (
-      'method' => 'GET',
-      'uri' => '/z-action-with-query-param',
-      'filters' => 
-      array (
-        'page' => 
-        array (
-          'requirement' => '\\d+',
-          'description' => 'Page of the overview.',
-          'default' => '1',
-        ),
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    14 =>
-    array (
-      'method' => 'GET',
-      'uri' => '/z-action-with-query-param-no-default',
-      'filters' => 
-      array (
-        'page' => 
-        array (
-          'requirement' => '\\d+',
-          'description' => 'Page of the overview.',
-        ),
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    15 =>
-    array (
-      'method' => 'GET',
-      'uri' => '/z-action-with-query-param-strict',
-      'requirements' => 
-      array (
-        'page' => 
-        array (
-          'requirement' => '\\d+',
-          'dataType' => '',
-          'description' => 'Page of the overview.',
-        ),
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    16 =>
-    array (
-      'method' => 'POST',
-      'uri' => '/z-action-with-request-param',
-      'parameters' => 
-      array (
-        'param1' => 
-        array (
-          'required' => true,
-          'dataType' => 'string',
-          'actualType' => 'string',
-          'subType' => NULL,
-          'description' => 'Param1 description.',
-          'readonly' => false,
-        ),
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    17 =>
-    array (
-      'method' => 'GET',
-      'uri' => '/z-query-param-array-requirements',
-      'filters' => 
-      array (
-        'param1' => 
-        array (
-          'requirement' => 'regexp',
-          'description' => 'Param1 description.',
-        ),
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    18 =>
-    array (
-      'method' => 'GET',
-      'uri' => '/z-query-param-plain-array-requirements',
-      'filters' => 
-      array (
-        'param1' => 
-        array (
-          'requirement' => 'NotNull, NotBlank',
-          'description' => 'Param1 description.',
-        ),
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    19 =>
-    array (
-      'method' => 'GET',
-      'uri' => '/z-query-requirement-param-not-set',
-      'filters' => 
-      array (
-        'param1' => 
-        array (
-          'description' => 'Param1 description.',
-        ),
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    20 =>
-    array (
-      'method' => 'ANY',
-      'uri' => '/z-return-jms-and-validator-output',
-      'response' => 
-      array (
-        'bar' => 
-        array (
-          'default' => NULL,
-          'actualType' => 'datetime',
-          'subType' => NULL,
-          'groups' => 
-          array (
-            0 => 'Default',
-            1 => 'MultipleTest',
-          ),
-          'dataType' => 'DateTime',
-          'readonly' => NULL,
-          'required' => NULL,
-        ),
-        'objects' => 
-        array (
-          'default' => NULL,
-          'actualType' => 'collection',
-          'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
-          'groups' => 
-          array (
-            0 => 'Default',
-            1 => 'MultipleTest',
-          ),
-          'dataType' => 'array of objects (Test)',
-          'children' => 
-          array (
-            'a' => 
-            array (
-              'default' => 'nelmio',
-              'actualType' => 'string',
-              'subType' => NULL,
-              'groups' => 
-              array (
-                0 => 'Default',
-                1 => 'Test',
-              ),
-              'format' => '{length: {min: foo}}, {not blank}',
-              'required' => true,
-              'dataType' => 'string',
-              'readonly' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
-              'field' => 'a',
-            ),
-            'b' => 
-            array (
-              'default' => NULL,
-              'actualType' => 'datetime',
-              'subType' => NULL,
-              'groups' => 
-              array (
-                0 => 'Default',
-                1 => 'Test',
-              ),
-              'dataType' => 'DateTime',
-              'readonly' => NULL,
-              'required' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
-              'field' => 'b',
-            ),
-          ),
-          'readonly' => NULL,
-          'required' => NULL,
-        ),
-        'number' => 
-        array (
-          'dataType' => 'DateTime',
-          'actualType' => 'datetime',
-          'subType' => NULL,
-          'required' => false,
-          'default' => NULL,
-          'description' => '',
-          'readonly' => false,
-          'sinceVersion' => NULL,
-          'untilVersion' => NULL,
-        ),
-        'related' => 
-        array (
-          'dataType' => 'object (Test)',
-          'actualType' => 'model',
-          'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
-          'required' => false,
-          'default' => NULL,
-          'description' => '',
-          'readonly' => false,
-          'sinceVersion' => NULL,
-          'untilVersion' => NULL,
-          'children' => 
-          array (
-            'a' => 
-            array (
-              'default' => 'nelmio',
-              'actualType' => 'string',
-              'subType' => NULL,
-              'groups' => 
-              array (
-                0 => 'Default',
-                1 => 'Test',
-              ),
-              'format' => '{length: {min: foo}}, {not blank}',
-              'required' => true,
-              'dataType' => 'string',
-              'readonly' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
-              'field' => 'a',
-            ),
-            'b' => 
-            array (
-              'default' => NULL,
-              'actualType' => 'datetime',
-              'subType' => NULL,
-              'groups' => 
-              array (
-                0 => 'Default',
-                1 => 'Test',
-              ),
-              'dataType' => 'DateTime',
-              'readonly' => NULL,
-              'required' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
-              'field' => 'b',
-            ),
-          ),
-        ),
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    21 =>
-    array (
-      'method' => 'ANY',
-      'uri' => '/z-return-selected-parsers-input',
-      'parameters' => 
-      array (
-        'a' => 
-        array (
-          'dataType' => 'string',
-          'actualType' => 'string',
-          'subType' => NULL,
-          'default' => NULL,
-          'required' => true,
-          'description' => 'A nice description',
-          'readonly' => false,
-        ),
-        'b' => 
-        array (
-          'dataType' => 'string',
-          'actualType' => 'string',
-          'subType' => NULL,
-          'default' => NULL,
-          'required' => true,
-          'description' => NULL,
-          'readonly' => false,
-        ),
-        'c' => 
-        array (
-          'dataType' => 'boolean',
-          'actualType' => 'boolean',
-          'subType' => NULL,
-          'default' => false,
-          'required' => true,
-          'description' => NULL,
-          'readonly' => false,
-        ),
-        'd' => 
-        array (
-          'dataType' => 'string',
-          'actualType' => 'string',
-          'subType' => NULL,
-          'default' => 'DefaultTest',
-          'required' => true,
-          'description' => NULL,
-          'readonly' => false,
-        ),
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    22 =>
-    array (
-      'method' => 'ANY',
-      'uri' => '/z-return-selected-parsers-output',
-      'response' => 
-      array (
-        'bar' => 
-        array (
-          'default' => NULL,
-          'actualType' => 'datetime',
-          'subType' => NULL,
-          'groups' => 
-          array (
-            0 => 'Default',
-            1 => 'MultipleTest',
-          ),
-          'dataType' => 'DateTime',
-          'readonly' => NULL,
-          'required' => NULL,
-        ),
-        'objects' => 
-        array (
-          'default' => NULL,
-          'actualType' => 'collection',
-          'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
-          'groups' => 
-          array (
-            0 => 'Default',
-            1 => 'MultipleTest',
-          ),
-          'dataType' => 'array of objects (Test)',
-          'children' => 
-          array (
-            'a' => 
-            array (
-              'default' => 'nelmio',
-              'actualType' => 'string',
-              'subType' => NULL,
-              'groups' => 
-              array (
-                0 => 'Default',
-                1 => 'Test',
-              ),
-              'format' => '{length: {min: foo}}, {not blank}',
-              'required' => true,
-              'dataType' => 'string',
-              'readonly' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
-              'field' => 'a',
-            ),
-            'b' => 
-            array (
-              'default' => NULL,
-              'actualType' => 'datetime',
-              'subType' => NULL,
-              'groups' => 
-              array (
-                0 => 'Default',
-                1 => 'Test',
-              ),
-              'dataType' => 'DateTime',
-              'readonly' => NULL,
-              'required' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
-              'field' => 'b',
-            ),
-          ),
-          'readonly' => NULL,
-          'required' => NULL,
-        ),
-        'number' => 
-        array (
-          'dataType' => 'DateTime',
-          'actualType' => 'datetime',
-          'subType' => NULL,
-          'required' => false,
-          'default' => NULL,
-          'description' => '',
-          'readonly' => false,
-          'sinceVersion' => NULL,
-          'untilVersion' => NULL,
-        ),
-        'related' => 
-        array (
-          'dataType' => 'object (Test)',
-          'actualType' => 'model',
-          'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
-          'required' => false,
-          'default' => NULL,
-          'description' => '',
-          'readonly' => false,
-          'sinceVersion' => NULL,
-          'untilVersion' => NULL,
-          'children' => 
-          array (
-            'a' => 
-            array (
-              'default' => 'nelmio',
-              'actualType' => 'string',
-              'subType' => NULL,
-              'groups' => 
-              array (
-                0 => 'Default',
-                1 => 'Test',
-              ),
-              'format' => '{length: {min: foo}}, {not blank}',
-              'required' => true,
-              'dataType' => 'string',
-              'readonly' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
-              'field' => 'a',
-            ),
-            'b' => 
-            array (
-              'default' => NULL,
-              'actualType' => 'datetime',
-              'subType' => NULL,
-              'groups' => 
-              array (
-                0 => 'Default',
-                1 => 'Test',
-              ),
-              'dataType' => 'DateTime',
-              'readonly' => NULL,
-              'required' => NULL,
-              'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
-              'field' => 'b',
-            ),
-          ),
-        ),
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    23 =>
-    array (
-      'method' => 'POST',
-      'uri' => '/zcached',
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    24 =>
-    array (
-      'method' => 'POST',
-      'uri' => '/zsecured',
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-    25 =>
-    array (
-      'method' => 'GET',
-      'uri' => '/zz-tests-route-version.{_format}',
-      'requirements' => 
-      array (
-        '_format' => 
-        array (
-          'requirement' => '',
-          'dataType' => '',
-          'description' => '',
-        ),
-      ),
-      'https' => false,
-      'authentication' => false,
-      'authenticationRoles' => 
-      array (
-      ),
-      'deprecated' => false,
-    ),
-  ),
-);
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'field' => 'baz',
+                        ],
+                        'circular' => [
+                            'dataType' => 'object (JmsNested)',
+                            'actualType' => 'model',
+                            'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'field' => 'circular',
+                        ],
+                        'parent' => [
+                            'dataType' => 'object (JmsTest)',
+                            'actualType' => 'model',
+                            'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => null,
+                            'children' => [
+                                'foo' => [
+                                    'dataType' => 'string',
+                                    'actualType' => 'string',
+                                    'subType' => null,
+                                    'required' => false,
+                                    'default' => null,
+                                    'description' => '',
+                                    'readonly' => false,
+                                    'sinceVersion' => null,
+                                    'untilVersion' => null,
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                                    'field' => 'foo',
+                                ],
+                                'bar' => [
+                                    'dataType' => 'DateTime',
+                                    'actualType' => 'datetime',
+                                    'subType' => null,
+                                    'required' => false,
+                                    'default' => null,
+                                    'description' => '',
+                                    'readonly' => true,
+                                    'sinceVersion' => null,
+                                    'untilVersion' => null,
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                                    'field' => 'bar',
+                                ],
+                                'number' => [
+                                    'dataType' => 'double',
+                                    'actualType' => 'float',
+                                    'subType' => null,
+                                    'required' => false,
+                                    'default' => null,
+                                    'description' => '',
+                                    'readonly' => false,
+                                    'sinceVersion' => null,
+                                    'untilVersion' => null,
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                                    'field' => 'number',
+                                ],
+                                'arr' => [
+                                    'dataType' => 'array',
+                                    'actualType' => 'collection',
+                                    'subType' => null,
+                                    'required' => false,
+                                    'default' => null,
+                                    'description' => '',
+                                    'readonly' => false,
+                                    'sinceVersion' => null,
+                                    'untilVersion' => null,
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                                    'field' => 'arr',
+                                ],
+                                'nested' => [
+                                    'dataType' => 'object (JmsNested)',
+                                    'actualType' => 'model',
+                                    'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                                    'required' => false,
+                                    'default' => null,
+                                    'description' => '',
+                                    'readonly' => false,
+                                    'sinceVersion' => null,
+                                    'untilVersion' => null,
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                                    'field' => 'nested',
+                                ],
+                                'nested_array' => [
+                                    'dataType' => 'array of objects (JmsNested)',
+                                    'actualType' => 'collection',
+                                    'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                                    'required' => false,
+                                    'default' => null,
+                                    'description' => '',
+                                    'readonly' => false,
+                                    'sinceVersion' => null,
+                                    'untilVersion' => null,
+                                    'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsTest',
+                                    'field' => 'nested_array',
+                                ],
+                            ],
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'field' => 'parent',
+                        ],
+                        'since' => [
+                            'dataType' => 'string',
+                            'actualType' => 'string',
+                            'subType' => null,
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => '0.2',
+                            'untilVersion' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'field' => 'since',
+                        ],
+                        'until' => [
+                            'dataType' => 'string',
+                            'actualType' => 'string',
+                            'subType' => null,
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => null,
+                            'untilVersion' => '0.3',
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'field' => 'until',
+                        ],
+                        'since_and_until' => [
+                            'dataType' => 'string',
+                            'actualType' => 'string',
+                            'subType' => null,
+                            'required' => false,
+                            'default' => null,
+                            'description' => '',
+                            'readonly' => false,
+                            'sinceVersion' => '0.4',
+                            'untilVersion' => '0.5',
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                            'field' => 'since_and_until',
+                        ],
+                    ],
+                ],
+                'nested_array' => [
+                    'dataType' => 'array of objects (JmsNested)',
+                    'actualType' => 'collection',
+                    'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\JmsNested',
+                    'required' => false,
+                    'default' => null,
+                    'description' => '',
+                    'readonly' => false,
+                    'sinceVersion' => null,
+                    'untilVersion' => null,
+                ],
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        7 => [
+            'method' => 'GET',
+            'uri' => '/route_with_host.{_format}',
+            'host' => 'api.test.dev',
+            'description' => 'Route with host placeholder',
+            'requirements' => [
+                'domain' => [
+                    'requirement' => 'test.dev|test.com',
+                    'dataType' => '',
+                    'description' => '',
+                ],
+                '_format' => [
+                    'requirement' => '',
+                    'dataType' => '',
+                    'description' => '',
+                ],
+            ],
+            'views' => [
+                0 => 'default',
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        8 => [
+            'method' => 'ANY',
+            'uri' => '/secure-route',
+            'https' => true,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        9 => [
+            'method' => 'GET',
+            'uri' => '/with-link',
+            'link' => 'http://symfony.com',
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        10 => [
+            'method' => 'ANY',
+            'uri' => '/yet-another/{id}',
+            'requirements' => [
+                'id' => [
+                    'requirement' => '\\d+',
+                    'dataType' => '',
+                    'description' => '',
+                ],
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        11 => [
+            'method' => 'GET',
+            'uri' => '/z-action-with-deprecated-indicator',
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => true,
+        ],
+        12 => [
+            'method' => 'POST',
+            'uri' => '/z-action-with-nullable-request-param',
+            'parameters' => [
+                'param1' => [
+                    'required' => false,
+                    'dataType' => 'string',
+                    'actualType' => 'string',
+                    'subType' => null,
+                    'description' => 'Param1 description.',
+                    'readonly' => false,
+                ],
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        13 => [
+            'method' => 'GET',
+            'uri' => '/z-action-with-query-param',
+            'filters' => [
+                'page' => [
+                    'requirement' => '\\d+',
+                    'description' => 'Page of the overview.',
+                    'default' => '1',
+                ],
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        14 => [
+            'method' => 'GET',
+            'uri' => '/z-action-with-query-param-no-default',
+            'filters' => [
+                'page' => [
+                    'requirement' => '\\d+',
+                    'description' => 'Page of the overview.',
+                ],
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        15 => [
+            'method' => 'GET',
+            'uri' => '/z-action-with-query-param-strict',
+            'requirements' => [
+                'page' => [
+                    'requirement' => '\\d+',
+                    'dataType' => '',
+                    'description' => 'Page of the overview.',
+                ],
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        16 => [
+            'method' => 'POST',
+            'uri' => '/z-action-with-request-param',
+            'parameters' => [
+                'param1' => [
+                    'required' => true,
+                    'dataType' => 'string',
+                    'actualType' => 'string',
+                    'subType' => null,
+                    'description' => 'Param1 description.',
+                    'readonly' => false,
+                ],
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        17 => [
+            'method' => 'GET',
+            'uri' => '/z-query-param-array-requirements',
+            'filters' => [
+                'param1' => [
+                    'requirement' => 'regexp',
+                    'description' => 'Param1 description.',
+                ],
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        18 => [
+            'method' => 'GET',
+            'uri' => '/z-query-param-plain-array-requirements',
+            'filters' => [
+                'param1' => [
+                    'requirement' => 'NotNull, NotBlank',
+                    'description' => 'Param1 description.',
+                ],
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        19 => [
+            'method' => 'GET',
+            'uri' => '/z-query-requirement-param-not-set',
+            'filters' => [
+                'param1' => [
+                    'description' => 'Param1 description.',
+                ],
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        20 => [
+            'method' => 'ANY',
+            'uri' => '/z-return-jms-and-validator-output',
+            'response' => [
+                'bar' => [
+                    'default' => null,
+                    'actualType' => 'datetime',
+                    'subType' => null,
+                    'groups' => [
+                        0 => 'Default',
+                        1 => 'MultipleTest',
+                    ],
+                    'dataType' => 'DateTime',
+                    'readonly' => null,
+                    'required' => null,
+                ],
+                'objects' => [
+                    'default' => null,
+                    'actualType' => 'collection',
+                    'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
+                    'groups' => [
+                        0 => 'Default',
+                        1 => 'MultipleTest',
+                    ],
+                    'dataType' => 'array of objects (Test)',
+                    'children' => [
+                        'a' => [
+                            'default' => 'nelmio',
+                            'actualType' => 'string',
+                            'subType' => null,
+                            'groups' => [
+                                0 => 'Default',
+                                1 => 'Test',
+                            ],
+                            'format' => '{length: {min: foo}}, {not blank}',
+                            'required' => true,
+                            'dataType' => 'string',
+                            'readonly' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
+                            'field' => 'a',
+                        ],
+                        'b' => [
+                            'default' => null,
+                            'actualType' => 'datetime',
+                            'subType' => null,
+                            'groups' => [
+                                0 => 'Default',
+                                1 => 'Test',
+                            ],
+                            'dataType' => 'DateTime',
+                            'readonly' => null,
+                            'required' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
+                            'field' => 'b',
+                        ],
+                    ],
+                    'readonly' => null,
+                    'required' => null,
+                ],
+                'number' => [
+                    'dataType' => 'DateTime',
+                    'actualType' => 'datetime',
+                    'subType' => null,
+                    'required' => false,
+                    'default' => null,
+                    'description' => '',
+                    'readonly' => false,
+                    'sinceVersion' => null,
+                    'untilVersion' => null,
+                ],
+                'related' => [
+                    'dataType' => 'object (Test)',
+                    'actualType' => 'model',
+                    'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
+                    'required' => false,
+                    'default' => null,
+                    'description' => '',
+                    'readonly' => false,
+                    'sinceVersion' => null,
+                    'untilVersion' => null,
+                    'children' => [
+                        'a' => [
+                            'default' => 'nelmio',
+                            'actualType' => 'string',
+                            'subType' => null,
+                            'groups' => [
+                                0 => 'Default',
+                                1 => 'Test',
+                            ],
+                            'format' => '{length: {min: foo}}, {not blank}',
+                            'required' => true,
+                            'dataType' => 'string',
+                            'readonly' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
+                            'field' => 'a',
+                        ],
+                        'b' => [
+                            'default' => null,
+                            'actualType' => 'datetime',
+                            'subType' => null,
+                            'groups' => [
+                                0 => 'Default',
+                                1 => 'Test',
+                            ],
+                            'dataType' => 'DateTime',
+                            'readonly' => null,
+                            'required' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
+                            'field' => 'b',
+                        ],
+                    ],
+                ],
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        21 => [
+            'method' => 'ANY',
+            'uri' => '/z-return-selected-parsers-input',
+            'parameters' => [
+                'a' => [
+                    'dataType' => 'string',
+                    'actualType' => 'string',
+                    'subType' => null,
+                    'default' => null,
+                    'required' => true,
+                    'description' => 'A nice description',
+                    'readonly' => false,
+                ],
+                'b' => [
+                    'dataType' => 'string',
+                    'actualType' => 'string',
+                    'subType' => null,
+                    'default' => null,
+                    'required' => true,
+                    'description' => null,
+                    'readonly' => false,
+                ],
+                'c' => [
+                    'dataType' => 'boolean',
+                    'actualType' => 'boolean',
+                    'subType' => null,
+                    'default' => false,
+                    'required' => true,
+                    'description' => null,
+                    'readonly' => false,
+                ],
+                'd' => [
+                    'dataType' => 'string',
+                    'actualType' => 'string',
+                    'subType' => null,
+                    'default' => 'DefaultTest',
+                    'required' => true,
+                    'description' => null,
+                    'readonly' => false,
+                ],
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        22 => [
+            'method' => 'ANY',
+            'uri' => '/z-return-selected-parsers-output',
+            'response' => [
+                'bar' => [
+                    'default' => null,
+                    'actualType' => 'datetime',
+                    'subType' => null,
+                    'groups' => [
+                        0 => 'Default',
+                        1 => 'MultipleTest',
+                    ],
+                    'dataType' => 'DateTime',
+                    'readonly' => null,
+                    'required' => null,
+                ],
+                'objects' => [
+                    'default' => null,
+                    'actualType' => 'collection',
+                    'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
+                    'groups' => [
+                        0 => 'Default',
+                        1 => 'MultipleTest',
+                    ],
+                    'dataType' => 'array of objects (Test)',
+                    'children' => [
+                        'a' => [
+                            'default' => 'nelmio',
+                            'actualType' => 'string',
+                            'subType' => null,
+                            'groups' => [
+                                0 => 'Default',
+                                1 => 'Test',
+                            ],
+                            'format' => '{length: {min: foo}}, {not blank}',
+                            'required' => true,
+                            'dataType' => 'string',
+                            'readonly' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
+                            'field' => 'a',
+                        ],
+                        'b' => [
+                            'default' => null,
+                            'actualType' => 'datetime',
+                            'subType' => null,
+                            'groups' => [
+                                0 => 'Default',
+                                1 => 'Test',
+                            ],
+                            'dataType' => 'DateTime',
+                            'readonly' => null,
+                            'required' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
+                            'field' => 'b',
+                        ],
+                    ],
+                    'readonly' => null,
+                    'required' => null,
+                ],
+                'number' => [
+                    'dataType' => 'DateTime',
+                    'actualType' => 'datetime',
+                    'subType' => null,
+                    'required' => false,
+                    'default' => null,
+                    'description' => '',
+                    'readonly' => false,
+                    'sinceVersion' => null,
+                    'untilVersion' => null,
+                ],
+                'related' => [
+                    'dataType' => 'object (Test)',
+                    'actualType' => 'model',
+                    'subType' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
+                    'required' => false,
+                    'default' => null,
+                    'description' => '',
+                    'readonly' => false,
+                    'sinceVersion' => null,
+                    'untilVersion' => null,
+                    'children' => [
+                        'a' => [
+                            'default' => 'nelmio',
+                            'actualType' => 'string',
+                            'subType' => null,
+                            'groups' => [
+                                0 => 'Default',
+                                1 => 'Test',
+                            ],
+                            'format' => '{length: {min: foo}}, {not blank}',
+                            'required' => true,
+                            'dataType' => 'string',
+                            'readonly' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
+                            'field' => 'a',
+                        ],
+                        'b' => [
+                            'default' => null,
+                            'actualType' => 'datetime',
+                            'subType' => null,
+                            'groups' => [
+                                0 => 'Default',
+                                1 => 'Test',
+                            ],
+                            'dataType' => 'DateTime',
+                            'readonly' => null,
+                            'required' => null,
+                            'parentClass' => 'Nelmio\\ApiDocBundle\\Tests\\Fixtures\\Model\\Test',
+                            'field' => 'b',
+                        ],
+                    ],
+                ],
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        23 => [
+            'method' => 'POST',
+            'uri' => '/zcached',
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        24 => [
+            'method' => 'POST',
+            'uri' => '/zsecured',
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+        25 => [
+            'method' => 'GET',
+            'uri' => '/zz-tests-route-version.{_format}',
+            'requirements' => [
+                '_format' => [
+                    'requirement' => '',
+                    'dataType' => '',
+                    'description' => '',
+                ],
+            ],
+            'https' => false,
+            'authentication' => false,
+            'authenticationRoles' => [
+            ],
+            'deprecated' => false,
+        ],
+    ],
+];

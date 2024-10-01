@@ -25,7 +25,7 @@ class DumpCommandTest extends WebTestCase
      * @param array  $expectedMethodsCount Expected resource methods count
      * @param array  $expectedMethodValues Expected resource method values
      */
-    public function testDumpWithViewOption($view, array $expectedMethodsCount, array $expectedMethodValues)
+    public function testDumpWithViewOption($view, array $expectedMethodsCount, array $expectedMethodValues): void
     {
         $this->getContainer();
 
@@ -35,11 +35,11 @@ class DumpCommandTest extends WebTestCase
 
         $tester = new ApplicationTester($application);
 
-        $input = array(
+        $input = [
             'command' => 'api:doc:dump',
             '--view' => $view,
             '--format' => 'json',
-        );
+        ];
         $tester->run($input);
 
         $display = $tester->getDisplay();
@@ -64,35 +64,35 @@ class DumpCommandTest extends WebTestCase
      */
     public static function viewProvider()
     {
-        return array(
-            'test' => array(
+        return [
+            'test' => [
                 'test',
-                array(
+                [
                     '/api/resources' => 1,
-                ),
-                array(
+                ],
+                [
                     '/api/resources[0].method' => 'GET',
                     '/api/resources[0].uri' => '/api/resources.{_format}',
-                )
-            ),
-            'premium' => array(
+                ],
+            ],
+            'premium' => [
                 'premium',
-                array(
+                [
                     '/api/resources' => 2,
-                ),
-                array(
+                ],
+                [
                     '/api/resources[0].method' => 'GET',
                     '/api/resources[0].uri' => '/api/resources.{_format}',
                     '/api/resources[1].method' => 'POST',
                     '/api/resources[1].uri' => '/api/resources.{_format}',
-                )
-            ),
-            'default' => array(
+                ],
+            ],
+            'default' => [
                 'default',
-                array(
+                [
                     '/api/resources' => 4,
-                ),
-                array(
+                ],
+                [
                     '/api/resources[0].method' => 'GET',
                     '/api/resources[0].uri' => '/api/resources.{_format}',
                     '/api/resources[1].method' => 'POST',
@@ -101,8 +101,8 @@ class DumpCommandTest extends WebTestCase
                     '/api/resources[2].uri' => '/api/resources/{id}.{_format}',
                     '/api/resources[3].method' => 'GET',
                     '/api/resources[3].uri' => '/api/resources/{id}.{_format}',
-                )
-            ),
-        );
+                ],
+            ],
+        ];
     }
 }

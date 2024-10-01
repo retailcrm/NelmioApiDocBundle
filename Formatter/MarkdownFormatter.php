@@ -13,15 +13,12 @@ namespace Nelmio\ApiDocBundle\Formatter;
 
 class MarkdownFormatter extends AbstractFormatter
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function renderOne(array $data)
     {
         $markdown = sprintf("### `%s` %s ###\n", $data['method'], $data['uri']);
 
         if (isset($data['deprecated']) && false !== $data['deprecated']) {
-            $markdown .= "### This method is deprecated ###";
+            $markdown .= '### This method is deprecated ###';
             $markdown .= "\n\n";
         }
 
@@ -107,15 +104,15 @@ class MarkdownFormatter extends AbstractFormatter
                 }
 
                 if (null !== $parameter['sinceVersion'] || null !== $parameter['untilVersion']) {
-                    $markdown .= "  * versions: ";
+                    $markdown .= '  * versions: ';
                     if ($parameter['sinceVersion']) {
-                        $markdown .= '>='.$parameter['sinceVersion'];
+                        $markdown .= '>=' . $parameter['sinceVersion'];
                     }
                     if ($parameter['untilVersion']) {
                         if ($parameter['sinceVersion']) {
                             $markdown .= ',';
                         }
-                        $markdown .= '<='.$parameter['untilVersion'];
+                        $markdown .= '<=' . $parameter['untilVersion'];
                     }
                     $markdown .= "\n";
                 }
@@ -127,9 +124,6 @@ class MarkdownFormatter extends AbstractFormatter
         return $markdown;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function render(array $collection)
     {
         $markdown = '';

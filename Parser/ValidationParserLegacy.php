@@ -12,7 +12,6 @@
 namespace Nelmio\ApiDocBundle\Parser;
 
 use Symfony\Component\Validator\Mapping\ClassMetadataFactoryInterface;
-use Symfony\Component\Validator\Constraint;
 
 /**
  * Uses the Symfony Validation component to extract information about API objects. This is a backwards-compatible Validation component for Symfony2.1
@@ -20,7 +19,7 @@ use Symfony\Component\Validator\Constraint;
 class ValidationParserLegacy extends ValidationParser
 {
     /**
-     * @var \Symfony\Component\Validator\Mapping\ClassMetadataFactoryInterface
+     * @var ClassMetadataFactoryInterface
      */
     protected $factory;
 
@@ -34,9 +33,6 @@ class ValidationParserLegacy extends ValidationParser
         $this->factory = $factory;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supports(array $input)
     {
         $className = $input['class'];
@@ -44,12 +40,9 @@ class ValidationParserLegacy extends ValidationParser
         return null !== $this->factory->getClassMetadata($className);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function parse(array $input)
     {
-        $params = array();
+        $params = [];
         $className = $input['class'];
 
         $classdata = $this->factory->getClassMetadata($className);
@@ -60,9 +53,9 @@ class ValidationParserLegacy extends ValidationParser
         $defaults = $refl->getDefaultProperties();
 
         foreach ($properties as $property) {
-            $vparams = array();
+            $vparams = [];
 
-            $vparams['default'] = isset($defaults[$property]) ? $defaults[$property] : null;
+            $vparams['default'] = $defaults[$property] ?? null;
 
             $pds = $classdata->getMemberMetadatas($property);
 
@@ -75,10 +68,10 @@ class ValidationParserLegacy extends ValidationParser
             }
 
             if (isset($vparams['format'])) {
-                $vparams['format'] = join(', ', $vparams['format']);
+                $vparams['format'] = implode(', ', $vparams['format']);
             }
 
-            foreach (array('dataType', 'readonly', 'required') as $reqprop) {
+            foreach (['dataType', 'readonly', 'required'] as $reqprop) {
                 if (!isset($vparams[$reqprop])) {
                     $vparams[$reqprop] = null;
                 }
@@ -89,5 +82,4 @@ class ValidationParserLegacy extends ValidationParser
 
         return $params;
     }
-
 }

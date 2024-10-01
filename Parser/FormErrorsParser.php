@@ -23,16 +23,16 @@ class FormErrorsParser implements ParserInterface, PostParserInterface
      *
      * @param array $item containing the following fields: class, groups. Of which groups is optional
      *
-     * @return boolean
+     * @return bool
      */
     public function supports(array $item)
     {
-        return isset($item['form_errors']) && $item['form_errors'] === true;
+        return isset($item['form_errors']) && true === $item['form_errors'];
     }
 
     public function parse(array $item)
     {
-        return array();
+        return [];
     }
 
     /**
@@ -40,9 +40,6 @@ class FormErrorsParser implements ParserInterface, PostParserInterface
      *      - status_code: 400
      *      - message: "Validation failed"
      *      - errors: contains the original parameters, but all types are changed to array of strings (array of errors for each field)
-     *
-     * @param array $item
-     * @param array $parameters
      *
      * @return array
      */
@@ -54,7 +51,7 @@ class FormErrorsParser implements ParserInterface, PostParserInterface
             $params[$name] = null;
         }
 
-        $params['status_code'] = array(
+        $params['status_code'] = [
             'dataType' => 'integer',
             'actualType' => DataTypes::INTEGER,
             'subType' => null,
@@ -62,18 +59,18 @@ class FormErrorsParser implements ParserInterface, PostParserInterface
             'description' => 'The status code',
             'readonly' => true,
             'default' => 400,
-        );
+        ];
 
-        $params['message'] = array(
+        $params['message'] = [
             'dataType' => 'string',
             'actualType' => DataTypes::STRING,
             'subType' => null,
             'required' => false,
             'description' => 'The error message',
             'default' => 'Validation failed.',
-        );
+        ];
 
-        $params['errors'] = array(
+        $params['errors'] = [
             'dataType' => 'errors',
             'actualType' => DataTypes::MODEL,
             'subType' => sprintf('%s.FormErrors', $item['class']),
@@ -81,42 +78,41 @@ class FormErrorsParser implements ParserInterface, PostParserInterface
             'description' => 'Errors',
             'readonly' => true,
             'children' => $this->doPostParse($parameters),
-        );
+        ];
 
         return $params;
     }
 
-    protected function doPostParse(array $parameters, $attachFieldErrors = true, array $propertyPath = array())
+    protected function doPostParse(array $parameters, $attachFieldErrors = true, array $propertyPath = [])
     {
-        $data = array();
+        $data = [];
 
         foreach ($parameters as $name => $parameter) {
-
-            $data[$name] = array(
+            $data[$name] = [
                 'dataType' => 'parameter errors',
                 'actualType' => DataTypes::MODEL,
                 'subType' => 'FieldErrors',
                 'required' => false,
                 'description' => 'Errors on the parameter',
                 'readonly' => true,
-                'children' => array(
-                    'errors' => array(
+                'children' => [
+                    'errors' => [
                         'dataType' => 'array of errors',
                         'actualType' => DataTypes::COLLECTION,
                         'subType' => 'string',
                         'required' => false,
                         'dscription' => '',
                         'readonly' => true,
-                    ),
-                ),
-            );
+                    ],
+                ],
+            ];
 
-            if ($parameter['actualType'] === DataTypes::MODEL) {
+            if (DataTypes::MODEL === $parameter['actualType']) {
                 $propertyPath[] = $name;
                 $data[$name]['subType'] = sprintf('%s.FieldErrors[%s]', $parameter['subType'], implode('.', $propertyPath));
                 $data[$name]['children'] = $this->doPostParse($parameter['children'], $attachFieldErrors, $propertyPath);
             } else {
-                if ($attachFieldErrors === false) {
+                if (false === $attachFieldErrors) {
                     unset($data[$name]['children']);
                 }
                 $attachFieldErrors = false;

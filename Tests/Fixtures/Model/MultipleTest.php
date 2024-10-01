@@ -25,6 +25,7 @@ class MultipleTest
 
     /**
      * @JMS\Type("DateTime")
+     *
      * @JMS\SerializedName("number");
      */
     public $baz;
@@ -36,7 +37,9 @@ class MultipleTest
 
     /**
      * @Assert\Type(type="array")
+     *
      * @Assert\All({
+     *
      *     @Assert\Type(type="Test")
      * })
      */
